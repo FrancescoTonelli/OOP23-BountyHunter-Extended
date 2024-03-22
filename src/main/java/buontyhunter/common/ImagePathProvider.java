@@ -1033,6 +1033,30 @@ public class ImagePathProvider {
                     setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
                 }
             });
+            put(ImageType.potion, new AssetImage() {
+                {
+                    setPath("utility/potion.png");
+                    setType(ImageType.potion);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.damageUp, new AssetImage() {
+                {
+                    setPath("utility/dmgup.png");
+                    setType(ImageType.damageUp);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.speedUp, new AssetImage() {
+                {
+                    setPath("utility/speed.png");
+                    setType(ImageType.speedUp);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
             put(ImageType.GameOver, new AssetImage() {
                 {
                     setPath("utility/GAMEOVER.jpeg");

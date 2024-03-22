@@ -130,5 +130,8 @@ public enum ImageType {
     teleporter,
     blacksmith,
     weaponContainer,
-    doblon
+    doblon,
+    potion,
+    damageUp,
+    speedUp
 }

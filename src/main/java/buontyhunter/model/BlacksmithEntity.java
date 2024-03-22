@@ -3,6 +3,7 @@ package buontyhunter.model;
 import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;
 import buontyhunter.weaponClasses.MeleeWeapon;
+import buontyhunter.weaponClasses.RangedWeapon;
 
 public class BlacksmithEntity extends InterractableArea implements Blacksmith{
 
@@ -25,7 +26,7 @@ public class BlacksmithEntity extends InterractableArea implements Blacksmith{
 
     @Override
     public void buyAmmo(PlayerEntity player) {
-        if(player.withdrawDoblons(ammoCost)){
+        if(player.getWeapon() instanceof RangedWeapon && player.withdrawDoblons(ammoCost)){
             player.giveAmmo(1);
         }
     }
