@@ -1,10 +1,10 @@
-package buontyhunter.model;
+package buontyhunter.model.event;
 
+import buontyhunter.model.WorldEvent;
 import buontyhunter.model.AI.enemySpawner.EnemyType;
 
 public class KilledEnemyEvent implements WorldEvent{
     private EnemyType killedType;
-    private int moneyReward;
 
     /**
      * create a new KilledEnemyEvent , it is generated when an enemy is killed
@@ -12,7 +12,6 @@ public class KilledEnemyEvent implements WorldEvent{
      */
     public KilledEnemyEvent(EnemyType killedType) {
         this.killedType = killedType;
-        this.moneyReward = Math.random() > 0.6 ? 1 : 3;
     }
 
     /**
@@ -21,14 +20,6 @@ public class KilledEnemyEvent implements WorldEvent{
      */
     public EnemyType getKilledType() {
         return killedType;
-    }
-
-    /**
-     * get the money reward for killing the enemy
-     * @return the money reward for killing the enemy
-     */
-    public int getMoneyReward() {
-        return moneyReward;
     }
 
 }

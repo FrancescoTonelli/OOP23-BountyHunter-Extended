@@ -1,6 +1,8 @@
 package buontyhunter.graphics;
 
+import buontyhunter.common.Point2d;
 import buontyhunter.model.*;
+import buontyhunter.model.Consumables.Consumable;
 import buontyhunter.weaponClasses.RangedWeapon;
 import buontyhunter.weaponClasses.Weapon;
 
@@ -129,4 +131,12 @@ public interface Graphics {
 	 * @param y the y coordinate
 	 */
 	void drawDurabilityBar(Weapon weapon, int x, int y);
+
+	/**
+	 * this method calls ConsumableGraphics to draw consumables
+	 * @param consumable the consumable
+	 * @param position its position
+	 * @param bBox its BoundingBox
+	 */
+	void drawConsumable(Consumable consumable, Point2d position, BoundingBox bBox);
 }

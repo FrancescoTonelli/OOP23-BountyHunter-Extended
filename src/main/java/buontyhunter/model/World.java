@@ -10,8 +10,11 @@ import buontyhunter.core.WinnerType;
 import buontyhunter.model.AI.enemySpawner.EnemyConfiguration;
 import buontyhunter.model.AI.enemySpawner.EnemyRegistry;
 import buontyhunter.model.AI.enemySpawner.EnemyRegistryImpl;
+import buontyhunter.model.Consumables.ConsumableManager;
+import buontyhunter.model.Consumables.ConsumableManagerImpl;
 import buontyhunter.model.event.ChangeWorldEvent;
 import buontyhunter.model.event.GameOverEvent;
+import buontyhunter.model.event.KilledEnemyEvent;
 import buontyhunter.physics.BoundaryCollision;
 
 import java.util.ArrayList;
@@ -31,12 +34,14 @@ public class World {
     private LoadingBar loadingBar;
     private WizardBossEntity wizardBoss;
     private InventoryObject inventory;
+    private ConsumableManager consumablesManager;
 
     public World(RectBoundingBox bbox) {
         mainBBox = bbox;
         this.healthBar = GameFactory.getInstance().createHealthBar();
         this.interractableAreas = new ArrayList<InterractableArea>();
         enemyRegistry = new EnemyRegistryImpl();
+        consumablesManager = new ConsumableManagerImpl();
     }
 
     /**
@@ -514,5 +519,12 @@ public class World {
      */
     public void handlePlayerKilled() {
         notifyWorldEvent(new GameOverEvent(WinnerType.ENEMY));
+    }
+
+    /**
+     * return the consumables manager
+     */
+    public ConsumableManager getConsumableManager(){
+        return this.consumablesManager;
     }
 }

@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import buontyhunter.model.FighterEntity.MovementState;
+import buontyhunter.model.Consumables.Consumable;
 import buontyhunter.weaponClasses.MeleeWeapon;
 import buontyhunter.weaponClasses.RangedWeapon;
 import buontyhunter.weaponClasses.Weapon;
@@ -24,6 +25,7 @@ public class SwingGraphics implements Graphics {
 	private double ratioY;
 	private SceneCamera camera;
 	private SwingAssetProvider assetManager;
+	final private ConsumableGraphics consumableGraphics;
 
 	private Font titleFont = new Font("Arial", Font.BOLD, 20);
 	private Font paragraphFont = new Font("Arial", Font.PLAIN, 15);
@@ -35,6 +37,7 @@ public class SwingGraphics implements Graphics {
 		this.ratioY = ratioY;
 		this.camera = camera;
 		this.assetManager = assetManager;
+		consumableGraphics = new ConsumableGraphicsImpl(g2, camera, assetManager);
 	}
 
 	private int getXinPixel(Point2d p) {
@@ -737,5 +740,10 @@ public class SwingGraphics implements Graphics {
 							/ ((MeleeWeapon) weapon).getMaxDurability(),
 					barWidth - 10);
 		}
+	}
+
+	@Override
+	public void drawConsumable(Consumable consumable, Point2d position, BoundingBox bBox) {
+		consumableGraphics.drawConsumable(consumable, position, bBox);
 	}
 }

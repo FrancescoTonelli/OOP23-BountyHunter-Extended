@@ -14,6 +14,7 @@ import buontyhunter.model.AI.enemySpawner.EnemySpawner;
 import buontyhunter.model.AI.enemySpawner.EnemySpawnerFixed;
 import buontyhunter.model.AI.enemySpawner.EnemyType;
 import buontyhunter.model.AI.pathFinding.AIEnemyFollowPathHelper;
+import buontyhunter.model.event.KilledEnemyEvent;
 
 import java.util.*;
 import java.util.stream.Collectors;

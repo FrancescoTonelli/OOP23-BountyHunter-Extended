@@ -9,7 +9,7 @@ import buontyhunter.common.Logger.LogType;
 import buontyhunter.graphics.*;
 import buontyhunter.input.*;
 import buontyhunter.model.*;
-import buontyhunter.model.event.ChangeWorldEvent;
+import buontyhunter.model.event.*;
 import buontyhunter.weaponClasses.RangedWeapon;
 
 public class GameEngine implements WorldEventListener {
@@ -158,8 +158,6 @@ public class GameEngine implements WorldEventListener {
                 ((PlayerEntity) gameState.getWorld().getPlayer()).getQuests().stream()
                         .filter(quest -> quest.getTarget().equals(((KilledEnemyEvent) ev).getKilledType()))
                         .forEach(quest -> quest.incrementTargetActuallyKilled());
-                ((PlayerEntity) gameState.getWorld().getPlayer())
-                        .depositDoblons(((KilledEnemyEvent) ev).getMoneyReward());
                 ((PlayerEntity) gameState.getWorld().getPlayer()).getQuests().stream()
                         .filter(quest -> quest.getnTargetActuallyKilled() >= quest.getnTargetToKill())
                         .forEach(quest -> quest.end((PlayerEntity) gameState.getWorld().getPlayer()));
