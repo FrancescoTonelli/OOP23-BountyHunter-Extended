@@ -271,6 +271,8 @@ public class World {
                     wizardBoss.getDamagingArea().updatePhysics(dt, this);
                 }
             }
+
+            this.consumablesManager.getAllConsumables().forEach(i->i.updatePhysics(dt, this));
         }
     }
 
@@ -398,6 +400,8 @@ public class World {
         if (inventory != null)
             entities.add(inventory);
 
+        this.consumablesManager.getAllConsumables().stream().forEach(i -> entities.add(i));
+
         this.interractableAreas.forEach(area -> entities.add(area));
         return entities;
     }
@@ -468,6 +472,7 @@ public class World {
     public void removeEnemy(int enemyIdentifier, boolean killed) {
         if (killed) {
             notifyWorldEvent(new KilledEnemyEvent(enemyRegistry.getEnemy(enemyIdentifier).getEnemyType()));
+            this.getConsumableManager().generateNewDrop((PlayerEntity)this.getPlayer(), enemyRegistry.getEnemy(enemyIdentifier).getPos());
         }
         enemyRegistry.removeEnemy(enemyIdentifier);
     }

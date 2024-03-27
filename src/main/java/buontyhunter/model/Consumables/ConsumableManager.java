@@ -5,10 +5,9 @@ import buontyhunter.model.PlayerEntity;
 import java.util.List;
 
 public interface ConsumableManager {
-    List<Consumable> isOnConsumables(PlayerEntity plr);
     List<Consumable> getAllConsumables();
-    void applyEachConsumableUnderPlayer(PlayerEntity plr);
+    void applyConsumable(PlayerEntity player, Consumable consumable);
     void addConsumable(Consumable newConsumable);
     void deleteConsumable(Consumable consumable);
-    void generateNewDrop(Point2d position);
+    void generateNewDrop(PlayerEntity player, Point2d position);
 }

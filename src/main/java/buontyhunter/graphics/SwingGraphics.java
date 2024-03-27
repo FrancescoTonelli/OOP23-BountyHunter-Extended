@@ -743,7 +743,8 @@ public class SwingGraphics implements Graphics {
 	}
 
 	@Override
-	public void drawConsumable(Consumable consumable, Point2d position, BoundingBox bBox) {
-		consumableGraphics.drawConsumable(consumable, position, bBox);
+	public void drawConsumable(Consumable consumable) {
+		consumableGraphics.drawConsumable(consumable, getXinPixel(camera.getObjectPointInScene(consumable.getPos()).get()), 
+		getYinPixel(camera.getObjectPointInScene(consumable.getPos()).get()));
 	}
 }
