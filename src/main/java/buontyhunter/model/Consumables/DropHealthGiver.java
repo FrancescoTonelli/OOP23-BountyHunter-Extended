@@ -9,16 +9,16 @@ import buontyhunter.model.GameObjectType;
 import buontyhunter.model.PlayerEntity;
 import buontyhunter.physics.PhysicsComponent;
 
-public class DropAmmoGiver extends Consumable{
+public class DropHealthGiver extends Consumable{
 
-    public DropAmmoGiver(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
+    public DropHealthGiver(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, int id) {
         super(type, pos, vel, box, input, graph, phys, id);
     }
 
     @Override
     public void apply(PlayerEntity player) {
-        player.giveAmmo(3);
+        player.curePlayer();
     }
     
 }

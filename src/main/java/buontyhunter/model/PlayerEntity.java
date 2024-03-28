@@ -173,4 +173,11 @@ public class PlayerEntity extends FighterEntity {
         quests.clear();
     }
 
+    /**
+     * Cures the player health instantly
+     */
+    public void curePlayer(){
+        this.setHealth(this.getMaxHealth());
+    }
+
 }

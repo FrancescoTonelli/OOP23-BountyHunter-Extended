@@ -8,7 +8,6 @@ import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;
 import buontyhunter.graphics.ConsumablesGraphicsComponent;
 import buontyhunter.input.NullInputComponent;
-import buontyhunter.model.CollisionDetector;
 import buontyhunter.model.GameObjectType;
 import buontyhunter.model.PlayerEntity;
 import buontyhunter.model.RectBoundingBox;
@@ -16,40 +15,38 @@ import buontyhunter.physics.ConsumablesPhysicsComponent;
 
 public class ConsumableManagerImpl implements ConsumableManager{
 
-    final List<Consumable> consumablesList;
-    final CollisionDetector collisionDetector;
-    private static int standardBBoxDimension = 1;
+    private List<Consumable> consumablesList;
+    private int last_id;
 
     public ConsumableManagerImpl(){
         consumablesList = new ArrayList<>();
-        collisionDetector = new CollisionDetector();
-    }
-
-    @Override
-    public void addConsumable(Consumable newConsumable) {
-        consumablesList.add(newConsumable);
-    }
-
-    @Override
-    public void deleteConsumable(Consumable consumable) {
-        consumablesList.remove(consumable);
+        last_id = 0;
     }
 
     @Override
     public void generateNewDrop(PlayerEntity player, Point2d position) {
         Random rand = new Random();
         int val = rand.nextInt(10);
-        if(true || val <= 2){
+        if(val <= 1){
             this.consumablesList.add(new DropAmmoGiver(GameObjectType.Consumable, position, new Vector2d(0, 0), 
-            new RectBoundingBox(position, standardBBoxDimension, standardBBoxDimension), 
-            new NullInputComponent(), new ConsumablesGraphicsComponent(), new ConsumablesPhysicsComponent()));
+            genBoundingBox(position), 
+            new NullInputComponent(), new ConsumablesGraphicsComponent(), new ConsumablesPhysicsComponent(), last_id));
 
-        }else if(val <= 5){
-            /* Spawn healthGiver */
+        }else if(val <= 3){
+            this.consumablesList.add(new DropHealthGiver(GameObjectType.Consumable, position, new Vector2d(0, 0), 
+            genBoundingBox(position), 
+            new NullInputComponent(), new ConsumablesGraphicsComponent(), new ConsumablesPhysicsComponent(), last_id));
         }
         else{
-            /* Spawn moneyGiver */
+            this.consumablesList.add(new DropDoblonsGiver(GameObjectType.Consumable, position, new Vector2d(0, 0),
+            genBoundingBox(position), new NullInputComponent(), new ConsumablesGraphicsComponent(),
+            new ConsumablesPhysicsComponent(), last_id));
         }
+        last_id++;
+    }
+
+    private RectBoundingBox genBoundingBox(Point2d position){
+        return new RectBoundingBox(new Point2d(position.x - 0.3, position.y - 0.3), 1, 1);
     }
 
     @Override
@@ -59,7 +56,9 @@ public class ConsumableManagerImpl implements ConsumableManager{
 
     @Override
     public void applyConsumable(PlayerEntity player, Consumable consumable) {
-        this.getAllConsumables().stream().filter(i -> i.equals(consumable)).forEach(i -> i.apply(player));
+        this.getAllConsumables().stream().filter(i -> i.getId() == consumable.getId()).forEach(i -> {i.apply(player); i.use();});
+        
+        this.consumablesList = new ArrayList<>(this.getAllConsumables().stream().filter(i->!i.isUsed()).toList());
     }
     
 }

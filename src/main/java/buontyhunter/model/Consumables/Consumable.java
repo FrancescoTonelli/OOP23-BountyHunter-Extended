@@ -11,11 +11,27 @@ import buontyhunter.model.PlayerEntity;
 import buontyhunter.physics.PhysicsComponent;
 
 public abstract class Consumable extends GameObject{
+    private final int id;
+    private boolean used;
 
     public Consumable(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
-            GraphicsComponent graph, PhysicsComponent phys) {
+            GraphicsComponent graph, PhysicsComponent phys, int id) {
         super(type, pos, vel, box, input, graph, phys);
+        this.id = id;
+        this.used = false;
     }
 
     public abstract void apply(final PlayerEntity player);
+
+    public int getId(){
+        return this.id;
+    }
+
+    public boolean isUsed(){
+        return this.used;
+    }
+
+    public void use(){
+        this.used = true;
+    }
 }

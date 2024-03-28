@@ -5,6 +5,8 @@ import java.awt.*;
 import buontyhunter.common.ImageType;
 import buontyhunter.model.Consumables.Consumable;
 import buontyhunter.model.Consumables.DropAmmoGiver;
+import buontyhunter.model.Consumables.DropDoblonsGiver;
+import buontyhunter.model.Consumables.DropHealthGiver;
 
 public class ConsumableGraphicsImpl implements ConsumableGraphics{
 
@@ -30,6 +32,11 @@ public class ConsumableGraphicsImpl implements ConsumableGraphics{
 
             if(consumable instanceof DropAmmoGiver){
                 toDraw = this.assetManager.getImage(ImageType.arrow);
+            }else if(consumable instanceof DropDoblonsGiver){
+                toDraw = this.assetManager.getImage(ImageType.doblon);
+            }
+            else if(consumable instanceof DropHealthGiver){
+                toDraw = this.assetManager.getImage(ImageType.potion);
             }
 
             g2.drawImage(toDraw, xInPixel, 
