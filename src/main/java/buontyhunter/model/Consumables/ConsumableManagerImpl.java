@@ -20,7 +20,7 @@ public class ConsumableManagerImpl implements ConsumableManager{
 
     private List<Consumable> consumablesList;
     private int last_id;
-    private static int powerUpQty = 100;
+    private static int powerUpQty = 6;
 
     public ConsumableManagerImpl(){
         consumablesList = new ArrayList<>();

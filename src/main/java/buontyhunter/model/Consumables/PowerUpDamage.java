@@ -11,7 +11,8 @@ import buontyhunter.physics.PhysicsComponent;
 
 public class PowerUpDamage extends Consumable{
 
-    private static float additive = (float)0.5;
+    private static float damageMultiplier = 2;
+    private static int duration = 3000;
 
     public PowerUpDamage(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, int id) {
@@ -20,8 +21,29 @@ public class PowerUpDamage extends Consumable{
 
     @Override
     public void apply(PlayerEntity player) {
-        player.setDamageMultiplier(player.getDamageMultiplier() + additive);
-        System.out.println("damage: " + player.getDamageMultiplier());
+        DamageThread t = new DamageThread(player);
+        t.start();
+    }
+
+    private class DamageThread extends Thread{
+
+        private final PlayerEntity player;
+
+        public DamageThread(PlayerEntity player){
+            this.player = player;
+        }
+
+        @Override
+        public void run() {
+            
+            try {
+                this.player.setDamageMultiplier(this.player.getDamageMultiplier() * damageMultiplier);
+                Thread.sleep(duration);
+                this.player.setDamageMultiplier(this.player.getDamageMultiplier() / damageMultiplier);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
     
 }
