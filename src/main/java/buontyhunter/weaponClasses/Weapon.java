@@ -10,7 +10,7 @@ public abstract class Weapon {
     protected int damage;
     protected double attackSpeed; // the higher the attack speed, the slower the attack
     protected int range;
-    protected double speed;
+    protected double weaponSpeed;
     protected Direction attackDirection;
     protected RectBoundingBox hitbox;
     protected FighterEntity owner;
@@ -21,7 +21,7 @@ public abstract class Weapon {
         this.damage = damage;
         this.attackSpeed = attackSpeed;
         this.range = range;
-        this.speed = speed;
+        this.weaponSpeed = speed;
         this.owner = owner;
         this.attackDirection = owner.getDirection();
         type = weaponType;
@@ -89,8 +89,8 @@ public abstract class Weapon {
      * get the speed of the weapon
      * @return the speed of the weapon
      */
-    public double getSpeed() {
-        return speed;
+    public double getWeaponSpeed() {
+        return weaponSpeed;
     }
 
     /**
@@ -152,7 +152,7 @@ public abstract class Weapon {
         if (speed <= 0) {
             throw new IllegalArgumentException("Speed cannot be negative");
         }
-        this.speed = speed;
+        this.weaponSpeed = speed;
     }
 
     /**

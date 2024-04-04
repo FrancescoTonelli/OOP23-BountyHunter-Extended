@@ -18,6 +18,7 @@ public class PlayerEntity extends FighterEntity {
     private int doblons;
     private List<Weapon> inventoryWeapons;
     private float damageMultiplier;
+    private double movementPlayerSpeed;
 
     public PlayerEntity(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, int health, int maxHealth, Weapon w) {
@@ -26,6 +27,7 @@ public class PlayerEntity extends FighterEntity {
         this.doblons = 0;
         inventoryWeapons = new ArrayList<Weapon>();
         damageMultiplier = 1;
+        movementPlayerSpeed = 0.3;
     }
 
     /**
@@ -195,5 +197,20 @@ public class PlayerEntity extends FighterEntity {
      */
     public void setDamageMultiplier(float value){
         this.damageMultiplier = value;
+    }
+
+    /**
+     * return player's movement speed
+     */
+    public double getMovementSpeed(){
+        return this.movementPlayerSpeed;
+    }
+
+    /**
+     * modify player's movement speed value
+     * @param value the new value
+     */
+    public void setMovementSpeed(double value){
+        this.movementPlayerSpeed = value;
     }
 }

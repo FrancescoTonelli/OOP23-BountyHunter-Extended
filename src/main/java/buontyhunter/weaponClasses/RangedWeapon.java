@@ -123,22 +123,22 @@ public class RangedWeapon extends Weapon {
 
                 switch (attackDirection) {
                     case STAND_UP: {
-                        pos = new Point2d(pos.x, pos.y - speed);
+                        pos = new Point2d(pos.x, pos.y - weaponSpeed);
                         hitbox = ((RectBoundingBox) hitbox).withPoint(pos);
                         break;
                     }
                     case STAND_DOWN: {
-                        pos = new Point2d(pos.x, pos.y + speed);
+                        pos = new Point2d(pos.x, pos.y + weaponSpeed);
                         hitbox = ((RectBoundingBox) hitbox).withPoint(pos);
                         break;
                     }
                     case STAND_LEFT: {
-                        pos = new Point2d(pos.x - speed, pos.y);
+                        pos = new Point2d(pos.x - weaponSpeed, pos.y);
                         hitbox = ((RectBoundingBox) hitbox).withPoint(pos);
                         break;
                     }
                     case STAND_RIGHT: {
-                        pos = new Point2d(pos.x + speed, pos.y);
+                        pos = new Point2d(pos.x + weaponSpeed, pos.y);
                         hitbox = ((RectBoundingBox) hitbox).withPoint(pos);
                         break;
                     }
@@ -149,7 +149,7 @@ public class RangedWeapon extends Weapon {
 
                 owner.getDamagingArea().setBBox(hitbox);
             }
-            travelDistance += speed;
+            travelDistance += weaponSpeed;
             // }
         }
 

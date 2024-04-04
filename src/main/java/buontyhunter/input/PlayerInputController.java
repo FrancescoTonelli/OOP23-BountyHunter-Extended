@@ -13,13 +13,14 @@ import buontyhunter.model.*;
  */
 public class PlayerInputController implements InputComponent {
 
-	private final double speed = 0.3;
+	private double speed;
 	private double timer;
 	private boolean isAttacking = false;
 
 	@Override
 	public void update(GameObject player, InputController c, World w) {
 		Vector2d vel = new Vector2d(0, 0);
+		this.speed = ((PlayerEntity)player).getMovementSpeed();
 
 		switch (((PlayerEntity)player).getDirection()) {
 			case MOVE_UP:{
