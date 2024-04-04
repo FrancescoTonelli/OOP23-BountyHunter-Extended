@@ -3,10 +3,13 @@ package buontyhunter.graphics;
 import java.awt.*;
 
 import buontyhunter.common.ImageType;
-import buontyhunter.model.Consumables.Consumable;
-import buontyhunter.model.Consumables.DropAmmoGiver;
-import buontyhunter.model.Consumables.DropDoblonsGiver;
-import buontyhunter.model.Consumables.DropHealthGiver;
+import buontyhunter.model.consumables.Consumable;
+import buontyhunter.model.consumables.DropAmmoGiver;
+import buontyhunter.model.consumables.DropDoblonsGiver;
+import buontyhunter.model.consumables.DropHealthGiver;
+import buontyhunter.model.consumables.PowerUpDamage;
+import buontyhunter.model.consumables.PowerUpDurability;
+import buontyhunter.model.consumables.PowerUpSpeed;
 
 public class ConsumableGraphicsImpl implements ConsumableGraphics{
 
@@ -37,6 +40,15 @@ public class ConsumableGraphicsImpl implements ConsumableGraphics{
             }
             else if(consumable instanceof DropHealthGiver){
                 toDraw = this.assetManager.getImage(ImageType.potion);
+            }
+            else if(consumable instanceof PowerUpDurability){
+                toDraw = this.assetManager.getImage(ImageType.hammer);
+            }
+            else if(consumable instanceof PowerUpSpeed){
+                toDraw = this.assetManager.getImage(ImageType.speedUp);
+            }
+            else if(consumable instanceof PowerUpDamage){
+                toDraw = this.assetManager.getImage(ImageType.damageUp);
             }
 
             g2.drawImage(toDraw, xInPixel, 

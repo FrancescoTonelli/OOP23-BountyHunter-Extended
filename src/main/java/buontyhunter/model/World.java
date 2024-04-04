@@ -10,8 +10,8 @@ import buontyhunter.core.WinnerType;
 import buontyhunter.model.AI.enemySpawner.EnemyConfiguration;
 import buontyhunter.model.AI.enemySpawner.EnemyRegistry;
 import buontyhunter.model.AI.enemySpawner.EnemyRegistryImpl;
-import buontyhunter.model.Consumables.ConsumableManager;
-import buontyhunter.model.Consumables.ConsumableManagerImpl;
+import buontyhunter.model.consumables.ConsumableManager;
+import buontyhunter.model.consumables.ConsumableManagerImpl;
 import buontyhunter.model.event.ChangeWorldEvent;
 import buontyhunter.model.event.GameOverEvent;
 import buontyhunter.model.event.KilledEnemyEvent;
@@ -472,7 +472,7 @@ public class World {
     public void removeEnemy(int enemyIdentifier, boolean killed) {
         if (killed) {
             notifyWorldEvent(new KilledEnemyEvent(enemyRegistry.getEnemy(enemyIdentifier).getEnemyType()));
-            this.getConsumableManager().generateNewDrop((PlayerEntity)this.getPlayer(), enemyRegistry.getEnemy(enemyIdentifier).getPos());
+            this.getConsumableManager().generateNewDrop(enemyRegistry.getEnemy(enemyIdentifier).getPos());
         }
         enemyRegistry.removeEnemy(enemyIdentifier);
     }

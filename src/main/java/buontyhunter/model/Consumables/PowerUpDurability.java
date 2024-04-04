@@ -8,17 +8,20 @@ import buontyhunter.model.BoundingBox;
 import buontyhunter.model.GameObjectType;
 import buontyhunter.model.PlayerEntity;
 import buontyhunter.physics.PhysicsComponent;
+import buontyhunter.weaponClasses.MeleeWeapon;
 
-public class DropHealthGiver extends Consumable{
+public class PowerUpDurability extends Consumable{
 
-    public DropHealthGiver(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
+    public PowerUpDurability(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, int id) {
         super(type, pos, vel, box, input, graph, phys, id);
     }
 
     @Override
     public void apply(PlayerEntity player) {
-        player.curePlayer();
+        if(player.getWeapon() instanceof MeleeWeapon){
+            ((MeleeWeapon)player.getWeapon()).setDurability(((MeleeWeapon)player.getWeapon()).getMaxDurability());
+        }
     }
     
 }

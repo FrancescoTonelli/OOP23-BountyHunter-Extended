@@ -1,7 +1,7 @@
 package buontyhunter.graphics;
 
 import buontyhunter.model.*;
-import buontyhunter.model.Consumables.Consumable;
+import buontyhunter.model.consumables.Consumable;
 import buontyhunter.weaponClasses.RangedWeapon;
 import buontyhunter.weaponClasses.Weapon;
 

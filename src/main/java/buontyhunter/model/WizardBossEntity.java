@@ -167,6 +167,7 @@ public class WizardBossEntity extends FighterEntity {
         if (die) {
             w.handleBossKilled();
             w.notifyWorldEvent(new KilledEnemyEvent(EnemyType.WIZARD));
+            w.getConsumableManager().generateNewDrop(w.getWizardBoss().getPos());
         }
         return die;
     }

@@ -1,4 +1,4 @@
-package buontyhunter.model.Consumables;
+package buontyhunter.model.consumables;
 
 import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;
@@ -18,7 +18,7 @@ public class DropDoblonsGiver extends Consumable{
 
     @Override
     public void apply(PlayerEntity player) {
-        player.depositDoblons(3);
+        player.depositDoblons(1);
     }
     
 }

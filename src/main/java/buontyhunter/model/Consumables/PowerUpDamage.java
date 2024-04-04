@@ -9,16 +9,19 @@ import buontyhunter.model.GameObjectType;
 import buontyhunter.model.PlayerEntity;
 import buontyhunter.physics.PhysicsComponent;
 
-public class DropHealthGiver extends Consumable{
+public class PowerUpDamage extends Consumable{
 
-    public DropHealthGiver(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
+    private static float additive = (float)0.5;
+
+    public PowerUpDamage(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, int id) {
         super(type, pos, vel, box, input, graph, phys, id);
     }
 
     @Override
     public void apply(PlayerEntity player) {
-        player.curePlayer();
+        player.setDamageMultiplier(player.getDamageMultiplier() + additive);
+        System.out.println("damage: " + player.getDamageMultiplier());
     }
     
 }

@@ -17,6 +17,7 @@ public class PlayerEntity extends FighterEntity {
     protected FighterEntityType type = FighterEntityType.PLAYER;
     private int doblons;
     private List<Weapon> inventoryWeapons;
+    private float damageMultiplier;
 
     public PlayerEntity(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, int health, int maxHealth, Weapon w) {
@@ -24,6 +25,7 @@ public class PlayerEntity extends FighterEntity {
         quests = new ArrayList<Quest>();
         this.doblons = 0;
         inventoryWeapons = new ArrayList<Weapon>();
+        damageMultiplier = 1;
     }
 
     /**
@@ -180,4 +182,18 @@ public class PlayerEntity extends FighterEntity {
         this.setHealth(this.getMaxHealth());
     }
 
+    /**
+     * return player's damage multiplier
+     */
+    public float getDamageMultiplier(){
+        return this.damageMultiplier;
+    }
+
+    /**
+     * modify player's damage multiplier value
+     * @param value the new value
+     */
+    public void setDamageMultiplier(float value){
+        this.damageMultiplier = value;
+    }
 }

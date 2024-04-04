@@ -1,4 +1,4 @@
-package buontyhunter.model.Consumables;
+package buontyhunter.model.consumables;
 
 import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;

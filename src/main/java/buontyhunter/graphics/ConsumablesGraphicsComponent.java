@@ -2,7 +2,7 @@ package buontyhunter.graphics;
 
 import buontyhunter.model.GameObject;
 import buontyhunter.model.World;
-import buontyhunter.model.Consumables.Consumable;
+import buontyhunter.model.consumables.Consumable;
 
 public class ConsumablesGraphicsComponent implements GraphicsComponent{
 

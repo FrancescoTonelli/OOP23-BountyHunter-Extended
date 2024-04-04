@@ -3,6 +3,7 @@ package buontyhunter.weaponClasses;
 import buontyhunter.common.Point2d;
 import buontyhunter.common.Direction;
 import buontyhunter.model.FighterEntity;
+import buontyhunter.model.PlayerEntity;
 import buontyhunter.model.RectBoundingBox;
 
 public abstract class Weapon {
@@ -62,6 +63,9 @@ public abstract class Weapon {
      * @return the damage of the weapon
      */
     public int getDamage() {
+        if(owner instanceof PlayerEntity){
+            return (int)(damage * ((PlayerEntity)owner).getDamageMultiplier());
+        }
         return damage;
     }
 

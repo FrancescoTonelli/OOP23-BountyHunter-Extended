@@ -1,8 +1,9 @@
-package buontyhunter.model.Consumables;
+package buontyhunter.model.consumables;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;
@@ -11,12 +12,15 @@ import buontyhunter.input.NullInputComponent;
 import buontyhunter.model.GameObjectType;
 import buontyhunter.model.PlayerEntity;
 import buontyhunter.model.RectBoundingBox;
+import buontyhunter.model.Tile;
+import buontyhunter.model.World;
 import buontyhunter.physics.ConsumablesPhysicsComponent;
 
 public class ConsumableManagerImpl implements ConsumableManager{
 
     private List<Consumable> consumablesList;
     private int last_id;
+    private static int powerUpQty = 100;
 
     public ConsumableManagerImpl(){
         consumablesList = new ArrayList<>();
@@ -24,7 +28,7 @@ public class ConsumableManagerImpl implements ConsumableManager{
     }
 
     @Override
-    public void generateNewDrop(PlayerEntity player, Point2d position) {
+    public void generateNewDrop(Point2d position) {
         Random rand = new Random();
         int val = rand.nextInt(10);
         if(val <= 1){
@@ -59,6 +63,45 @@ public class ConsumableManagerImpl implements ConsumableManager{
         this.getAllConsumables().stream().filter(i -> i.getId() == consumable.getId()).forEach(i -> {i.apply(player); i.use();});
         
         this.consumablesList = new ArrayList<>(this.getAllConsumables().stream().filter(i->!i.isUsed()).toList());
+    }
+
+    @Override
+    public void generatePowerUp(World w) {
+
+        List<Tile> avaiableTiles = w.getTileManager().getTiles().stream().flatMap(List::stream)
+                                    .filter(t -> t.isTraversable()).collect(Collectors.toList());
+
+        if (avaiableTiles.size() == 0) {
+            return;
+        }
+
+        var random = new Random();
+        for (int i = 0; i < powerUpQty; i++) {
+            this.consumablesList.add(selectPowerUp(avaiableTiles.get(random.nextInt(avaiableTiles.size())).getPoint(), i));
+            this.last_id++;
+        }
+    }
+
+    private Consumable selectPowerUp(Point2d position, int selector){
+        int normalizedSelector = selector;
+        while(normalizedSelector > 2){
+            normalizedSelector -= 3;
+        }
+
+        switch(normalizedSelector){
+            case 0:
+                return new PowerUpDamage(GameObjectType.Consumable, position, new Vector2d(0, 0), 
+                genBoundingBox(position), 
+                new NullInputComponent(), new ConsumablesGraphicsComponent(), new ConsumablesPhysicsComponent(), last_id);
+            case 1:
+                return new PowerUpDurability(GameObjectType.Consumable, position, new Vector2d(0, 0), 
+                genBoundingBox(position), 
+                new NullInputComponent(), new ConsumablesGraphicsComponent(), new ConsumablesPhysicsComponent(), last_id);
+            default:
+                return new PowerUpSpeed(GameObjectType.Consumable, position, new Vector2d(0, 0), 
+                genBoundingBox(position), 
+                new NullInputComponent(), new ConsumablesGraphicsComponent(), new ConsumablesPhysicsComponent(), last_id);
+        }
     }
     
 }
