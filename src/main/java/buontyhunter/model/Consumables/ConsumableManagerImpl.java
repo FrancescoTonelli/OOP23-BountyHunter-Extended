@@ -19,11 +19,13 @@ import buontyhunter.physics.ConsumablesPhysicsComponent;
 public class ConsumableManagerImpl implements ConsumableManager{
 
     private List<Consumable> consumablesList;
+    private List<Consumable> powerUpsInUse;
     private int last_id;
-    private static int powerUpQty = 6;
+    private static int powerUpQty = 100;
 
     public ConsumableManagerImpl(){
         consumablesList = new ArrayList<>();
+        powerUpsInUse = new ArrayList<>();
         last_id = 0;
     }
 
@@ -60,7 +62,13 @@ public class ConsumableManagerImpl implements ConsumableManager{
 
     @Override
     public void applyConsumable(PlayerEntity player, Consumable consumable) {
-        this.getAllConsumables().stream().filter(i -> i.getId() == consumable.getId()).forEach(i -> {i.apply(player); i.use();});
+        this.getAllConsumables().stream().filter(i -> i.getId() == consumable.getId()).forEach(i -> {
+            i.apply(player);
+            i.use();
+            if(i instanceof PowerUpDamage || i instanceof PowerUpSpeed){
+                this.powerUpsInUse.add(i);
+            }
+        });
         
         this.consumablesList = new ArrayList<>(this.getAllConsumables().stream().filter(i->!i.isUsed()).toList());
     }
@@ -102,6 +110,43 @@ public class ConsumableManagerImpl implements ConsumableManager{
                 genBoundingBox(position), 
                 new NullInputComponent(), new ConsumablesGraphicsComponent(), new ConsumablesPhysicsComponent(), last_id);
         }
+    }
+
+    @Override
+    public void disableUsedPowerUps(PlayerEntity player, boolean disableAll) {
+        if(disableAll){
+            this.powerUpsInUse.stream().filter(i -> i instanceof PowerUpDamage).forEach(i -> ((PowerUpDamage)i).disable(player));
+            this.powerUpsInUse.stream().filter(i -> i instanceof PowerUpSpeed).forEach(i -> ((PowerUpSpeed)i).disable(player));
+            this.powerUpsInUse = new ArrayList<>();
+        }
+        else{
+            this.powerUpsInUse.stream()
+            .filter(i -> i instanceof PowerUpDamage 
+                && timeInMillisPassed(((PowerUpDamage)i).getUsedTime()) > ((PowerUpDamage)i).getDurationInMillis())
+            .forEach(i -> ((PowerUpDamage)i).disable(player));
+
+            this.powerUpsInUse.stream()
+            .filter(i -> i instanceof PowerUpSpeed 
+                && timeInMillisPassed(((PowerUpSpeed)i).getUsedTime()) > ((PowerUpSpeed)i).getDurationInMillis())
+            .forEach(i -> ((PowerUpSpeed)i).disable(player));
+
+            List<Consumable> leftPowerUps = new ArrayList<>();
+            leftPowerUps.addAll(this.powerUpsInUse.stream()
+                                .filter(i -> i instanceof PowerUpDamage 
+                                    && timeInMillisPassed(((PowerUpDamage)i).getUsedTime()) <= ((PowerUpDamage)i).getDurationInMillis())
+                                .collect(Collectors.toList()));
+            leftPowerUps.addAll(this.powerUpsInUse.stream()
+                                .filter(i -> i instanceof PowerUpSpeed 
+                                    && timeInMillisPassed(((PowerUpSpeed)i).getUsedTime()) <= ((PowerUpSpeed)i).getDurationInMillis())
+                                .collect(Collectors.toList()));
+            this.powerUpsInUse = leftPowerUps;
+            
+        }
+        
+    }
+
+    private long timeInMillisPassed(long pastTime){
+        return System.currentTimeMillis() - pastTime;
     }
     
 }

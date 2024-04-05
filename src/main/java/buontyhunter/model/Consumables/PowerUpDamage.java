@@ -11,8 +11,9 @@ import buontyhunter.physics.PhysicsComponent;
 
 public class PowerUpDamage extends Consumable{
 
-    private static float damageMultiplier = 2;
-    private static int duration = 3000;
+    private static float DAMAGE_MULTIPLIER = 2;
+    private static int DURATION = 10000;
+    private long usedTime;
 
     public PowerUpDamage(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, int id) {
@@ -21,29 +22,25 @@ public class PowerUpDamage extends Consumable{
 
     @Override
     public void apply(PlayerEntity player) {
-        DamageThread t = new DamageThread(player);
-        t.start();
+        player.setDamageMultiplier(player.getDamageMultiplier() * DAMAGE_MULTIPLIER);
     }
 
-    private class DamageThread extends Thread{
+    public void disable(PlayerEntity player){
+        player.setDamageMultiplier(player.getDamageMultiplier() / DAMAGE_MULTIPLIER);
+    }
 
-        private final PlayerEntity player;
+    @Override
+    public void use(){
+        super.use();
+        this.usedTime = System.currentTimeMillis();
+    }
 
-        public DamageThread(PlayerEntity player){
-            this.player = player;
-        }
+    public int getDurationInMillis(){
+        return DURATION;
+    }
 
-        @Override
-        public void run() {
-            
-            try {
-                this.player.setDamageMultiplier(this.player.getDamageMultiplier() * damageMultiplier);
-                Thread.sleep(duration);
-                this.player.setDamageMultiplier(this.player.getDamageMultiplier() / damageMultiplier);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public long getUsedTime(){
+        return this.usedTime;
     }
     
 }

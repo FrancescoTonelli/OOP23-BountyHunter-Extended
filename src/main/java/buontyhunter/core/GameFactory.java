@@ -335,6 +335,7 @@ public class GameFactory {
          * @return the open world created
          */
         public World createOpenWorld(World oldWorld) {
+                oldWorld.getConsumableManager().disableUsedPowerUps((PlayerEntity)oldWorld.getPlayer(), true);
                 var toRet = new World(new RectBoundingBox(new Point2d(0, 0), 20, 18));
                 if (oldWorld != null && oldWorld.getPlayer() != null && oldWorld.getPlayer() instanceof PlayerEntity) {
                         oldWorld.getPlayer().setPos(GameEngine.OPEN_WORLD_PLAYER_START);
@@ -364,6 +365,7 @@ public class GameFactory {
          * @return the hub world created
          */
         public World createHubWorld(World oldWorld) {
+                oldWorld.getConsumableManager().disableUsedPowerUps((PlayerEntity)oldWorld.getPlayer(), true);
                 var toRet = new World(new RectBoundingBox(new Point2d(0, 0), 16, 16));
                 if (oldWorld != null && oldWorld.getPlayer() != null && oldWorld.getPlayer() instanceof PlayerEntity) {
                         oldWorld.getPlayer().setPos(GameEngine.HUB_PLAYER_START);

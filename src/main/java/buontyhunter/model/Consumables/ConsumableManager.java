@@ -11,4 +11,5 @@ public interface ConsumableManager {
     void applyConsumable(PlayerEntity player, Consumable consumable);
     void generateNewDrop(Point2d position);
     void generatePowerUp(World w);
+    void disableUsedPowerUps(PlayerEntity player, boolean disableAll);
 }

@@ -105,12 +105,18 @@ public class SwingScene implements Scene, ComponentListener {
 				currentTrack = Track.HUB_TRACK;
 			}
 
+			/* FOR POWER-UP TESTING (modify power-up quantity in ConsumableManagerImpl) */
+			/*
 			if(gameState.getWorld().getConsumableManager().getAllConsumables().isEmpty()){
 				gameState.getWorld().getConsumableManager().generatePowerUp(gameState.getWorld());
-			}
+			}*/
+
+
+			
 
 		} else {
 			questButtons.clear();
+
 			if(gameState.getWorld().getConsumableManager().getAllConsumables().isEmpty()){
 				gameState.getWorld().getConsumableManager().generatePowerUp(gameState.getWorld());
 			}

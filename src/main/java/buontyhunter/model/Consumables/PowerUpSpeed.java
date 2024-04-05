@@ -11,8 +11,9 @@ import buontyhunter.physics.PhysicsComponent;
 
 public class PowerUpSpeed extends Consumable{
 
-    private static double speedMultiplier = 1.5;
-    private static int duration = 3000;
+    private static double SPEED_MULTIPLIER = 1.5;
+    private static int DURATION = 10000;
+    private long usedTime;
 
     public PowerUpSpeed(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, int id) {
@@ -21,28 +22,24 @@ public class PowerUpSpeed extends Consumable{
 
     @Override
     public void apply(PlayerEntity player) {
-        SpeedThread t = new SpeedThread(player);
-        t.start();
+        player.setMovementSpeed(player.getMovementSpeed() * SPEED_MULTIPLIER);
     }
     
-    private class SpeedThread extends Thread{
+    public void disable(PlayerEntity player){
+        player.setMovementSpeed(player.getMovementSpeed() / SPEED_MULTIPLIER);
+    }
 
-        private final PlayerEntity player;
+    @Override
+    public void use(){
+        super.use();
+        this.usedTime = System.currentTimeMillis();
+    }
 
-        public SpeedThread(PlayerEntity player){
-            this.player = player;
-        }
+    public int getDurationInMillis(){
+        return DURATION;
+    }
 
-        @Override
-        public void run() {
-            
-            try {
-                this.player.setMovementSpeed(this.player.getMovementSpeed() * speedMultiplier);
-                Thread.sleep(duration);
-                this.player.setMovementSpeed(this.player.getMovementSpeed() / speedMultiplier);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public long getUsedTime(){
+        return this.usedTime;
     }
 }

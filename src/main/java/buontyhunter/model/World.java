@@ -273,6 +273,7 @@ public class World {
             }
 
             this.consumablesManager.getAllConsumables().forEach(i->i.updatePhysics(dt, this));
+            this.consumablesManager.disableUsedPowerUps((PlayerEntity)this.getPlayer(), false);
         }
     }
 
@@ -390,6 +391,7 @@ public class World {
         for (var enemy : getEnemies()) {
             entities.add(enemy);
         }
+        this.consumablesManager.getAllConsumables().stream().forEach(i -> entities.add(i));
         if (healthBar != null)
             entities.add(healthBar);
         if (miniMap != null)
@@ -400,7 +402,6 @@ public class World {
         if (inventory != null)
             entities.add(inventory);
 
-        this.consumablesManager.getAllConsumables().stream().forEach(i -> entities.add(i));
 
         this.interractableAreas.forEach(area -> entities.add(area));
         return entities;
