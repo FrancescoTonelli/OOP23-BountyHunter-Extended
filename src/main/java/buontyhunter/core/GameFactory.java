@@ -252,6 +252,29 @@ public class GameFactory {
         }
 
         /**
+         * Create a new pong game; this object will be used to show the pong window in
+         * the game
+         * 
+         * @param pos position for the interractable area in which the pong icon can be
+         *            shown
+         * @return the pong area created
+         */
+        public InterractableArea createPongForHub(Point2d pos) {
+
+                PongPanel panel = new PongPanel(GameObjectType.HidableObject,
+                                new Point2d(0, 0), new Vector2d(0, 0),
+                                new RectBoundingBox(new Point2d(0, 0), GameEngine.RESIZATOR.getWINDOW_WIDTH(),
+                                                GameEngine.RESIZATOR.getWINDOW_HEIGHT()),
+                                new PongInputComponent(), new PongPanelGraphicsComponent(),
+                                new PongPhysicsComponent(), false);
+
+                return new PongEntity(GameObjectType.InterractableArea,
+                                pos, new Vector2d(0, 0),
+                                new RectBoundingBox(pos, 1, 1),
+                                panel);
+        }
+
+        /**
          * create the default quests for the game
          * 
          * @return the list of quests created
@@ -299,7 +322,7 @@ public class GameFactory {
         /**
          * Create a new wizard boss; this object will be used to show the wizard boss in
          * 
-         * @param w the world where the wizard boss will be used
+         * @param w     the world where the wizard boss will be used
          * @param level the level of the wizard boss
          * @return the wizard boss created
          */
@@ -335,7 +358,7 @@ public class GameFactory {
          * @return the open world created
          */
         public World createOpenWorld(World oldWorld) {
-                oldWorld.getConsumableManager().disableUsedPowerUps((PlayerEntity)oldWorld.getPlayer(), true);
+                oldWorld.getConsumableManager().disableUsedPowerUps((PlayerEntity) oldWorld.getPlayer(), true);
                 var toRet = new World(new RectBoundingBox(new Point2d(0, 0), 20, 18));
                 if (oldWorld != null && oldWorld.getPlayer() != null && oldWorld.getPlayer() instanceof PlayerEntity) {
                         oldWorld.getPlayer().setPos(GameEngine.OPEN_WORLD_PLAYER_START);
@@ -365,7 +388,9 @@ public class GameFactory {
          * @return the hub world created
          */
         public World createHubWorld(World oldWorld) {
-                oldWorld.getConsumableManager().disableUsedPowerUps((PlayerEntity)oldWorld.getPlayer(), true);
+                if (oldWorld != null) {
+                        oldWorld.getConsumableManager().disableUsedPowerUps((PlayerEntity) oldWorld.getPlayer(), true);
+                }
                 var toRet = new World(new RectBoundingBox(new Point2d(0, 0), 16, 16));
                 if (oldWorld != null && oldWorld.getPlayer() != null && oldWorld.getPlayer() instanceof PlayerEntity) {
                         oldWorld.getPlayer().setPos(GameEngine.HUB_PLAYER_START);
@@ -385,6 +410,7 @@ public class GameFactory {
                 toRet.setTeleporter(this.createTeleporterToOpenWorld());
                 toRet.addInterractableArea(this.createQuestPannelForHub(new Point2d(7, 5)));
                 toRet.addInterractableArea(this.createBlacksmithForHub(new Point2d(1, 4)));
+                toRet.addInterractableArea(this.createPongForHub(new Point2d(13, 2)));
                 toRet.setQuestJournal(this.createQuestJournal());
                 toRet.disableEnemies();
                 toRet.setInventory(this.createInventoryPanel());

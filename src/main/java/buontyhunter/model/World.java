@@ -3,6 +3,7 @@ package buontyhunter.model;
 import java.util.List;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import buontyhunter.common.Point2d;
 import buontyhunter.core.GameFactory;
@@ -272,8 +273,14 @@ public class World {
                 }
             }
 
-            this.consumablesManager.getAllConsumables().forEach(i->i.updatePhysics(dt, this));
-            this.consumablesManager.disableUsedPowerUps((PlayerEntity)this.getPlayer(), false);
+            List<InterractableArea> toUpdate = this.interractableAreas.stream().filter(i -> i instanceof PongEntity)
+                    .collect(Collectors.toList());
+            if (!toUpdate.isEmpty() && toUpdate.get(0).getPanel().isShow()) {
+                toUpdate.get(0).getPanel().updatePhysics(dt, this);
+            }
+
+            this.consumablesManager.getAllConsumables().forEach(i -> i.updatePhysics(dt, this));
+            this.consumablesManager.disableUsedPowerUps((PlayerEntity) this.getPlayer(), false);
         }
     }
 
@@ -402,7 +409,6 @@ public class World {
         if (inventory != null)
             entities.add(inventory);
 
-
         this.interractableAreas.forEach(area -> entities.add(area));
         return entities;
     }
@@ -530,7 +536,7 @@ public class World {
     /**
      * return the consumables manager
      */
-    public ConsumableManager getConsumableManager(){
+    public ConsumableManager getConsumableManager() {
         return this.consumablesManager;
     }
 }

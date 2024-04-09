@@ -1,2 +1,2 @@
-echo "Starting project... for Mac/Linux";
-./gradlew build && cd app/build/libs && java -jar app.jar
+echo "Starting project for Mac/Linux...";
+./gradlew build && cd build/libs && java -jar BuontyHunter.jar

@@ -1057,6 +1057,14 @@ public class ImagePathProvider {
                     setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
                 }
             });
+            put(ImageType.pongIcon, new AssetImage() {
+                {
+                    setPath("utility/pong.png");
+                    setType(ImageType.pongIcon);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
             put(ImageType.GameOver, new AssetImage() {
                 {
                     setPath("utility/GAMEOVER.jpeg");

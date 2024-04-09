@@ -1,6 +1,7 @@
 package buontyhunter.graphics;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import javax.swing.JButton;
 import buontyhunter.core.GameEngine;
@@ -197,7 +198,6 @@ public class SwingGraphics implements Graphics {
 					propsY * playerSize);
 		}
 
-
 		var b = w.getWizardBoss();
 		if (b.isGpsActive()) {
 			g2.setColor(Color.MAGENTA);
@@ -276,19 +276,20 @@ public class SwingGraphics implements Graphics {
 		g2.setColor(new Color(0, 0, 0, 0.6f));
 		g2.fillRect(0, 0, GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT());
 
-		int minDim = GameEngine.RESIZATOR.getWINDOW_WIDTH() < GameEngine.RESIZATOR.getWINDOW_HEIGHT() ?
-		GameEngine.RESIZATOR.getWINDOW_WIDTH() : GameEngine.RESIZATOR.getWINDOW_HEIGHT();
+		int minDim = GameEngine.RESIZATOR.getWINDOW_WIDTH() < GameEngine.RESIZATOR.getWINDOW_HEIGHT()
+				? GameEngine.RESIZATOR.getWINDOW_WIDTH()
+				: GameEngine.RESIZATOR.getWINDOW_HEIGHT();
 
-		int boardDimension = minDim/5*4;
-		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH()/2 - (boardDimension/2);
-		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT()/2 - (boardDimension/2);
+		int boardDimension = minDim / 5 * 4;
+		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2 - (boardDimension / 2);
+		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2 - (boardDimension / 2);
 
 		g2.drawImage(assetManager.getImage(ImageType.noticeBoard), x, y, boardDimension, boardDimension, null);
 
 	}
 
 	public void drawQuest(QuestEntity quest, int x, int y, int unit, JButton btn) {
-		if(btn.getBounds().isEmpty() || !btn.getBounds().equals(new Rectangle(x, y, unit, unit))){
+		if (btn.getBounds().isEmpty() || !btn.getBounds().equals(new Rectangle(x, y, unit, unit))) {
 			btn.removeAll();
 
 			btn.setOpaque(true);
@@ -300,15 +301,14 @@ public class SwingGraphics implements Graphics {
 					Image.SCALE_SMOOTH);
 			btn.setIcon(new ImageIcon(scaled));
 
-			String content = "<html><b>" + quest.getName() + 
-				"</b><br><br>" + quest.getDescription() +
-				"<br><br>" + quest.getDoblonsReward() + " dobloni</html>";
-
+			String content = "<html><b>" + quest.getName() +
+					"</b><br><br>" + quest.getDescription() +
+					"<br><br>" + quest.getDoblonsReward() + " dobloni</html>";
 
 			JLabel label = new JLabel(content);
 
 			label.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 11));
-				
+
 			btn.add(label, BorderLayout.CENTER);
 		}
 	}
@@ -451,7 +451,7 @@ public class SwingGraphics implements Graphics {
 						this.drawKnight((EnemyEntity) obj, w, getXinPixel(point.get()), getYinPixel(point.get()));
 						break;
 					default:
-						
+
 						break;
 				}
 			}
@@ -618,9 +618,9 @@ public class SwingGraphics implements Graphics {
 		if (boss.getHealth() <= 0)
 			return;
 		var point = camera.getObjectPointInScene(boss.getPos());
-		
+
 		if (point.isPresent()) {
-			
+
 			int x = getXinPixel(point.get());
 			int y = getYinPixel(point.get());
 
@@ -749,5 +749,52 @@ public class SwingGraphics implements Graphics {
 					getXinPixel(camera.getObjectPointInScene(consumable.getPos()).get()),
 					getYinPixel(camera.getObjectPointInScene(consumable.getPos()).get()));
 		}
+	}
+
+	@Override
+	public void drawPongIcon(PongEntity pong) {
+		if (!pong.getPanel().isShow()) {
+			g2.drawImage(assetManager.getImage(ImageType.pongIcon), getXinPixel(pong.getPos()) + 20,
+					getYinPixel(pong.getPos()) + 20,
+					null);
+		}
+	}
+
+	@Override
+	public void drawPongPanel(PongPanel panel) {
+		if (!panel.isShow())
+			return;
+
+		g2.setColor(new Color(0, 0, 0, 0.6f));
+		g2.fillRect(0, 0, GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+
+		double minDim = GameEngine.RESIZATOR.getWINDOW_WIDTH() < GameEngine.RESIZATOR.getWINDOW_HEIGHT()
+				? GameEngine.RESIZATOR.getWINDOW_WIDTH()
+				: GameEngine.RESIZATOR.getWINDOW_HEIGHT();
+
+		double boardWidth = minDim / 5 * 4;
+		double boardHeight = boardWidth / 4 * 3; // 4:3 dimension, like old TVs
+
+		double widthUnit = boardWidth / (double) panel.getBoardWidthSegments();
+		double heightUnit = boardHeight / (double) panel.getBoardHeightSegments();
+
+		double x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2 - (boardWidth / 2);
+		double y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2 - (boardHeight / 2);
+
+		g2.setColor(Color.BLACK);
+		g2.fill(new Rectangle2D.Double(x, y, boardWidth, boardHeight));
+
+		g2.setColor(Color.WHITE);
+		g2.fill(new Rectangle2D.Double(pongConvertCoordinate(panel.getBall().getPosition().x, x, widthUnit),
+				pongConvertCoordinate(panel.getBall().getPosition().y, y, heightUnit),
+				panel.getBall().getWidth() * widthUnit, panel.getBall().getHeight() * heightUnit));
+
+		g2.fill(new Rectangle2D.Double(pongConvertCoordinate(28, x, widthUnit),
+				pongConvertCoordinate(21, y, heightUnit),
+				panel.getBall().getWidth() * widthUnit, panel.getBall().getHeight() * heightUnit));
+	}
+
+	private double pongConvertCoordinate(double x, double boardX, double unitX) {
+		return boardX + (x * unitX);
 	}
 }

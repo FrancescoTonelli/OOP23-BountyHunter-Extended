@@ -107,17 +107,17 @@ public class SwingScene implements Scene, ComponentListener {
 
 			/* FOR POWER-UP TESTING (modify power-up quantity in ConsumableManagerImpl) */
 			/*
-			if(gameState.getWorld().getConsumableManager().getAllConsumables().isEmpty()){
-				gameState.getWorld().getConsumableManager().generatePowerUp(gameState.getWorld());
-			}*/
-
-
-			
+			 * if(gameState.getWorld().getConsumableManager().getAllConsumables().isEmpty())
+			 * {
+			 * gameState.getWorld().getConsumableManager().generatePowerUp(gameState.
+			 * getWorld());
+			 * }
+			 */
 
 		} else {
 			questButtons.clear();
 
-			if(gameState.getWorld().getConsumableManager().getAllConsumables().isEmpty()){
+			if (gameState.getWorld().getConsumableManager().getAllConsumables().isEmpty()) {
 				gameState.getWorld().getConsumableManager().generatePowerUp(gameState.getWorld());
 			}
 		}
@@ -251,6 +251,10 @@ public class SwingScene implements Scene, ComponentListener {
 					if (e instanceof FighterEntity) {
 
 						((FighterEntity) e).getDamagingArea().updateGraphics(gr, scene);
+					}
+
+					if (e instanceof PongEntity) {
+						gr.drawPongIcon((PongEntity) e);
 					}
 
 					if ((camera.inScene(e.getPos()) && (e instanceof Teleporter || e instanceof WizardBossEntity))) {

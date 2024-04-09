@@ -133,5 +133,6 @@ public enum ImageType {
     doblon,
     potion,
     damageUp,
-    speedUp
+    speedUp,
+    pongIcon
 }

@@ -165,9 +165,9 @@ public class WizardBossEntity extends FighterEntity {
     private boolean checkDie(World w) {
         die = getHealth() <= 0;
         if (die) {
+            w.getConsumableManager().generateNewDrop(w.getWizardBoss().getPos());
             w.handleBossKilled();
             w.notifyWorldEvent(new KilledEnemyEvent(EnemyType.WIZARD));
-            w.getConsumableManager().generateNewDrop(w.getWizardBoss().getPos());
         }
         return die;
     }
