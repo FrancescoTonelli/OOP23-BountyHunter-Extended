@@ -23,7 +23,7 @@ public class PongPhysicsComponent extends PhysicsComponent {
      * 
      * @param pong the panel on which to make checks and changes
      */
-    public void collidingWithPaddle(PongPanel pong) {
+    private void collidingWithPaddle(PongPanel pong) {
 
         switchPaddle(pong, pong.getPlayerPaddle(), true);
         switchPaddle(pong, pong.getEnemyPaddle(), false);
@@ -78,7 +78,7 @@ public class PongPhysicsComponent extends PhysicsComponent {
      * 
      * @param pong the panel on which to make checks and changes
      */
-    public void collidingWithWall(PongPanel pong) {
+    private void collidingWithWall(PongPanel pong) {
         if (pong.getBall().getUpperBound() <= 0
                 || pong.getBall().getLowerBound() >= pong.getBoardHeightSegments()) {
             pong.invertBallDirectionY();

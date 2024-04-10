@@ -35,6 +35,7 @@
         - [Fabio Fattori](#21-fabio-fattori)
         - [Mattia Senni](#22-mattia-senni)
         - [Francesco Tonelli](#23-francesco-tonelli)
+            - [Francesco Tonelli - Extended](#231-francesco-tonelli---extended)
         - [Alessandro Buono](#24-alessandro-buono)
         - [Codice riadattato per la realizzazzione](#25-codice-riadattato-per-la-realizzazzione)
     - [3. Codice Esterno](#3-codice-esterno)
@@ -42,6 +43,7 @@
         - [Fabio Fattori](#32-fabio-fattori-codice-esterno)
         - [Mattia Senni](#33-mattia-senni-codice-esterno)
         - [Francesco Tonelli](#34-francesco-tonelli-codice-esterno)
+            - [Francesco Tonelli - Extended](#341-francesco-tonelli-codice-esterno---extended)
         - [Alessandro Buono](#35-alessandro-buono-codice-esterno)
 - [Sviluppo ](#sviluppo)
     - [1. Testing Automatizzato ](#1-testing-automatizzato)
@@ -524,7 +526,27 @@ EnemyRegistry --> EnemyEntity : enemies[]
 
 **Soluzione** : L'HUD viene stampata tutta in SwingScene, facendo uso di SwingGraphics e Graphics2d. Ho riutilizzato una vecchia healthBar che avevamo creato per il testing, l'ho riadattata, e poi ho aggiunto, rendendo scalabile, il display dell'arma equipaggiata, l'eventuale durabilità, i dobloni del giocatore e le sue munizioni. Il tutto è disegnato utilizzando varie proporzioni delle dimensioni del frame.
 
-![no UML found](./relazioniImgs/hud_diagram.png "4.3 Diagramma UML che descrive come è stato implementato l'HUD")
+![no UML found](./relazioniImgs/hud_diagram.png "4.4 Diagramma UML che descrive come è stato implementato l'HUD")
+
+#### 2.3.1 Francesco Tonelli - Extended
+
+**Problema** : Al posto di dare dei dobloni al player, dopo la morte di ogni nemico questi rilascia per terra dei drop che il giocatore può raccogliere
+
+**Soluzione** : Il World adesso possiede un ConsumableManager, che gestisce tutti i drop nel mondo di gioco, creandoli, utilizzandoli ed eliminandoli. Il manager possiede quindi una lista di Consumable, classe astratta che viene estesa da DropDoblonsGiver (che, se raccolto, da un doblone al giocatore), DropAmmoGiver (che da 3 munizioni) e DropHealthGiver (che cura istantaneamente il giocatore). Per questi consumabili sono stati sviluppati un componente per la fisica (ConsumablePhysicsComponent, che attiva il consumabile quando viene raggiunto dal giocatore), uno per la grafica (ConsumablesGraphicsComponent, che rende possibile disegnarlo) e una classe per disegnarli (ConsumableGraphics, che viene richiamata da SwingGraphics quando vanno disegnati a schermo).
+
+![no UML found](./relazioniImgs/drop_diagram.png "4.5 Diagramma UML che descrive come sono stati implementati i drop")
+
+**Problema** : Aggiungere un modo per potenziare il giocatore durante la partita
+
+**Soluzione** : Estendendo Consumable, sono stati creati PowerUpDamage (aumenta il danno inflitto per 10 secondi), PowerUpSpeed (aumenta la velocità per 10 secondi) e PowerUpDurability (ripara l'arma del giocatore). Questi power up sono gestiti sempre dal ConsumableManager, che si occupa di crearne 100 nel mondo, poi li attiva come i drop, e si occupa anche di disattivare quelli a tempo dopo il loro funzionamento. Per stamparli e gestirli vengono sempre usati ConsumablePhysicsComponent, ConsumablesGraphicsComponent e ConsumableGraphics.
+
+![no UML found](./relazioniImgs/powerup_diagram.png "4.6 Diagramma UML che descrive come sono stati implementati i power up")
+
+**Problema** : Aggiungere il gioco del pong come minigame nella HUB
+
+**Soluzione** : Nella HUB è adesso presente una nuova InterractableArea, ovvero una PongEntity. Questa possiede un PongPanel, che contiene i tre oggetti di gioco (racchette e palla), disegnati come PongObjects. Un PongObject contiene la sua posizione, le sue due dimensioni e la velocità di spostamento, e può restituire le cordinate dei suoi lati, per rendere più pulito il calcolo delle collisioni. Il PongPanel contiene la divisione in segmenti del campo da gioco, i tre oggetti e il vettore direzionale della palla, e offre i metodi per spostare i vari oggetti di gioco. PongPanel utilizza PongPhysicsComponent per controllare le collisioni della palla e per farla muovere di conseguenza, aumentandone anche la velocità, PongPanelGraphicsComponent (che richiama SwingGraphics, nel quale sono stati inseriti appositi metodi) per stampare e aggiornare la schermata, e PongInputComponent per far muovere la racchetta del giocatore tramite input da tastiera. PongInputComponent possiede inoltre un AIPong, ovvero un oggetto che muove la racchetta dell'avversario (la logica di questa AI segue la palla). PongEntity si occupa infine di sottrarre o aggiungere dobloni al giocatore, in base all'aver subito o l'aver segnato un punto.
+
+![no UML found](./relazioniImgs/pong_diagram.png "4.7 Diagramma UML che descrive come è stato implemetato il pong")
 
 #### 2.4 Alessandro Buono
 
@@ -906,6 +928,35 @@ Ho aggiunto numerosi metodi in SwingGraphics per disegnare alcune entità e inte
 |MusicPlayerImpl | |
 |Direction | |
 
+#### 3.4.1 Francesco Tonelli Codice Esterno - Extended
+
+Di seguito ho aggiunto i file che sono stati creati ex-novo durante la parte di sviluppo aggiuntiva
+
+|File|
+|----|
+|ConsumableGraphics|
+|ConsumableGraphicsImpl|
+|ConsumablesGraphicsComponent|
+|PongPanelGraphicsComponent|
+|PongInputComponent|
+|ConsumableGraphicsImpl|
+|AIPong|
+|AIPongImpl|
+|Consumable|
+|ConsumableManager|
+|ConsumableManagerImpl|
+|DropAmmoGiver|
+|DropDoblonsGiver|
+|DropHealthGiver|
+|PowerUpDamage|
+|PowerUpDurability|
+|PowerUpSpeed|
+|Pong|
+|PongEntity|
+|PongObject|
+|PongPanel|
+|PongPhysicsComponent|
+
 #### 3.5 Alessandro Buono Codice Esterno
 
 SwingScene: Inserimento di un più efficiente metodo di gestire gli input dei vari tasti e le funzioni ad essi collegati nell’interfaccia e nelle altre classi (PlayerInputController, PlayerInputComponent, InputController, KeyboardInputController) per attacchi e movimento sia nei casi di pressione che di rilascio per ogni caso utile.
@@ -993,4 +1044,6 @@ Ho dovuto fare cose semplici sulla carta, ma comunque molto dispendiose a livell
 - lo scopo del gioco è uccidere più nemici possibili ed il boss
 - il boss è segnalato da un pallino viola sulla mappa, inseguilo per ucciderlo
 - una volta ucciso il boss, si rigenererà con il doppio della potenza
-- il giocoo andrà avanti all'infito con il boss che di volta in volta si rigenererà
+- il gioco andrà avanti all'infito con il boss che di volta in volta si rigenererà
+- alla morte di un nemico verrà lasciato a terra uno fra tre drop: il doblone darà un doblone al giocatore, la freccia darà al giocatore tre munizioni (raccoglibile solo se si ha equipaggiata un'arma che usa munizioni), la pozione curerà la vita del giocatore
+- sparsi per la mappa ci sono 100 power up, che il giocatore può raccogliere, di tre tipi: il martello ripara l'arma del giocatore (raccoglibile solo se l'arma equipaggiata ha una durabilità), la saetta aumenterà la velocità del giocatore per 10 secondi, l'icona della spada aumenterà per 10 secondi il danno inflitto
