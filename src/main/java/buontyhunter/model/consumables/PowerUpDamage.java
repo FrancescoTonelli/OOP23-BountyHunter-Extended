@@ -9,7 +9,7 @@ import buontyhunter.model.GameObjectType;
 import buontyhunter.model.PlayerEntity;
 import buontyhunter.physics.PhysicsComponent;
 
-public class PowerUpDamage extends Consumable{
+public class PowerUpDamage extends Consumable {
 
     private static float DAMAGE_MULTIPLIER = 2;
     private static int DURATION = 10000;
@@ -25,22 +25,37 @@ public class PowerUpDamage extends Consumable{
         player.setDamageMultiplier(player.getDamageMultiplier() * DAMAGE_MULTIPLIER);
     }
 
-    public void disable(PlayerEntity player){
+    /**
+     * Nullifies the effect of the power up on the player
+     * 
+     * @param player the player to cancel the effect on
+     */
+    public void disable(PlayerEntity player) {
         player.setDamageMultiplier(player.getDamageMultiplier() / DAMAGE_MULTIPLIER);
     }
 
     @Override
-    public void use(){
+    public void use() {
         super.use();
         this.usedTime = System.currentTimeMillis();
     }
 
-    public int getDurationInMillis(){
+    /**
+     * Returns the power up duration in milliseconds
+     * 
+     * @return the duration in milliseconds
+     */
+    public int getDurationInMillis() {
         return DURATION;
     }
 
-    public long getUsedTime(){
+    /**
+     * Returns the moment in which the power up was activated
+     * 
+     * @return the time in milliseconds
+     */
+    public long getUsedTime() {
         return this.usedTime;
     }
-    
+
 }

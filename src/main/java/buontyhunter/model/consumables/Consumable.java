@@ -10,7 +10,7 @@ import buontyhunter.model.GameObjectType;
 import buontyhunter.model.PlayerEntity;
 import buontyhunter.physics.PhysicsComponent;
 
-public abstract class Consumable extends GameObject{
+public abstract class Consumable extends GameObject {
     private final int id;
     private boolean used;
 
@@ -21,17 +21,35 @@ public abstract class Consumable extends GameObject{
         this.used = false;
     }
 
+    /**
+     * Activate the consumable effects on the player
+     * 
+     * @param player the player to whom the consumable is applied
+     */
     public abstract void apply(final PlayerEntity player);
 
-    public int getId(){
+    /**
+     * Get the consumable id
+     * 
+     * @return the id
+     */
+    public int getId() {
         return this.id;
     }
 
-    public boolean isUsed(){
+    /**
+     * Checks if the consumable has been used
+     * 
+     * @return true if it has been used, false otherwise
+     */
+    public boolean isUsed() {
         return this.used;
     }
 
-    public void use(){
+    /**
+     * changes the usage flag to indicate that a consumable has been used
+     */
+    public void use() {
         this.used = true;
     }
 }

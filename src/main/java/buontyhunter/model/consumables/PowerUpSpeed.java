@@ -9,7 +9,7 @@ import buontyhunter.model.GameObjectType;
 import buontyhunter.model.PlayerEntity;
 import buontyhunter.physics.PhysicsComponent;
 
-public class PowerUpSpeed extends Consumable{
+public class PowerUpSpeed extends Consumable {
 
     private static double SPEED_MULTIPLIER = 1.5;
     private static int DURATION = 10000;
@@ -24,22 +24,37 @@ public class PowerUpSpeed extends Consumable{
     public void apply(PlayerEntity player) {
         player.setMovementSpeed(player.getMovementSpeed() * SPEED_MULTIPLIER);
     }
-    
-    public void disable(PlayerEntity player){
+
+    /**
+     * Nullifies the effect of the power up on the player
+     * 
+     * @param player the player to cancel the effect on
+     */
+    public void disable(PlayerEntity player) {
         player.setMovementSpeed(player.getMovementSpeed() / SPEED_MULTIPLIER);
     }
 
     @Override
-    public void use(){
+    public void use() {
         super.use();
         this.usedTime = System.currentTimeMillis();
     }
 
-    public int getDurationInMillis(){
+    /**
+     * Returns the power up duration in milliseconds
+     * 
+     * @return the duration in milliseconds
+     */
+    public int getDurationInMillis() {
         return DURATION;
     }
 
-    public long getUsedTime(){
+    /**
+     * Returns the moment in which the power up was activated
+     * 
+     * @return the time in milliseconds
+     */
+    public long getUsedTime() {
         return this.usedTime;
     }
 }

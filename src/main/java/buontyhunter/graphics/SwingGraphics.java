@@ -810,6 +810,14 @@ public class SwingGraphics implements Graphics {
 
 	}
 
+	/**
+	 * Converts PongPanel coordinates to fit the game panel
+	 * 
+	 * @param x      the coordinate to adjust
+	 * @param boardX the coordinate of the pong board
+	 * @param unitX  the unit of a cell on the pong grid
+	 * @return the adjusted coordinate
+	 */
 	private double pongConvertCoordinate(double x, double boardX, double unitX) {
 		return boardX + (x * unitX);
 	}

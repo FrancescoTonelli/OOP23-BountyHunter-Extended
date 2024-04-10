@@ -17,12 +17,27 @@ public class PongPhysicsComponent extends PhysicsComponent {
         ((PongPanel) obj).moveBall();
     }
 
+    /**
+     * Check if the panel's ball is colliding with a paddle, and modify its
+     * direction and speed
+     * 
+     * @param pong the panel on which to make checks and changes
+     */
     public void collidingWithPaddle(PongPanel pong) {
 
         switchPaddle(pong, pong.getPlayerPaddle(), true);
         switchPaddle(pong, pong.getEnemyPaddle(), false);
     }
 
+    /**
+     * Used by collidingWithPaddle to check collisions with player's paddle or
+     * enemy's paddle
+     * 
+     * @param pong     the panel on which to make checks and changes
+     * @param paddle   the paddle to check
+     * @param isPlayer true if you need to check the player's paddle, false if you
+     *                 need to check the enemy's paddle
+     */
     private void switchPaddle(PongPanel pong, PongObject paddle, boolean isPlayer) {
         if ((isPlayer && pong.getBall().getLeftBound() <= paddle.getRightBound()) ||
                 (!isPlayer && pong.getBall().getRightBound() >= paddle.getLeftBound())) {
@@ -45,10 +60,24 @@ public class PongPhysicsComponent extends PhysicsComponent {
         }
     }
 
+    /**
+     * checks whether the value of x is between a and b
+     * 
+     * @param x the value to check
+     * @param a first limit
+     * @param b second limit
+     * @return true if x is between a and b, false otherwise
+     */
     private boolean isBetween(double x, double a, double b) {
         return (x >= a && x <= b) || (x >= b && x <= a);
     }
 
+    /**
+     * Checks if the ball is colliding with a wall, and modify its direction and its
+     * position
+     * 
+     * @param pong the panel on which to make checks and changes
+     */
     public void collidingWithWall(PongPanel pong) {
         if (pong.getBall().getUpperBound() <= 0
                 || pong.getBall().getLowerBound() >= pong.getBoardHeightSegments()) {
