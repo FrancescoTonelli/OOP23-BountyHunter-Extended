@@ -105,6 +105,9 @@ public class FighterEntity extends GameObject {
      * @param damage the amount of damage that the entity will take
      */
     public void takeDamage(int damage) {
+        if(this instanceof PlayerEntity){
+            damage-= ((PlayerEntity)this).getDmgRed();
+        }
         setHealth(health - damage);
     }
 

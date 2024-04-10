@@ -4,6 +4,7 @@ import buontyhunter.input.*;
 import buontyhunter.model.*;
 import buontyhunter.model.AI.enemySpawner.EnemyConfiguration;
 import buontyhunter.model.AI.enemySpawner.EnemyType;
+import buontyhunter.model.armourClasses.Armour;
 import buontyhunter.model.weaponClasses.WeaponFactory;
 import buontyhunter.physics.*;
 import buontyhunter.common.*;
@@ -44,7 +45,7 @@ public class GameFactory {
                                 new RectBoundingBox(new Point2d(0, 0), 1, 1),
                                 new PlayerInputController(), new PlayerGraphicsComponent(),
                                 new PlayerPhysicsComponent(),
-                                health, maxHealth, null);
+                                health, maxHealth, null, new Armour(0, 0));
 
                 toRet.addWeapon(WeaponFactory.getInstance().createSword(toRet));
                 toRet.addWeapon(WeaponFactory.getInstance().createBow(toRet));
