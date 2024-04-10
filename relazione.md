@@ -982,6 +982,12 @@ Ho dovuto fare cose semplici sulla carta, ma comunque molto dispendiose a livell
 
 - per accettare una missione bisogna cliccare su di essa con il mouse dopo averla aperta nell'hub
 
+# Pong minigame
+
+- una volta interagito con l'icona nell'hub, usare le frecce direzionali in alto e in basso per comandare la racchetta
+- ogni punto segnato premierà il giocatore con 3 dobloni
+- ogni punto subito sottrarrà un doblone al giocatore (se il giocatore non ne possiede, non succederà nulla)
+
 # Dinamiche di gioco
 
 - lo scopo del gioco è uccidere più nemici possibili ed il boss
