@@ -1,4 +1,4 @@
-package buontyhunter.weaponClasses;
+package buontyhunter.model.weaponClasses;
 
 import buontyhunter.model.FighterEntity;
 

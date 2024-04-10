@@ -12,7 +12,7 @@ import buontyhunter.graphics.*;
 import buontyhunter.input.*;
 import buontyhunter.model.*;
 import buontyhunter.model.event.*;
-import buontyhunter.weaponClasses.RangedWeapon;
+import buontyhunter.model.weaponClasses.RangedWeapon;
 
 public class GameEngine implements WorldEventListener {
 

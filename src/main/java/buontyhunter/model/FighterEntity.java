@@ -6,9 +6,9 @@ import buontyhunter.common.Vector2d;
 import buontyhunter.core.GameFactory;
 import buontyhunter.graphics.GraphicsComponent;
 import buontyhunter.input.InputComponent;
+import buontyhunter.model.weaponClasses.Weapon;
+import buontyhunter.model.weaponClasses.WeaponFactory;
 import buontyhunter.physics.PhysicsComponent;
-import buontyhunter.weaponClasses.Weapon;
-import buontyhunter.weaponClasses.WeaponFactory;
 
 public class FighterEntity extends GameObject {
 

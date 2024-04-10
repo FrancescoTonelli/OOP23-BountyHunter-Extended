@@ -1,4 +1,4 @@
-package buontyhunter.weaponClasses;
+package buontyhunter.model.weaponClasses;
 
 import buontyhunter.common.Point2d;
 import buontyhunter.common.Direction;

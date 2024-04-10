@@ -6,10 +6,10 @@ import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;
 import buontyhunter.graphics.GraphicsComponent;
 import buontyhunter.input.InputComponent;
+import buontyhunter.model.weaponClasses.RangedWeapon;
+import buontyhunter.model.weaponClasses.Weapon;
+import buontyhunter.model.weaponClasses.WeaponType;
 import buontyhunter.physics.PhysicsComponent;
-import buontyhunter.weaponClasses.RangedWeapon;
-import buontyhunter.weaponClasses.Weapon;
-import buontyhunter.weaponClasses.WeaponType;
 
 public class PlayerEntity extends FighterEntity {
 

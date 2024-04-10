@@ -1,4 +1,4 @@
-package buontyhunter.weaponClasses;
+package buontyhunter.model.weaponClasses;
 
 public enum WeaponType {
     SWORD,

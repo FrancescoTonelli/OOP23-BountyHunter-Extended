@@ -8,7 +8,7 @@ import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;
 import buontyhunter.core.GameFactory;
 import buontyhunter.model.GameObject;
-import buontyhunter.weaponClasses.MeleeWeapon;
+import buontyhunter.model.weaponClasses.MeleeWeapon;
 import buontyhunter.model.*;
 
 /**

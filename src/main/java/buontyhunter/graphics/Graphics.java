@@ -2,8 +2,8 @@ package buontyhunter.graphics;
 
 import buontyhunter.model.*;
 import buontyhunter.model.consumables.Consumable;
-import buontyhunter.weaponClasses.RangedWeapon;
-import buontyhunter.weaponClasses.Weapon;
+import buontyhunter.model.weaponClasses.RangedWeapon;
+import buontyhunter.model.weaponClasses.Weapon;
 
 public interface Graphics {
 	/**

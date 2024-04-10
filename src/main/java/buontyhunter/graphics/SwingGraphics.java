@@ -14,10 +14,11 @@ import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import buontyhunter.model.FighterEntity.MovementState;
 import buontyhunter.model.consumables.Consumable;
-import buontyhunter.weaponClasses.MeleeWeapon;
-import buontyhunter.weaponClasses.RangedWeapon;
-import buontyhunter.weaponClasses.Weapon;
-import buontyhunter.weaponClasses.WeaponType;
+import buontyhunter.model.weaponClasses.MeleeWeapon;
+import buontyhunter.model.weaponClasses.RangedWeapon;
+import buontyhunter.model.weaponClasses.Weapon;
+import buontyhunter.model.weaponClasses.WeaponType;
+
 import java.util.stream.Collectors;
 
 public class SwingGraphics implements Graphics {

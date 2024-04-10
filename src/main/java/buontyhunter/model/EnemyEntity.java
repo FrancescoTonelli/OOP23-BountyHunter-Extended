@@ -12,8 +12,8 @@ import buontyhunter.model.AI.AIFactory.PathFinderType;
 import buontyhunter.model.AI.enemySpawner.EnemyConfiguration;
 import buontyhunter.model.AI.enemySpawner.EnemyType;
 import buontyhunter.model.AI.pathFinding.AIEnemyFollowPathHelper;
+import buontyhunter.model.weaponClasses.WeaponFactory;
 import buontyhunter.physics.PhysicsComponent;
-import buontyhunter.weaponClasses.WeaponFactory;
 
 /**
  * This class is used to represent an enemy entity
