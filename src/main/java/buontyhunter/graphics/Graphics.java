@@ -162,7 +162,7 @@ public interface Graphics {
 	 * 
 	 * @param pong the pong entity to draw
 	 */
-	void drawPongIcon(PongEntity pong);
+	void drawPongIcon(PongEntity pong, World w);
 
 	/**
 	 * this method draw the pong game panel

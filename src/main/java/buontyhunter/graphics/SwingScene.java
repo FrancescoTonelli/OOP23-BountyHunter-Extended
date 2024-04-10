@@ -254,7 +254,7 @@ public class SwingScene implements Scene, ComponentListener {
 					}
 
 					if (e instanceof PongEntity) {
-						gr.drawPongIcon((PongEntity) e);
+						gr.drawPongIcon((PongEntity) e, scene);
 					}
 
 					if ((camera.inScene(e.getPos()) && (e instanceof Teleporter || e instanceof WizardBossEntity))) {

@@ -255,11 +255,12 @@ public class GameFactory {
          * Create a new pong game; this object will be used to show the pong window in
          * the game
          * 
-         * @param pos position for the interractable area in which the pong icon can be
-         *            shown
+         * @param pos    position for the interractable area in which the pong icon can
+         *               be shown
+         * @param player the player
          * @return the pong area created
          */
-        public InterractableArea createPongForHub(Point2d pos) {
+        public InterractableArea createPongForHub(Point2d pos, PlayerEntity player) {
 
                 PongPanel panel = new PongPanel(GameObjectType.HidableObject,
                                 new Point2d(0, 0), new Vector2d(0, 0),
@@ -271,7 +272,7 @@ public class GameFactory {
                 return new PongEntity(GameObjectType.InterractableArea,
                                 pos, new Vector2d(0, 0),
                                 new RectBoundingBox(pos, 1, 1),
-                                panel);
+                                panel, player);
         }
 
         /**
@@ -410,7 +411,7 @@ public class GameFactory {
                 toRet.setTeleporter(this.createTeleporterToOpenWorld());
                 toRet.addInterractableArea(this.createQuestPannelForHub(new Point2d(7, 5)));
                 toRet.addInterractableArea(this.createBlacksmithForHub(new Point2d(1, 4)));
-                toRet.addInterractableArea(this.createPongForHub(new Point2d(13, 2)));
+                toRet.addInterractableArea(this.createPongForHub(new Point2d(13, 2), (PlayerEntity) toRet.getPlayer()));
                 toRet.setQuestJournal(this.createQuestJournal());
                 toRet.disableEnemies();
                 toRet.setInventory(this.createInventoryPanel());

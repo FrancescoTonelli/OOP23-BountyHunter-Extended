@@ -1,6 +1,8 @@
 package buontyhunter.core;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import buontyhunter.common.Point2d;
 import buontyhunter.common.Resizator;
@@ -106,13 +108,14 @@ public class GameEngine implements WorldEventListener {
             if (gameState.getWorld().getMiniMap() != null) {
                 // if the map is not showing, the player can move
                 if (!gameState.getWorld().getMiniMap().isShow() && !gameState.getWorld().getInventory().isShow()
-                        && !gameState.getWorld().getQuestJournal().isShow()){
+                        && !gameState.getWorld().getQuestJournal().isShow()) {
                     gameState.getWorld().getPlayer().updateInput(controller, gameState.getWorld());
 
                 }
 
                 gameState.getWorld().getMiniMap().updateInput(controller, gameState.getWorld());
-            } else  if(!gameState.getWorld().getInventory().isShow() && !gameState.getWorld().getQuestJournal().isShow()){
+            } else if (!gameState.getWorld().getInventory().isShow()
+                    && !gameState.getWorld().getQuestJournal().isShow()) {
                 gameState.getWorld().getPlayer().updateInput(controller, gameState.getWorld());
 
             }
@@ -123,6 +126,13 @@ public class GameEngine implements WorldEventListener {
             gameState.getWorld().getInventory().updateInput(controller, gameState.getWorld());
             gameState.getWorld().getQuestJournal().updateInput(controller, gameState.getWorld());
             gameState.getWorld().getInterractableAreas().forEach(area -> area.updateInput(controller));
+
+            List<InterractableArea> toUpdate = gameState.getWorld().getInterractableAreas().stream()
+                    .filter(i -> i instanceof PongEntity)
+                    .collect(Collectors.toList());
+            if (!toUpdate.isEmpty() && toUpdate.get(0).getPanel().isShow()) {
+                toUpdate.get(0).getPanel().updateInput(controller, gameState.getWorld());
+            }
         }
     }
 
@@ -154,7 +164,7 @@ public class GameEngine implements WorldEventListener {
                 } else {
                     this.view.setIsHub(false);
                 }
-            }  else if (ev instanceof KilledEnemyEvent) {
+            } else if (ev instanceof KilledEnemyEvent) {
                 ((PlayerEntity) gameState.getWorld().getPlayer()).getQuests().stream()
                         .filter(quest -> quest.getTarget().equals(((KilledEnemyEvent) ev).getKilledType()))
                         .forEach(quest -> quest.incrementTargetActuallyKilled());

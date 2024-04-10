@@ -1,7 +1,7 @@
 package buontyhunter.model;
 
 public interface Pong {
-    void scored(PlayerEntity player, boolean scoredAgainst);
+    void scored(boolean scoredAgainst);
 
     HidableObject getPanel();
 }

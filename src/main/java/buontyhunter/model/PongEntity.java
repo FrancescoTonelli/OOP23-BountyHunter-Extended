@@ -5,16 +5,21 @@ import buontyhunter.common.Vector2d;
 
 public class PongEntity extends InterractableArea implements Pong {
 
-    public PongEntity(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, HidableObject panel) {
+    private PlayerEntity player;
+
+    public PongEntity(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, HidableObject panel,
+            PlayerEntity player) {
         super(type, pos, vel, box, panel);
+        ((PongPanel) this.getPanel()).setEntity(this);
+        this.player = player;
     }
 
     @Override
-    public void scored(PlayerEntity player, boolean scoredAgainst) {
+    public void scored(boolean scoredAgainst) {
         if (scoredAgainst) {
-            player.withdrawDoblons(1);
+            this.player.withdrawDoblons(1);
         } else {
-            player.depositDoblons(3);
+            this.player.depositDoblons(3);
         }
     }
 

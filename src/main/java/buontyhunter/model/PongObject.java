@@ -42,18 +42,18 @@ public class PongObject {
     }
 
     public double getUpperBound() {
-        return this.position.y - (this.height / 2);
+        return this.position.y;
     }
 
     public double getLowerBound() {
-        return this.position.y + (this.height / 2);
+        return this.position.y + this.height;
     }
 
     public double getLeftBound() {
-        return this.position.x - (this.width / 2);
+        return this.position.x;
     }
 
     public double getRightBound() {
-        return this.position.x + (this.width / 2);
+        return this.position.x + this.width;
     }
 }

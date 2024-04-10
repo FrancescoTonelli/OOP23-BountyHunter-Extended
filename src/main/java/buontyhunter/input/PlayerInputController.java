@@ -1,5 +1,8 @@
 package buontyhunter.input;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import buontyhunter.common.Direction;
 import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;
@@ -20,22 +23,22 @@ public class PlayerInputController implements InputComponent {
 	@Override
 	public void update(GameObject player, InputController c, World w) {
 		Vector2d vel = new Vector2d(0, 0);
-		this.speed = ((PlayerEntity)player).getMovementSpeed();
+		this.speed = ((PlayerEntity) player).getMovementSpeed();
 
-		switch (((PlayerEntity)player).getDirection()) {
-			case MOVE_UP:{
+		switch (((PlayerEntity) player).getDirection()) {
+			case MOVE_UP: {
 				setDirection(player, Direction.STAND_UP);
 				break;
 			}
-			case MOVE_DOWN:{
+			case MOVE_DOWN: {
 				setDirection(player, Direction.STAND_DOWN);
 				break;
 			}
-			case MOVE_LEFT:{
+			case MOVE_LEFT: {
 				setDirection(player, Direction.STAND_LEFT);
 				break;
 			}
-			case MOVE_RIGHT:{
+			case MOVE_RIGHT: {
 				setDirection(player, Direction.STAND_RIGHT);
 				break;
 			}
@@ -43,7 +46,7 @@ public class PlayerInputController implements InputComponent {
 				break;
 		}
 
-		if(!isAttacking){
+		if (!isAttacking) {
 			if (c.isMoveUp()) {
 				isAttacking = false;
 				vel.y -= speed;
@@ -61,46 +64,45 @@ public class PlayerInputController implements InputComponent {
 				isAttacking = false;
 				vel.x -= speed;
 				setDirection(player, Direction.MOVE_LEFT);
-			} 
+			}
 		}
 
 		if (timer <= 0) {
-			
 
 			if (c.isAttackUp()) {
 				isAttacking = true;
 				setTimer(player);
 				setDirection(player, Direction.STAND_UP);
-				instanceAttack((PlayerEntity) player, 0, -1);
-				
+				instanceAttack((PlayerEntity) player, 0, -1, w);
+
 			} else if (c.isAttackDown()) {
 				isAttacking = true;
 				setTimer(player);
 				setDirection(player, Direction.STAND_DOWN);
-				instanceAttack((PlayerEntity) player, 0, 1);
+				instanceAttack((PlayerEntity) player, 0, 1, w);
 
 			} else if (c.isAttackLeft()) {
 				isAttacking = true;
 				setTimer(player);
-				
+
 				setDirection(player, Direction.STAND_LEFT);
-				instanceAttack((PlayerEntity) player, -1, 0);
+				instanceAttack((PlayerEntity) player, -1, 0, w);
 			} else if (c.isAttackRight()) {
 				isAttacking = true;
 				setTimer(player);
-				
+
 				setDirection(player, Direction.STAND_RIGHT);
-				instanceAttack((PlayerEntity) player, 1, 0);
-			}else{
-				isAttacking=false;
+				instanceAttack((PlayerEntity) player, 1, 0, w);
+			} else {
+				isAttacking = false;
 			}
 
 		} else {
 			if (((FighterEntity) player).getDamagingArea() == null) {
-				instanceAttack((PlayerEntity) player, 0, 0);
+				instanceAttack((PlayerEntity) player, 0, 0, w);
 			}
 
-			if(((FighterEntity)player).getWeapon() instanceof MeleeWeapon){
+			if (((FighterEntity) player).getWeapon() instanceof MeleeWeapon) {
 				((PlayerEntity) player).getDamagingArea().setShow(false);
 			}
 
@@ -108,7 +110,7 @@ public class PlayerInputController implements InputComponent {
 				timer--;
 			}
 
-			isAttacking=false;
+			isAttacking = false;
 		}
 
 		player.setVel(vel);
@@ -124,16 +126,19 @@ public class PlayerInputController implements InputComponent {
 		player.setPos(pos.sum(vel));
 	}
 
-	private void instanceAttack(PlayerEntity player, int x, int y) {
+	private void instanceAttack(PlayerEntity player, int x, int y, World w) {
 
-		((PlayerEntity) player).setDamagingArea(
-				GameFactory.getInstance().WeaponDamagingArea((PlayerEntity) player, new Vector2d(x, y)));
-				
-		((PlayerEntity) player).getDamagingArea().setShow(true);
+		List<InterractableArea> pongCheck = w.getInterractableAreas().stream().filter(i -> i instanceof PongEntity)
+				.collect(Collectors.toList());
 
-		player.getWeapon().directAttack();
+		if (pongCheck.isEmpty() || !pongCheck.get(0).getPanel().isShow()) {
+			((PlayerEntity) player).setDamagingArea(
+					GameFactory.getInstance().WeaponDamagingArea((PlayerEntity) player, new Vector2d(x, y)));
 
-		
+			((PlayerEntity) player).getDamagingArea().setShow(true);
+
+			player.getWeapon().directAttack();
+		}
 	}
 
 	private void setTimer(GameObject player) {

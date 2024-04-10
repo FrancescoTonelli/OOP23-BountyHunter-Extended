@@ -9,28 +9,32 @@ import buontyhunter.physics.PhysicsComponent;
 public class PongPanel extends HidableObject {
 
     /*
-     * these dimensions are calculated in units of a 21 x 28 grid
-     * positions indicate the center of the objects
+     * these dimensions are calculated in units of a grid
      */
-    private static int boardHeightSegments = 21;
-    private static int boardWidthSegments = 28;
-    private static double paddleHeight = 4;
-    private static double paddleWidth = 1;
-    private static double ballDimension = 0.5;
+    private static int boardHeightSegments = 42;
+    private static int boardWidthSegments = 56;
+    private static double paddleHeight = 7;
+    private static double paddleWidth = 2;
+    private static double ballDimension = 1;
     private static double paddleSpeed = 0.5;
     private static double ballSpeed = 0.5;
+    private static Point2d originalBallPosition = new Point2d(boardWidthSegments / 2, boardHeightSegments / 2);
 
     private PongObject playerPaddle;
     private PongObject enemyPaddle;
     private PongObject ball;
     private Vector2d ballDirection = new Vector2d(1, 1);
+    private PongEntity entity;
 
     public PongPanel(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, boolean show) {
         super(type, pos, vel, box, input, graph, phys, show);
-        this.playerPaddle = new PongObject(new Point2d(1, 10), paddleHeight, paddleWidth, paddleSpeed);
-        this.enemyPaddle = new PongObject(new Point2d(26, 10), paddleHeight, paddleWidth, paddleSpeed);
-        this.ball = new PongObject(new Point2d(13, 10), ballDimension, ballDimension, ballSpeed);
+        this.playerPaddle = new PongObject(new Point2d(0, boardHeightSegments / 2 - paddleHeight / 2), paddleHeight,
+                paddleWidth, paddleSpeed);
+        this.enemyPaddle = new PongObject(
+                new Point2d(boardWidthSegments - paddleWidth, boardHeightSegments / 2 - paddleHeight / 2),
+                paddleHeight, paddleWidth, paddleSpeed + 0.1);
+        this.ball = new PongObject(originalBallPosition, ballDimension, ballDimension, ballSpeed);
     }
 
     public int getBoardHeightSegments() {
@@ -45,15 +49,15 @@ public class PongPanel extends HidableObject {
         if (this.playerPaddle.getUpperBound() - this.playerPaddle.getSpeed() >= 0) {
             this.playerPaddle.getPosition().y -= this.playerPaddle.getSpeed();
         } else {
-            this.playerPaddle.getPosition().y = this.playerPaddle.getHeight() / 2;
+            this.playerPaddle.getPosition().y = 0;
         }
     }
 
     public void playerMoveDown() {
-        if (this.playerPaddle.getLowerBound() + this.playerPaddle.getSpeed() < getBoardHeightSegments()) {
+        if (this.playerPaddle.getLowerBound() + this.playerPaddle.getSpeed() <= getBoardHeightSegments() - 1) {
             this.playerPaddle.getPosition().y += this.playerPaddle.getSpeed();
         } else {
-            this.playerPaddle.getPosition().y = getBoardHeightSegments() - (this.playerPaddle.getHeight() / 2);
+            this.playerPaddle.getPosition().y = getBoardHeightSegments() - this.playerPaddle.getHeight();
         }
     }
 
@@ -61,34 +65,21 @@ public class PongPanel extends HidableObject {
         if (this.enemyPaddle.getUpperBound() - this.enemyPaddle.getSpeed() >= 0) {
             this.enemyPaddle.getPosition().y -= this.enemyPaddle.getSpeed();
         } else {
-            this.enemyPaddle.getPosition().y = this.enemyPaddle.getHeight() / 2;
+            this.enemyPaddle.getPosition().y = 0;
         }
     }
 
     public void enemyMoveDown() {
-        if (this.enemyPaddle.getLowerBound() + this.enemyPaddle.getSpeed() < getBoardHeightSegments()) {
+        if (this.enemyPaddle.getLowerBound() + this.enemyPaddle.getSpeed() <= getBoardHeightSegments() - 1) {
             this.enemyPaddle.getPosition().y += this.enemyPaddle.getSpeed();
         } else {
-            this.enemyPaddle.getPosition().y = getBoardHeightSegments() - (this.enemyPaddle.getHeight() / 2);
+            this.enemyPaddle.getPosition().y = getBoardHeightSegments() - this.enemyPaddle.getHeight();
         }
     }
 
     public void moveBall() {
-        double x = this.ball.getPosition().x + (this.ballDirection.x * this.ball.getSpeed());
-        double y = this.ball.getPosition().y + (this.ballDirection.y * this.ball.getSpeed());
-        if (x < 0) {
-            x = 0;
-        }
-        if (y < 0) {
-            y = 0;
-        }
-        if (x >= this.getBoardWidthSegments()) {
-            x = this.getBoardWidthSegments() - 1;
-        }
-        if (y >= this.getBoardHeightSegments()) {
-            y = this.getBoardHeightSegments() - 1;
-        }
-        this.ball.setPosition(new Point2d(x, y));
+        this.ball.setPosition(new Point2d(this.ball.getPosition().x + (this.ballDirection.x * this.ball.getSpeed()),
+                this.ball.getPosition().y + (this.ballDirection.y * this.ball.getSpeed())));
     }
 
     public Vector2d getBallDirection() {
@@ -109,5 +100,28 @@ public class PongPanel extends HidableObject {
 
     public PongObject getEnemyPaddle() {
         return this.enemyPaddle;
+    }
+
+    public void resetBall() {
+        this.getBall().setPosition(originalBallPosition);
+        this.invertBallDirectionX();
+        this.invertBallDirectionY();
+        this.getBall().setSpeed(ballSpeed);
+    }
+
+    public void setEntity(PongEntity entity) {
+        this.entity = entity;
+    }
+
+    public PongEntity getEntity() {
+        return this.entity;
+    }
+
+    public void invertBallDirectionX() {
+        this.setBallDirection(new Vector2d(-this.getBallDirection().x, this.getBallDirection().y));
+    }
+
+    public void invertBallDirectionY() {
+        this.setBallDirection(new Vector2d(this.getBallDirection().x, -this.getBallDirection().y));
     }
 }

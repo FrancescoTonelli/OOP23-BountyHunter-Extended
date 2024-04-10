@@ -18,6 +18,7 @@ import buontyhunter.weaponClasses.MeleeWeapon;
 import buontyhunter.weaponClasses.RangedWeapon;
 import buontyhunter.weaponClasses.Weapon;
 import buontyhunter.weaponClasses.WeaponType;
+import java.util.stream.Collectors;
 
 public class SwingGraphics implements Graphics {
 
@@ -752,11 +753,12 @@ public class SwingGraphics implements Graphics {
 	}
 
 	@Override
-	public void drawPongIcon(PongEntity pong) {
-		if (!pong.getPanel().isShow()) {
+	public void drawPongIcon(PongEntity pong, World w) {
+		if (w.getInterractableAreas().stream().filter(i -> i.getPanel().isShow()).collect(Collectors.toList()).isEmpty()
+				&&
+				!w.getInventory().isShow() && !w.getQuestJournal().isShow()) {
 			g2.drawImage(assetManager.getImage(ImageType.pongIcon), getXinPixel(pong.getPos()) + 20,
-					getYinPixel(pong.getPos()) + 20,
-					null);
+					getYinPixel(pong.getPos()) + 20, null);
 		}
 	}
 
@@ -784,14 +786,28 @@ public class SwingGraphics implements Graphics {
 		g2.setColor(Color.BLACK);
 		g2.fill(new Rectangle2D.Double(x, y, boardWidth, boardHeight));
 
+		g2.setColor(Color.GRAY);
+		g2.fill(new Rectangle2D.Double(pongConvertCoordinate((double) panel.getBoardWidthSegments() / 2, x, widthUnit),
+				pongConvertCoordinate(0, y, heightUnit),
+				widthUnit, boardHeight));
+		g2.fill(new Rectangle2D.Double(pongConvertCoordinate(0, x, widthUnit),
+				pongConvertCoordinate(0, y, heightUnit),
+				widthUnit, boardHeight));
+		g2.fill(new Rectangle2D.Double(pongConvertCoordinate((double) panel.getBoardWidthSegments() - 1, x, widthUnit),
+				pongConvertCoordinate(0, y, heightUnit),
+				widthUnit, boardHeight));
+
 		g2.setColor(Color.WHITE);
 		g2.fill(new Rectangle2D.Double(pongConvertCoordinate(panel.getBall().getPosition().x, x, widthUnit),
 				pongConvertCoordinate(panel.getBall().getPosition().y, y, heightUnit),
 				panel.getBall().getWidth() * widthUnit, panel.getBall().getHeight() * heightUnit));
+		g2.fill(new Rectangle2D.Double(pongConvertCoordinate(panel.getPlayerPaddle().getPosition().x, x, widthUnit),
+				pongConvertCoordinate(panel.getPlayerPaddle().getPosition().y, y, heightUnit),
+				panel.getPlayerPaddle().getWidth() * widthUnit, panel.getPlayerPaddle().getHeight() * heightUnit));
+		g2.fill(new Rectangle2D.Double(pongConvertCoordinate(panel.getEnemyPaddle().getPosition().x, x, widthUnit),
+				pongConvertCoordinate(panel.getEnemyPaddle().getPosition().y, y, heightUnit),
+				panel.getEnemyPaddle().getWidth() * widthUnit, panel.getEnemyPaddle().getHeight() * heightUnit));
 
-		g2.fill(new Rectangle2D.Double(pongConvertCoordinate(28, x, widthUnit),
-				pongConvertCoordinate(21, y, heightUnit),
-				panel.getBall().getWidth() * widthUnit, panel.getBall().getHeight() * heightUnit));
 	}
 
 	private double pongConvertCoordinate(double x, double boardX, double unitX) {
