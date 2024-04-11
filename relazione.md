@@ -51,6 +51,7 @@
         - [Fabio Fattori](#21-fabio-fattori-sviluppo)
         - [Mattia Senni](#22-mattia-senni-sviluppo)
         - [Francesco Tonelli](#23-francesco-tonelli-sviluppo)
+            - [Francesco Tonelli](#231-francesco-tonelli-sviluppo---extended)
         - [Alessandro Buono](#24-alessandro-buono-sviluppo)
 - [Commenti Finali ](#commenti-finali)
     - [1. Autovalutazione e Lavori Futuri ](#1-autovalutazione-e-lavori-futuri)
@@ -770,7 +771,12 @@ per l'implementazione del l'A* path finder è stato utilizzato un utilizzato un 
     Usate per lo sviluppo del fabbro nella classe SwingScene. Permalink: https://github.com/progetto-oop/OOP23-BountyHunter/blob/75c21c3c431681794c9b95293f02a4e8c649c342/app/src/main/java/buontyhunter/graphics/SwingScene.java#L153C4-L153C11
 
 **Utilizzo di javax.sound.sampled** (non spiegata a lezione):
-    Usata per la riproduzione delle tracce mumsicali durante il gameplay in MusicPlayer. Permalink: https://github.com/progetto-oop/OOP23-BountyHunter/blob/75c21c3c431681794c9b95293f02a4e8c649c342/app/src/main/java/buontyhunter/model/MusicPlayerImpl.java#L16
+    Usata per la riproduzione delle tracce musicali durante il gameplay in MusicPlayer. Permalink: https://github.com/progetto-oop/OOP23-BountyHunter/blob/75c21c3c431681794c9b95293f02a4e8c649c342/app/src/main/java/buontyhunter/model/MusicPlayerImpl.java#L16
+
+#### 2.3.1 Francesco Tonelli Sviluppo - Extended
+
+**Utilizzo di Stream**:
+    Utilizzati diverse volte per gestire le liste di consumabili nel ConsumableManager e nel World (getSceneEntities) e la lista di InterractableArea per trovare la PongEntity in World (updateState), in PLayerInputController (instanceAttack) e in SwingGraphics (drawPongIcon). Il permalink presenta un esempio creato per i consumabili. Permalink: https://github.com/FrancescoTonelli/OOP23-BountyHunter-Extended/blob/609593f636d23de3f7c196b15154951457fffdc4/src/main/java/buontyhunter/model/consumables/ConsumableManagerImpl.java#L72
 
 #### 2.4 Alessandro Buono Sviluppo
 
