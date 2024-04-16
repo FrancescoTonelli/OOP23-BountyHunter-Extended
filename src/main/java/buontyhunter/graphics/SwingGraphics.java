@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import buontyhunter.model.FighterEntity.MovementState;
 import buontyhunter.model.consumables.Consumable;
+import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.weaponClasses.MeleeWeapon;
 import buontyhunter.model.weaponClasses.RangedWeapon;
 import buontyhunter.model.weaponClasses.Weapon;
@@ -821,5 +822,10 @@ public class SwingGraphics implements Graphics {
 	 */
 	private double pongConvertCoordinate(double x, double boardX, double unitX) {
 		return boardX + (x * unitX);
+	}
+
+	public void drawSlotMachineBoard(SlotMachineBoard board){
+		if (!board.isShow())
+			return;
 	}
 }

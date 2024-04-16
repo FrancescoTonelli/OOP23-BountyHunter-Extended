@@ -5,6 +5,8 @@ import buontyhunter.model.*;
 import buontyhunter.model.AI.enemySpawner.EnemyConfiguration;
 import buontyhunter.model.AI.enemySpawner.EnemyType;
 import buontyhunter.model.armourClasses.Armour;
+import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
+import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
 import buontyhunter.model.weaponClasses.WeaponFactory;
 import buontyhunter.physics.*;
 import buontyhunter.common.*;
@@ -276,6 +278,21 @@ public class GameFactory {
                                 panel, player);
         }
 
+        public InterractableArea createSlotForHub(Point2d pos, PlayerEntity player){
+
+
+                SlotMachineBoard board = new SlotMachineBoard(GameObjectType.HidableObject, new Point2d(0, 0), new Vector2d(0, 0), 
+                                new RectBoundingBox(new Point2d(0, 0), GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT()),
+                                null, new SlotMachineBoardGraphicsComponent(), null, false) 
+
+                return new SlotMachineEntity(GameObjectType.InterractableArea,
+                                pos, new Vector2d(0, 0),
+                                new RectBoundingBox(pos, 1, 1),
+                                board, player);
+
+        }
+
+
         /**
          * create the default quests for the game
          * 
@@ -413,6 +430,7 @@ public class GameFactory {
                 toRet.addInterractableArea(this.createQuestPannelForHub(new Point2d(7, 5)));
                 toRet.addInterractableArea(this.createBlacksmithForHub(new Point2d(1, 4)));
                 toRet.addInterractableArea(this.createPongForHub(new Point2d(13, 2), (PlayerEntity) toRet.getPlayer()));
+               //TODO inserisci qui la slot ed il mercante
                 toRet.setQuestJournal(this.createQuestJournal());
                 toRet.disableEnemies();
                 toRet.setInventory(this.createInventoryPanel());

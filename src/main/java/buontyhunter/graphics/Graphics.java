@@ -170,4 +170,11 @@ public interface Graphics {
 	 * @param panel the panel to draw
 	 */
 	void drawPongPanel(PongPanel panel);
+
+	/**
+	 * This method renders the slot machine's board
+	 * 
+	 * @param board the board to draw
+	 */
+	void drawSlotMachineBoard(PongPanel board);
 }
