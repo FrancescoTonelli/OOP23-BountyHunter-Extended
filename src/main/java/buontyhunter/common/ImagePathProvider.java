@@ -1065,6 +1065,14 @@ public class ImagePathProvider {
                     setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
                 }
             });
+            put(ImageType.slotMachineBackground, new AssetImage() {
+                {
+                    setPath("slotMachine/slotMachineBackground.png");
+                    setType(ImageType.slotMachineBackground);
+                    setHeight(GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getWINDOW_WIDTH());
+                }
+            });
             put(ImageType.GameOver, new AssetImage() {
                 {
                     setPath("utility/GAMEOVER.jpeg");

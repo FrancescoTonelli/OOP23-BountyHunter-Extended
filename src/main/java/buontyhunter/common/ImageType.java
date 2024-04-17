@@ -134,5 +134,6 @@ public enum ImageType {
     potion,
     damageUp,
     speedUp,
-    pongIcon
+    pongIcon,
+    slotMachineBackground
 }

@@ -851,7 +851,7 @@ public class SwingGraphics implements Graphics {
 		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2 - (boardDimension / 2);
 		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2 - (boardDimension / 2);
 
-		//g2.drawImage(assetManager.getImage(ImageType.blacksmith), x, y, boardDimension, boardDimension, null);
+		g2.drawImage(assetManager.getImage(ImageType.slotMachineBackground), x, y, boardDimension, boardDimension, null);
 
 	}
 }
