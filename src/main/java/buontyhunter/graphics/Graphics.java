@@ -2,6 +2,7 @@ package buontyhunter.graphics;
 
 import buontyhunter.model.*;
 import buontyhunter.model.consumables.Consumable;
+import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.weaponClasses.RangedWeapon;
 import buontyhunter.model.weaponClasses.Weapon;
 
@@ -176,5 +177,5 @@ public interface Graphics {
 	 * 
 	 * @param board the board to draw
 	 */
-	void drawSlotMachineBoard(PongPanel board);
+	void drawSlotMachineBoard(SlotMachineBoard board, World w);
 }

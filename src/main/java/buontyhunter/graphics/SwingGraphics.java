@@ -824,8 +824,23 @@ public class SwingGraphics implements Graphics {
 		return boardX + (x * unitX);
 	}
 
-	public void drawSlotMachineBoard(SlotMachineBoard board){
-		if (!board.isShow())
+	public void drawSlotMachineBoard(SlotMachineBoard board,  World w){
+		if (!board.isShow()){
 			return;
+		}
+
+		g2.setColor(new Color(0, 0, 0, 0.6f));
+		g2.fillRect(0, 0, GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+
+		int minDim = GameEngine.RESIZATOR.getWINDOW_WIDTH() < GameEngine.RESIZATOR.getWINDOW_HEIGHT()
+				? GameEngine.RESIZATOR.getWINDOW_WIDTH()
+				: GameEngine.RESIZATOR.getWINDOW_HEIGHT();
+
+		int boardDimension = minDim / 5 * 3;
+		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2 - (boardDimension / 2);
+		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2 - (boardDimension / 2);
+
+		//g2.drawImage(assetManager.getImage(ImageType.blacksmith), x, y, boardDimension, boardDimension, null);
+
 	}
 }

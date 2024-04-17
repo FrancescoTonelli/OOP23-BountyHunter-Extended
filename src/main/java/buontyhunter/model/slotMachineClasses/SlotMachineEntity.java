@@ -8,10 +8,7 @@ import buontyhunter.model.HidableObject;
 import buontyhunter.model.InterractableArea;
 import buontyhunter.model.PlayerEntity;
 
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.random.*;
-import java.util.stream.*;
 
 public class SlotMachineEntity extends InterractableArea implements SlotMachine{
     
@@ -70,11 +67,14 @@ public class SlotMachineEntity extends InterractableArea implements SlotMachine{
 	@Override
 	public WinCategories win() {
 		
-        Random r = new Random();
-        WinCategories win = WinCategories.Lose;
-        
         SlotMachineTilesTypes[][] arr = new SlotMachineTilesTypes[3][3];
         SlotMachineTilesTypes[] coll = {SlotMachineTilesTypes.zombie, SlotMachineTilesTypes.skelly, SlotMachineTilesTypes.knight, SlotMachineTilesTypes.wizard, SlotMachineTilesTypes.doblon, SlotMachineTilesTypes.hammer};
+        SlotMachineTilesTypes combo = arr[0][0];
+        
+        WinCategories win = WinCategories.Lose;
+        Random r = new Random();
+        int streak = 0;
+        int hammerCount = 0;
 
         for(int i=0; i < arr.length;i++){
             for(int j=0; j < arr[i].length;j++){
@@ -82,18 +82,16 @@ public class SlotMachineEntity extends InterractableArea implements SlotMachine{
             }
         }
 
-        SlotMachineTilesTypes combo = arr[0][0];
-        int streak = 0;
         for(int i=0; i < arr.length;i++){
-
-            
             for(int j=0; j < arr[i].length;j++){
                 
                 if(j==0){
                     combo = arr[i][j];
+
                 }
                 else if(arr[i][j]==combo){
                     streak++;
+
                 }
 
             }
@@ -106,12 +104,51 @@ public class SlotMachineEntity extends InterractableArea implements SlotMachine{
                         winUpgrade(win);
 
                         break;
-                
+                    case skelly:
+
+                        winUpgrade(win);
+                        break;
+                    case knight:
+
+                        winUpgrade(win);
+                        break;
+                    case wizard:
+
+                        winUpgrade(win);
+                        winUpgrade(win);
+
+                        break;
+                    case doblon:
+
+                        winUpgrade(win);
+                        winUpgrade(win);
+
+                        break;
+                    case hammer:
+
+                        hammerCount++;
+                        break;
                     default:
                         break;
                 }
             }
 
+        }
+
+        if(win==WinCategories.Lose || win==WinCategories.HalfRefund){
+            switch (hammerCount) {
+                case 1:
+                    win=WinCategories.HalfRefund;
+                    break;
+                case 2:
+                    win=WinCategories.Refund;
+                    break;
+                case 3:
+                    win=WinCategories.Double;
+                    break;
+                default:
+                    break;
+            }
         }
 
         return win;
