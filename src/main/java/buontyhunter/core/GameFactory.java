@@ -431,6 +431,9 @@ public class GameFactory {
                 toRet.addInterractableArea(this.createBlacksmithForHub(new Point2d(1, 4)));
                 toRet.addInterractableArea(this.createPongForHub(new Point2d(13, 2), (PlayerEntity) toRet.getPlayer()));
                //TODO inserisci qui la slot ed il mercante
+                toRet.addInterractableArea(this.createSlotForHub(new Point2d(13, 13), (PlayerEntity) toRet.getPlayer() ));
+
+
                 toRet.setQuestJournal(this.createQuestJournal());
                 toRet.disableEnemies();
                 toRet.setInventory(this.createInventoryPanel());

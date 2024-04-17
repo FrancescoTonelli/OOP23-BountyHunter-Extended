@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import buontyhunter.model.FighterEntity.MovementState;
 import buontyhunter.model.consumables.Consumable;
 import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
+import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
 import buontyhunter.model.weaponClasses.MeleeWeapon;
 import buontyhunter.model.weaponClasses.RangedWeapon;
 import buontyhunter.model.weaponClasses.Weapon;
@@ -822,6 +823,16 @@ public class SwingGraphics implements Graphics {
 	 */
 	private double pongConvertCoordinate(double x, double boardX, double unitX) {
 		return boardX + (x * unitX);
+	}
+
+	//TODO cambiare l'immagine della slot
+	public void drawSlotMachine(SlotMachineEntity slot, World w) {
+		if (w.getInterractableAreas().stream().filter(i -> i.getPanel().isShow()).collect(Collectors.toList()).isEmpty() &&
+				!w.getInventory().isShow() && !w.getQuestJournal().isShow()) {
+
+			g2.drawImage(assetManager.getImage(ImageType.skellyFront), getXinPixel(slot.getPos()) + 20,
+					getYinPixel(slot.getPos()) + 20, null);
+		}
 	}
 
 	public void drawSlotMachineBoard(SlotMachineBoard board,  World w){

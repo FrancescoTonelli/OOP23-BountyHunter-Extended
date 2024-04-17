@@ -15,6 +15,8 @@ import buontyhunter.core.GameEngine;
 import buontyhunter.input.*;
 import buontyhunter.model.*;
 import buontyhunter.model.MusicPlayer.Track;
+import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.*;
@@ -255,6 +257,10 @@ public class SwingScene implements Scene, ComponentListener {
 
 					if (e instanceof PongEntity) {
 						gr.drawPongIcon((PongEntity) e, scene);
+					}
+
+					if (e instanceof SlotMachineEntity) {
+						gr.drawSlotMachine((SlotMachineEntity) e, scene);
 					}
 
 					if ((camera.inScene(e.getPos()) && (e instanceof Teleporter || e instanceof WizardBossEntity))) {
