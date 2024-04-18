@@ -19,9 +19,14 @@ public class SlotMachineBoard extends HidableObject{
     private int x = 3;
     private int y = 3;
 
-    private int winCountdown =200;
-    private boolean isResultDisplaying=false;
-    private boolean isRolled=false;
+    private int winCountdown = 120;
+    private boolean buttonPressed = false;
+    private boolean isResultDisplaying = false;
+    private boolean isRolled = false;
+    private boolean jackpotWon = false;
+
+    
+
     private WinCategories win = WinCategories.Lose;
 
     private SlotMachineTilesTypes[][] arr = new SlotMachineTilesTypes[x][y];
@@ -35,33 +40,66 @@ public class SlotMachineBoard extends HidableObject{
 
     }
     
-    public boolean isResultDisplaying(){
-        return isResultDisplaying;
-    }
+    //Setters
 
+    public void buttonBeeingPressed(){
+        buttonPressed = true;
+    }
+    
     public void winCountdown(){
         winCountdown--;
     }
-
-    public void winCountdownReset(){
-        winCountdown=200;
+    
+    //Resetters
+    
+    public void resultNoMoreDisplaying(){
+        winCountdownReset();
+        resetWinCategory();
+        jackpotDeactivate();
+        isResultDisplaying=false;
     }
-
+    
+    public void buttonReleased(){
+        buttonPressed = false;
+    }
+    
+    public void jackpotDeactivate(){
+        jackpotWon=false;
+    }
+    
+    public void winCountdownReset(){
+        winCountdown=120;
+    }
+    
+    public void resetWinCategory(){
+        win= WinCategories.Lose;
+    }
+    
+    //Getters 
+    
+    public boolean isResultDisplaying(){
+        return isResultDisplaying;
+    }
+    
+    public boolean isButtonBeeingPressed(){
+        return buttonPressed;
+    }
+    
+    public boolean isjackpotWon(){
+        return jackpotWon;
+    }
+    
+    public WinCategories currentWinCategories(){
+        return win;
+    }
+    
     public boolean winCountdownOver(){
-        if(winCountdown<0){
+        if(winCountdown>0){
             return false;
         }
         return true;
     }
-
-    public WinCategories currentWinCategories(){
-        return win;
-    }
-
-    public void resetWinCategory(){
-        win= WinCategories.Lose;
-    }
-
+    
     public SlotMachineTilesTypes[][] getyDisplayedTipes(){
 
         return arr;
@@ -86,17 +124,17 @@ public class SlotMachineBoard extends HidableObject{
                             break;
                         case skelly:
     
-                            imgList[i][j]=ImageType.skellyFront1;
+                            imgList[i][j]=ImageType.skellyFront;
     
                             break;
                         case knight:
     
-                            imgList[i][j]=ImageType.knightFront1;
+                            imgList[i][j]=ImageType.knightFront;
                             
                             break;
                         case wizard:
     
-                            imgList[i][j]=ImageType.wizardFront1;
+                            imgList[i][j]=ImageType.wizardFront;
     
                             break;
                         case doblon:
@@ -133,14 +171,22 @@ public class SlotMachineBoard extends HidableObject{
      */
     public void roll(){
 
-        Random r = new Random();
-        
-        for(int i=0; i < arr.length;i++){
-            for(int j=0; j < arr[i].length;j++){
-                arr[i][j]= coll[r.nextInt(6)];
+        if(!isButtonBeeingPressed()){
+            Random r = new Random();
+            
+            for(int i=0; i < arr.length;i++){
+                for(int j=0; j < arr[i].length;j++){
+                    arr[i][j]= coll[r.nextInt(6)];
+    
+                    //Always win cheats
+    
+                    //arr[i][j]=SlotMachineTilesTypes.wizard;
+                }
             }
+            isRolled=true;
+
         }
-        isRolled=true;
+
     }
 
 
@@ -154,9 +200,49 @@ public class SlotMachineBoard extends HidableObject{
             return false;
         }
         else{
-            ((PlayerEntity)player).withdrawDoblons(5);
+            if(!isResultDisplaying()){
+                ((PlayerEntity)player).withdrawDoblons(5);
+                WinCategories winning = this.win();
+                switch (winning) {
+                    case Lose:
+                    
+                        break;
+
+                    case DoubleRefund:
+                        ((PlayerEntity)player).depositDoblons(10);
+
+                        break;
+                    
+                    case QuintupleRefund:
+                        ((PlayerEntity)player).depositDoblons(25);
+
+                        break;
+                    
+                    case SmallWin:
+                        ((PlayerEntity)player).depositDoblons(50);
+
+                        break;
+                    
+                    case BigWin:
+                        ((PlayerEntity)player).depositDoblons(250);
+
+                        break;
+                    
+                    case Jackpot:
+                        ((PlayerEntity)player).depositDoblons(1000);
+                        jackpotWon = true;
+
+                        break;
+
+                    default:
+
+                        break;
+                }
+
+                isResultDisplaying=true;
+            }
+
         }
-        isResultDisplaying=true;
         return true;
         
 	}
@@ -173,57 +259,54 @@ public class SlotMachineBoard extends HidableObject{
         SlotMachineTilesTypes combo = arr[0][0];
         
         
-        int streak = 0;
-        int hammerCount = 0;
-
-
         for(int i=0; i < arr.length;i++){
+            int streak = 0;
+            
             for(int j=0; j < arr[i].length;j++){
-                
+
                 if(j==0){
                     combo = arr[i][j];
 
                 }
-                else if(arr[i][j]==combo){
+                
+                if(arr[i][j]==combo){
                     streak++;
 
                 }
 
             }
 
+
             if(streak == arr[i].length){
 
                 switch (combo) {
                     case zombie:
-                        
-                        winUpgrade(win);
+                        if(win==WinCategories.Lose)
+                            win = WinCategories.DoubleRefund;
 
                         break;
                     case skelly:
-
-                        winUpgrade(win);
-
-                        break;
-                    case knight:
-
-                        winUpgrade(win);
-                        
-                        break;
-                    case wizard:
-
-                        winUpgrade(win);
-                        winUpgrade(win);
-
-                        break;
-                    case doblon:
-
-                        winUpgrade(win);
-                        winUpgrade(win);
+                        if(win==WinCategories.Lose||win==WinCategories.DoubleRefund)
+                            win = WinCategories.QuintupleRefund;
 
                         break;
                     case hammer:
+                        if(win==WinCategories.Lose||win==WinCategories.DoubleRefund)
+                            win = WinCategories.QuintupleRefund;
 
-                        hammerCount++;
+                        break;
+                    case knight:
+                        if(win==WinCategories.Lose||win==WinCategories.DoubleRefund||win==WinCategories.QuintupleRefund)
+                            win = WinCategories.SmallWin;
+                        
+                        break;
+                    case doblon:
+                        if(!(win==WinCategories.Jackpot||win==WinCategories.BigWin))
+                            win = WinCategories.BigWin;
+                        break;
+                    case wizard:
+                        if(!(win==WinCategories.Jackpot))
+                            win = WinCategories.Jackpot;
                         break;
                     default:
                         break;
@@ -232,57 +315,8 @@ public class SlotMachineBoard extends HidableObject{
 
         }
 
-        if(win==WinCategories.Lose || win==WinCategories.HalfRefund){
-            switch (hammerCount) {
-                case 1:
-                    win=WinCategories.HalfRefund;
-                    break;
-                case 2:
-                    win=WinCategories.Refund;
-                    break;
-                case 3:
-                    win=WinCategories.Double;
-                    break;
-                default:
-                    break;
-            }
-        }
-
         return win;
 
 	}
 
-    
-    private WinCategories winUpgrade(WinCategories winnin){
-
-        switch (winnin) {
-            case Lose:
-                winnin = WinCategories.HalfRefund;
-                break;
-
-            case HalfRefund:
-                winnin = WinCategories.Refund;
-                break;
-            
-            case Refund:
-                winnin = WinCategories.Double;
-                break;
-            
-            case Double:
-                winnin = WinCategories.Quintuple;
-                break;
-            
-            case Quintuple:
-                winnin = WinCategories.Jackpot;
-                break;
-            
-            default:
-                break;
-        }
-
-        return winnin;
-    }
-
-
-    
 }

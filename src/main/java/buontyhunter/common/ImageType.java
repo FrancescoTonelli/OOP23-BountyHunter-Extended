@@ -135,5 +135,9 @@ public enum ImageType {
     damageUp,
     speedUp,
     pongIcon,
-    slotMachineBackground
+    slotMachineBackground,
+    playButton,
+    jackpot,
+    win,
+    slotMachine
 }

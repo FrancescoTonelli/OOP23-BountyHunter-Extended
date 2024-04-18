@@ -2,9 +2,9 @@ package buontyhunter.model.slotMachineClasses;
 
 public enum WinCategories {
     Lose,
-    HalfRefund,
-    Refund,
-    Double,
-    Quintuple,
+    DoubleRefund,
+    QuintupleRefund,
+    SmallWin,
+    BigWin,
     Jackpot
 }

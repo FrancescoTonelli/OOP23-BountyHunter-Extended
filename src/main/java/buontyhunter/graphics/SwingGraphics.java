@@ -16,6 +16,7 @@ import buontyhunter.model.FighterEntity.MovementState;
 import buontyhunter.model.consumables.Consumable;
 import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
+import buontyhunter.model.slotMachineClasses.WinCategories;
 import buontyhunter.model.weaponClasses.MeleeWeapon;
 import buontyhunter.model.weaponClasses.RangedWeapon;
 import buontyhunter.model.weaponClasses.Weapon;
@@ -317,7 +318,6 @@ public class SwingGraphics implements Graphics {
 		}
 	}
 
-	//TODO qui ci sono i bottoni disegnati
 	public void drawBlacksmithButtons(int index, int x, int y, int unit, JButton btn) {
 		btn.setOpaque(true);
 		btn.setBackground(new Color(197, 145, 84));
@@ -335,6 +335,24 @@ public class SwingGraphics implements Graphics {
 			scaled = assetManager.getImage(ImageType.arrow).getScaledInstance((int) (btn.getWidth() / (1.5)),
 					(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
 		}
+
+		btn.setIcon(new ImageIcon(scaled));
+	}
+	
+	public void drawSlotMachineButtons(int x, int y, int unit, JButton btn) {
+		btn.setOpaque(false);
+		btn.setBackground(new Color(197, 145, 84));
+		btn.setBorderPainted(false);
+		btn.setBorder(new LineBorder(new Color(130, 91, 49), unit / 10));
+		btn.setBounds(x, y, unit, unit);
+		btn.setLayout(new BorderLayout());
+
+		Image scaled;
+
+		
+		scaled = assetManager.getImage(ImageType.playButton).getScaledInstance((int) (btn.getWidth()),
+				(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+		
 
 		btn.setIcon(new ImageIcon(scaled));
 	}
@@ -826,12 +844,11 @@ public class SwingGraphics implements Graphics {
 		return boardX + (x * unitX);
 	}
 
-	//TODO cambiare l'immagine della slot
 	public void drawSlotMachine(SlotMachineEntity slot, World w) {
 		if (w.getInterractableAreas().stream().filter(i -> i.getPanel().isShow()).collect(Collectors.toList()).isEmpty() &&
 				!w.getInventory().isShow() && !w.getQuestJournal().isShow()) {
 
-			g2.drawImage(assetManager.getImage(ImageType.skellyFront), getXinPixel(slot.getPos()) + 20,
+			g2.drawImage(assetManager.getImage(ImageType.slotMachine), getXinPixel(slot.getPos()) + 20,
 					getYinPixel(slot.getPos()) + 20, null);
 		}
 	}
@@ -860,9 +877,16 @@ public class SwingGraphics implements Graphics {
 
 		for(int i=0; i < imgList.length;i++){
             for(int j=0; j < imgList[i].length;j++){
-				g2.drawImage(assetManager.getImage(imgList[i][j]),(int)(x+offset+i*boardDimension*0.23),(int)(y+offset+j*boardDimension*0.28),90,90, null);
+				g2.drawImage(assetManager.getImage(imgList[i][j]),(int)(x+offset+j*boardDimension*0.23),(int)(y+offset+i*boardDimension*0.28),90,90, null);
 		
 			}
+		}
+
+		if(board.isjackpotWon()){
+			g2.drawImage(assetManager.getImage(ImageType.jackpot), x, 0, boardDimension, boardDimension/3, null);
+		}
+		else if(board.isResultDisplaying()&&board.currentWinCategories()!=WinCategories.Lose){
+			g2.drawImage(assetManager.getImage(ImageType.win), x, 0, boardDimension, boardDimension/3, null);
 		}
 
 

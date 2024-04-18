@@ -6,6 +6,8 @@ import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 
 public class SlotInputController implements InputComponent {
 
+    private int chill=5;
+
     @Override
     public void update(GameObject board, InputController c, World w) {
 
@@ -15,8 +17,7 @@ public class SlotInputController implements InputComponent {
             if(a.isResultDisplaying()){
     
                 if(a.winCountdownOver() ){
-                    a.winCountdownReset();
-                    a.resetWinCategory();
+                    a.resultNoMoreDisplaying();
                 }
                 else{
                     a.winCountdown();
@@ -24,7 +25,13 @@ public class SlotInputController implements InputComponent {
     
             }
             else{
-                a.roll();
+                if(chill<0){
+                    a.roll();
+                    chill=5;
+                }
+                else{
+                    chill--;
+                }
             }
         }
 

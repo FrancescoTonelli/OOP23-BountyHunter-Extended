@@ -15,6 +15,7 @@ import buontyhunter.core.GameEngine;
 import buontyhunter.input.*;
 import buontyhunter.model.*;
 import buontyhunter.model.MusicPlayer.Track;
+import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class SwingScene implements Scene, ComponentListener {
 	private final List<JButton> questButtons = new ArrayList<>();
 	private final List<JButton> blacksmithButtons = new ArrayList<>();
 	private final List<JButton> inventoryButtons = new ArrayList<>();
+	private final List<JButton>	slotMachineButtons = new ArrayList<>();
 	protected final SwingAssetProvider assetManager;
 	private final MusicPlayer musicPlayer;
 	private Track currentTrack;
@@ -171,6 +173,16 @@ public class SwingScene implements Scene, ComponentListener {
 			throw new RuntimeException(
 					"BlacksmithPanel not found" + gameState.getWorld().getInterractableAreas().stream()
 							.filter(pan -> pan.getPanel() instanceof BlacksmithPanel).toString());
+		}
+	}
+
+	private SlotMachineBoard getSlotMachineBoard() {
+		try {
+			return (SlotMachineBoard) gameState.getWorld().getInterractableAreas().stream()
+					.filter(e -> e.getPanel() instanceof SlotMachineBoard).findFirst().get().getPanel();
+		} catch (Exception e) {
+			throw new RuntimeException("SlotMachineBoard not found" + gameState.getWorld().getInterractableAreas().stream()
+							.filter(pan -> pan.getPanel() instanceof SlotMachineBoard).toString());
 		}
 	}
 
@@ -393,6 +405,44 @@ public class SwingScene implements Scene, ComponentListener {
 						btn.setVisible(false);
 					});
 				}
+
+				// render slotMachine button
+				if (IsHub && getSlotMachineBoard().isShow()) {
+					
+					int x = (int)((width * 0.5) - (unit*0.7));
+					int y = (int)(height * 0.77);
+
+					slotMachineButtons.forEach(btn -> {
+						frame.remove(btn);
+						btn.setVisible(false);
+					});
+
+					JButton play = new JButton();
+					play.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							getSlotMachineBoard().buttonBeeingPressed();
+							getSlotMachineBoard().play((PlayerEntity) gameState.getWorld().getPlayer());
+							getSlotMachineBoard().buttonReleased();
+						}
+					});
+					
+					slotMachineButtons.add(play);
+
+					slotMachineButtons.get(0).setVisible(getSlotMachineBoard().isShow());
+					
+					gr.drawSlotMachineButtons(x , y, unit, slotMachineButtons.get(0));
+					
+					this.add(slotMachineButtons.get(0));
+					
+
+				} else if (IsHub && !getSlotMachineBoard().isShow()) {
+					slotMachineButtons.forEach(btn -> {
+						frame.remove(btn);
+						btn.setVisible(false);
+					});
+				}
+
 
 				// HUD render
 				int weaponContainerDimension = frame.getHeight() / 8;

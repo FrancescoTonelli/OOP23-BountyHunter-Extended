@@ -1073,6 +1073,38 @@ public class ImagePathProvider {
                     setWidth(GameEngine.RESIZATOR.getWINDOW_WIDTH());
                 }
             });
+            put(ImageType.playButton, new AssetImage() {
+                {
+                    setPath("slotMachine/playButton.png");
+                    setType(ImageType.playButton);
+                    setHeight(GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getWINDOW_WIDTH());
+                }
+            });
+            put(ImageType.jackpot, new AssetImage() {
+                {
+                    setPath("slotMachine/jackpot.png");
+                    setType(ImageType.jackpot);
+                    setHeight(GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getWINDOW_WIDTH());
+                }
+            });
+            put(ImageType.win, new AssetImage() {
+                {
+                    setPath("slotMachine/win.png");
+                    setType(ImageType.win);
+                    setHeight(GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getWINDOW_WIDTH());
+                }
+            });
+            put(ImageType.slotMachine, new AssetImage() {
+                {
+                    setPath("slotMachine/slotMachine.png");
+                    setType(ImageType.slotMachine);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
             put(ImageType.GameOver, new AssetImage() {
                 {
                     setPath("utility/GAMEOVER.jpeg");
