@@ -317,6 +317,7 @@ public class SwingGraphics implements Graphics {
 		}
 	}
 
+	//TODO qui ci sono i bottoni disegnati
 	public void drawBlacksmithButtons(int index, int x, int y, int unit, JButton btn) {
 		btn.setOpaque(true);
 		btn.setBackground(new Color(197, 145, 84));
@@ -840,18 +841,30 @@ public class SwingGraphics implements Graphics {
 			return;
 		}
 
-		g2.setColor(new Color(0, 0, 0, 0.6f));
-		g2.fillRect(0, 0, GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT());
-
+		ImageType[][] imgList = board.getTileImages();
+		
 		int minDim = GameEngine.RESIZATOR.getWINDOW_WIDTH() < GameEngine.RESIZATOR.getWINDOW_HEIGHT()
-				? GameEngine.RESIZATOR.getWINDOW_WIDTH()
-				: GameEngine.RESIZATOR.getWINDOW_HEIGHT();
-
+		? GameEngine.RESIZATOR.getWINDOW_WIDTH()
+		: GameEngine.RESIZATOR.getWINDOW_HEIGHT();
+		
 		int boardDimension = minDim / 5 * 3;
 		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2 - (boardDimension / 2);
 		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2 - (boardDimension / 2);
+		int offset = (int)(boardDimension/7.5);
+		
+		g2.setColor(new Color(0, 0, 0, 0.6f));
+		g2.fillRect(0, 0, GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+
 
 		g2.drawImage(assetManager.getImage(ImageType.slotMachineBackground), x, y, boardDimension, boardDimension, null);
+
+		for(int i=0; i < imgList.length;i++){
+            for(int j=0; j < imgList[i].length;j++){
+				g2.drawImage(assetManager.getImage(imgList[i][j]),(int)(x+offset+i*boardDimension*0.23),(int)(y+offset+j*boardDimension*0.28),90,90, null);
+		
+			}
+		}
+
 
 	}
 }

@@ -6,11 +6,18 @@ public interface SlotMachine {
     
 
     /**
-     * Every time the roll button is clicked this method checks if the player can afford it
+     * This method is constantly called while not playing and it makes the various
+     * tiles change at random
+     * @return
+     */
+    void roll();
+
+    /**
+     * Every time the play button is clicked this method checks if the player can afford it
      * 
      * @return true if the player can afford it, false otherwise
      */
-    boolean roll();
+    boolean play();
 
 
     /**

@@ -283,7 +283,7 @@ public class GameFactory {
 
                 SlotMachineBoard board = new SlotMachineBoard(GameObjectType.HidableObject, new Point2d(0, 0), new Vector2d(0, 0), 
                                 new RectBoundingBox(new Point2d(0, 0), GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT()),
-                                null, new SlotMachineBoardGraphicsComponent(), null, false);
+                                new SlotInputController(), new SlotMachineBoardGraphicsComponent(), null, false);
 
                 return new SlotMachineEntity(GameObjectType.InterractableArea,
                                 pos, new Vector2d(0, 0),

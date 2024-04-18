@@ -12,6 +12,7 @@ import buontyhunter.graphics.*;
 import buontyhunter.input.*;
 import buontyhunter.model.*;
 import buontyhunter.model.event.*;
+import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
 import buontyhunter.model.weaponClasses.RangedWeapon;
 
 public class GameEngine implements WorldEventListener {
@@ -126,6 +127,14 @@ public class GameEngine implements WorldEventListener {
             gameState.getWorld().getInventory().updateInput(controller, gameState.getWorld());
             gameState.getWorld().getQuestJournal().updateInput(controller, gameState.getWorld());
             gameState.getWorld().getInterractableAreas().forEach(area -> area.updateInput(controller));
+
+            List<InterractableArea> updateSlot = gameState.getWorld().getInterractableAreas().stream()
+                    .filter(i -> i instanceof SlotMachineEntity)
+                    .collect(Collectors.toList());
+
+            if (!updateSlot.isEmpty() && updateSlot.get(0).getPanel().isShow()) {
+                updateSlot.get(0).getPanel().updateInput(controller, gameState.getWorld());
+            } 
 
             List<InterractableArea> toUpdate = gameState.getWorld().getInterractableAreas().stream()
                     .filter(i -> i instanceof PongEntity)
