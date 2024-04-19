@@ -29,7 +29,7 @@ public class Armour {
 
     public boolean levelUp(){
         
-        if(level<=15)
+        if(level<20)
         {
             if(level<3){
                 damageReduction+=2;

@@ -332,12 +332,28 @@ public class SwingScene implements Scene, ComponentListener {
 
 						//if the Shurikens has not been sold by the merchant yet, the weapon won't show in the inventory
 						if(((PlayerEntity) gameState.getWorld().getPlayer()).getWeapons()
-									.get(inventoryButtons.indexOf(btn)).getWeaponType()==WeaponType.SHURIKENS && !getMerchantMenu().isWeaponSold()){
+									.get(inventoryButtons.indexOf(btn)).getWeaponType()==WeaponType.SHURIKENS &&
+									 !((PlayerEntity) gameState.getWorld().getPlayer()).isWeaponBought()){
 
 							btn.setVisible(false);
 						}
 
 					});
+
+					//Draws how much damage reduction the player currently has
+					g2.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 25));
+					g2.setColor(Color.WHITE);
+					g2.drawString("Current damage reduction: " + ((PlayerEntity) gameState.getWorld().getPlayer()).getDmgRed(),
+								unit/5 , unit*5 - unit/2 );
+
+					//Draws how much damage multiplier the player currently has
+					g2.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 25));
+					g2.setColor(Color.WHITE);
+					g2.drawString("Current damage multiplier: " + ((PlayerEntity) gameState.getWorld().getPlayer()).getDamageMultiplier(),
+								unit/5 , unit*5 - unit/4 );
+
+
+
 				} else {
 					inventoryButtons.forEach(btn -> {
 						this.remove(btn);
@@ -541,11 +557,11 @@ public class SwingScene implements Scene, ComponentListener {
 
 				gr.drawDurabilityBar(((PlayerEntity) gameState.getWorld().getPlayer()).getWeapon(),
 						weaponContainerX + weaponContainerDimension + 10,
-						weaponContainerY + (weaponContainerDimension / 3));
+						weaponContainerY + (weaponContainerDimension / 4));
 
-				int iconDimension = weaponContainerDimension / 4;
+				int iconDimension = weaponContainerDimension / 3;
 				int doblonsIconX = weaponContainerX + weaponContainerDimension + 10;
-				int iconY = weaponContainerY + (3 * (weaponContainerDimension / 4));
+				int iconY = weaponContainerY + (int)(weaponContainerDimension /1.7);
 				g2.drawImage(assetManager.getImage(ImageType.doblon),
 						doblonsIconX, iconY, iconDimension, iconDimension, null);
 				String doblonsAmount = ((PlayerEntity) gameState.getWorld().getPlayer()).getDoblons() + "";
@@ -553,13 +569,21 @@ public class SwingScene implements Scene, ComponentListener {
 				g2.setColor(Color.BLACK);
 				g2.drawString(doblonsAmount, doblonsIconX + iconDimension, iconY + iconDimension);
 
-				int arrowIconX = doblonsIconX + iconDimension + 20;
+				int arrowIconX = doblonsIconX + iconDimension + 40;
 				g2.drawImage(assetManager.getImage(ImageType.arrow),
 						arrowIconX, iconY, iconDimension, iconDimension, null);
 				String ammoAmount = ((PlayerEntity) gameState.getWorld().getPlayer()).getAmmo() + "";
 				g2.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));
 				g2.setColor(Color.BLACK);
 				g2.drawString(ammoAmount, arrowIconX + iconDimension, iconY + iconDimension);
+
+				int armourIconX = arrowIconX + iconDimension + 40;
+				g2.drawImage(assetManager.getImage(ImageType.armour),
+						armourIconX, iconY, iconDimension, iconDimension, null);
+				String armourLvl = ((PlayerEntity) gameState.getWorld().getPlayer()).getArmourLevel() + "";
+				g2.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));
+				g2.setColor(Color.BLACK);
+				g2.drawString(armourLvl, armourIconX + iconDimension, iconY + iconDimension);
 
 			}
 		}

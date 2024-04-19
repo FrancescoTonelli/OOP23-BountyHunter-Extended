@@ -393,12 +393,6 @@ public class SwingGraphics implements Graphics {
 
 	}
 
-	public void drawNotEnoughMoney(){
-		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2;
-		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2;
-
-	}
-
 	public void drawStringUnderPlayer(String s) {
 		var playerPosition = camera.getPlayerPoint();
 		playerPosition.setY(playerPosition.y + 1.5);

@@ -9,7 +9,6 @@ import buontyhunter.model.GameObjectType;
 import buontyhunter.model.HidableObject;
 import buontyhunter.model.PlayerEntity;
 import buontyhunter.physics.PhysicsComponent;
-import buontyhunter.model.weaponClasses.WeaponFactory;
 
 public class MerchantMenu extends HidableObject {
 
@@ -24,10 +23,6 @@ public class MerchantMenu extends HidableObject {
 
         weaponSold=false;
         this.player=player;
-    }
-
-    public boolean isWeaponSold(){
-        return weaponSold;
     }
 
     public int getUpgradeArmourCost(){
@@ -78,7 +73,8 @@ public class MerchantMenu extends HidableObject {
         if(!weaponSold&&player.getDoblons()>=1000){
 
             player.withdrawDoblons(1000);
-            return weaponSold = true;
+            player.weaponBought();
+            return true;
         }
 
         return false;

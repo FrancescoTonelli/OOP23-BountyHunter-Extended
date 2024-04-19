@@ -21,6 +21,7 @@ public class PlayerEntity extends FighterEntity {
     private float damageMultiplier;
     private double movementPlayerSpeed;
     private Armour armatura;
+    private boolean weaponBought;
 
     public PlayerEntity(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
             GraphicsComponent graph, PhysicsComponent phys, int health, int maxHealth, Weapon w, Armour arm) {
@@ -30,6 +31,7 @@ public class PlayerEntity extends FighterEntity {
         inventoryWeapons = new ArrayList<Weapon>();
         damageMultiplier = 1;
         movementPlayerSpeed = 0.3;
+        weaponBought=false;
         this.armatura=arm;
     }
 
@@ -89,6 +91,21 @@ public class PlayerEntity extends FighterEntity {
      */
     public List<Weapon> getWeapons() {
         return new ArrayList<Weapon>(inventoryWeapons);
+    }
+
+    /**
+     * Notifies that the player has bought the Weapon from the merchant
+     */
+    public void weaponBought(){
+        weaponBought=true;
+    }
+    
+    /**
+     * gets if the player bought the Weapon from the merchant
+     * @return if the Weapon has been bought
+     */
+    public boolean isWeaponBought(){
+        return weaponBought;
     }
 
     /**
