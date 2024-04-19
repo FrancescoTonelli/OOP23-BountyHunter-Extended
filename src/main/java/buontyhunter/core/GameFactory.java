@@ -5,6 +5,7 @@ import buontyhunter.model.*;
 import buontyhunter.model.AI.enemySpawner.EnemyConfiguration;
 import buontyhunter.model.AI.enemySpawner.EnemyType;
 import buontyhunter.model.armourClasses.Armour;
+import buontyhunter.model.merchantClasses.MerchantMenu;
 import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
 import buontyhunter.model.weaponClasses.WeaponFactory;
@@ -278,6 +279,14 @@ public class GameFactory {
                                 panel, player);
         }
 
+        /**
+         * Create a new SlotMachine;
+         * this entity will be used to show the Slot in the game
+         * 
+         * @param pos    position for the Slot in the Hub
+         * @param player the player
+         * @return the interactable SlotMachine area created
+         */
         public InterractableArea createSlotForHub(Point2d pos, PlayerEntity player){
 
 
@@ -287,8 +296,30 @@ public class GameFactory {
 
                 return new SlotMachineEntity(GameObjectType.InterractableArea,
                                 pos, new Vector2d(0, 0),
-                                new RectBoundingBox(pos, 1, 1),
+                                new RectBoundingBox(pos, 2, 1),
                                 board, player);
+
+        }
+
+        /**
+         * Create a new Merchant;
+         * This entity will be used to show the Merchant in the game
+         * 
+         * @param pos    position for the Merchant in the Hub
+         * @param player the player
+         * @return the interactable Merchant area created
+         */
+        public InterractableArea createMerchantForHub(Point2d pos, PlayerEntity player){
+
+
+                MerchantMenu menu = new MerchantMenu(GameObjectType.HidableObject, new Point2d(0, 0), new Vector2d(0, 0), 
+                                new RectBoundingBox(new Point2d(0, 0), GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT()),
+                                null , new SlotMachineBoardGraphicsComponent(), null, false, player);
+
+                return new SlotMachineEntity(GameObjectType.InterractableArea,
+                                pos, new Vector2d(0, 0),
+                                new RectBoundingBox(pos, 1, 1),
+                                menu, player);
 
         }
 
@@ -429,9 +460,9 @@ public class GameFactory {
                 toRet.setTeleporter(this.createTeleporterToOpenWorld());
                 toRet.addInterractableArea(this.createQuestPannelForHub(new Point2d(7, 5)));
                 toRet.addInterractableArea(this.createBlacksmithForHub(new Point2d(1, 4)));
-                toRet.addInterractableArea(this.createPongForHub(new Point2d(13, 2), (PlayerEntity) toRet.getPlayer()));
+                toRet.addInterractableArea(this.createPongForHub(new Point2d(12, 2), (PlayerEntity) toRet.getPlayer()));
                //TODO inserisci qui la slot ed il mercante
-                toRet.addInterractableArea(this.createSlotForHub(new Point2d(13, 13), (PlayerEntity) toRet.getPlayer() ));
+                toRet.addInterractableArea(this.createSlotForHub(new Point2d(15, 2), (PlayerEntity) toRet.getPlayer() ));
 
 
                 toRet.setQuestJournal(this.createQuestJournal());

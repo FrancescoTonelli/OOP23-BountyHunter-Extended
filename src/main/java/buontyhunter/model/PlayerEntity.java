@@ -26,7 +26,7 @@ public class PlayerEntity extends FighterEntity {
             GraphicsComponent graph, PhysicsComponent phys, int health, int maxHealth, Weapon w, Armour arm) {
         super(type, pos, vel, box, input, graph, phys, health, maxHealth, w);
         quests = new ArrayList<Quest>();
-        this.doblons = 0;
+        this.doblons = 10000;
         inventoryWeapons = new ArrayList<Weapon>();
         damageMultiplier = 1;
         movementPlayerSpeed = 0.3;
@@ -52,8 +52,8 @@ public class PlayerEntity extends FighterEntity {
     /**
      * makes the player's Armour level up upgrading its damage reduction
      */
-    public void levelUpArmour(){
-        armatura.levelUp();
+    public boolean levelUpArmour(){
+        return armatura.levelUp();
     }
 
     /**

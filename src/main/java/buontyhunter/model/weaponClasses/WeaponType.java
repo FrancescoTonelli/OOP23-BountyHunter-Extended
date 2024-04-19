@@ -5,4 +5,5 @@ public enum WeaponType {
     BRASSKNUCKLES,
     BOW,
     BOSSBOW,
+    SHURIKENS
 }

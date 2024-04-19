@@ -4,6 +4,7 @@ package buontyhunter.model.weaponClasses;
 import buontyhunter.common.Direction;
 import buontyhunter.common.ImageType;
 import buontyhunter.model.FighterEntity;
+import buontyhunter.model.PlayerEntity;
 import buontyhunter.model.RectBoundingBox;
 import buontyhunter.common.Point2d;
 
@@ -96,12 +97,19 @@ public class RangedWeapon extends Weapon {
         private double travelDistance;
         private Point2d pos;
         private Direction attackDirection;
+        private int zigzag = 1;
+        private int curving = 0;
 
         public Bullet( Direction direction) {
             travelDistance = 0;
             this.attackDirection = direction;
             pos = owner.getPos();
             hitbox = new RectBoundingBox(pos, 1, 1);
+
+            if(((PlayerEntity)owner).getWeapon().getWeaponType()==WeaponType.SHURIKENS){
+                curving=1;
+            }
+            
         }
 
         /**
@@ -123,28 +131,38 @@ public class RangedWeapon extends Weapon {
 
                 switch (attackDirection) {
                     case STAND_UP: {
-                        pos = new Point2d(pos.x, pos.y - weaponSpeed);
+                        pos = new Point2d(pos.x + curving, pos.y - weaponSpeed);
                         hitbox = ((RectBoundingBox) hitbox).withPoint(pos);
                         break;
                     }
                     case STAND_DOWN: {
-                        pos = new Point2d(pos.x, pos.y + weaponSpeed);
+                        pos = new Point2d(pos.x + curving, pos.y + weaponSpeed);
                         hitbox = ((RectBoundingBox) hitbox).withPoint(pos);
                         break;
                     }
                     case STAND_LEFT: {
-                        pos = new Point2d(pos.x - weaponSpeed, pos.y);
+                        pos = new Point2d(pos.x - weaponSpeed, pos.y + curving);
                         hitbox = ((RectBoundingBox) hitbox).withPoint(pos);
                         break;
                     }
                     case STAND_RIGHT: {
-                        pos = new Point2d(pos.x + weaponSpeed, pos.y);
+                        pos = new Point2d(pos.x + weaponSpeed, pos.y + curving);
                         hitbox = ((RectBoundingBox) hitbox).withPoint(pos);
                         break;
                     }
                     default: {
                         break;
                     }
+                }
+                
+                if(((PlayerEntity)owner).getWeapon().getWeaponType()==WeaponType.SHURIKENS){
+                    zigzag++;
+                    
+                    if(zigzag == 2){
+                        zigzag = 0;
+                        curving = curving * (-1);
+                    }
+                    
                 }
 
                 owner.getDamagingArea().setBBox(hitbox);

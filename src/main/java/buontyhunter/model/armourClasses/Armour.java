@@ -10,9 +10,9 @@ public class Armour {
     }
 
 
-    public void levelUp(){
+    public boolean levelUp(){
         
-        if(level>=15)
+        if(level<=15)
         {
             if(level<3){
                 damageReduction+=2;
@@ -22,8 +22,10 @@ public class Armour {
             }
 
             level++;
+            return true;
         }
         
+        return false;
     }
 
     public int getLevel(){
