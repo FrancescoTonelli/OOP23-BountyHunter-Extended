@@ -779,6 +779,7 @@ public class SwingGraphics implements Graphics {
 			case SHURIKENS:
 				scaled = assetManager.getImage(ImageType.shurikenBundle).getScaledInstance((int) (btn.getWidth() / (1.5)),
 						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
 			default:
 				scaled = assetManager.getImage(ImageType.sword).getScaledInstance((int) (btn.getWidth() / (1.5)),
 						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
