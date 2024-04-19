@@ -536,7 +536,8 @@ Ho fatto in modo che ci sia un timer adattivo in modo da gestire l'attack speed 
 
 **Pattern usato** : ECS (Entity Component System)
 
-```
+```mermaid
+
 classDiagram
     class PlayerInputController {
         - double timer
@@ -571,6 +572,7 @@ classDiagram
     PlayerInputController -->InputController 
     PlayerInputController -->PlayerEntity 
     PlayerEntity -->WeaponDamagingArea
+    
 ```
 
 
@@ -585,7 +587,8 @@ classDiagram
 Spesso può sembrare inutile o subottimale, ma può rispariare tanto tempo quando si cercano dei campi specifici o quando si cerca di risalire ad un errore.
 È molto importante però anche considerare il modo in cui i compagni di progetto concepiscono e progettano il codice, perché fare del codice comprensibile per se stessi non vuol dire sempre fare del codice comprensibile per tutti.
 
-```
+```mermaid
+
 classDiagram
     class WeaponFactory {
         - WeaponFactory instance
@@ -668,6 +671,7 @@ classDiagram
     MeleeWeapon ..> FighterEntity
     RangedWeapon ..> FighterEntity
     RangedWeapon --> Bullet : has
+
 ```
 
 **Problema** : Necessità di dare un tipo diverso a stesse istanze di Weapon
@@ -751,6 +755,16 @@ per l'implementazione del l'A* path finder è stato utilizzato un utilizzato un 
     Usata per la riproduzione delle tracce mumsicali durante il gameplay in MusicPlayer. Permalink: https://github.com/progetto-oop/OOP23-BountyHunter/blob/75c21c3c431681794c9b95293f02a4e8c649c342/app/src/main/java/buontyhunter/model/MusicPlayerImpl.java#L16
 
 #### 2.4 Alessandro Buono Sviluppo
+
+**Utilizzo di JButton**
+
+**Utilizzo di Stream**: 
+    Usate in SwingGraphics/Scene per filtrare le varie possibili istanze di HidableObject e InteractableArea. Quello riportato è un singolo esempio presente nella classe SwingGraphics.
+    Permalink: SwingGraphics r:981 (da inserire permalink)
+
+**Utilizzo di Lambda Expressions**: 
+    Usate combinazione con gli Stream per filtrare Gli oggetti sopra citati.Esempio nella classe SwingScene .
+    Permalink: SwingScene r:185 (da inserire permalink)
 
 
 #### 2.5 Codice riadattato per la realizzazzione
@@ -976,17 +990,24 @@ In futuro vorrei gestire meglio tutta la parte delle armi ranged separando i Bul
 - I per aprire e chiudere l'inventario
 
 # Combattimento
-- freccette per attaccare nella direzione corrispondente alla freccetta premuta
+- premere le frecce direzionali per attaccare nella direzione corrispondente alla freccia premuta
 
-# Interazione con il fabbro , con il pannel delle quest e con il pannello dell'inventario
-- per interagire con il fabbro , con il pannel delle quest e con il pannello dell'inventario bisogna avvicinarsi e premere E
-- per chiudere il pannel delle quest e il pannello dell'inventario bisogna premere E oppure allontanarsi dalla zona interagibile
-- per eseguire qualsiasi azione nel pannello che si apre a schermo bisogna utilizzare il mouse e cliccare sui bottoni
+# Interazione con il Fabbro, con il Mercante , con il panel delle quest e con il pannello dell'inventario
+- per interagire con il Fabbro, con il Mercante o con il panel delle quest bisogna avvicinarsi e premere E
+- per chiudere il pannello del Fabbro, il Mercante o il panel delle quest si può premere ancora E oppure allontanarsi dalla zona interagibile con WASD
+- per aprire il pannello dell'inventario bisogna premere I
+- per chiudere il pannello dell'inventario bisogna premere nuovamente I
+- per eseguire qualsiasi azione nei vari pannelli che si aprono a schermo bisogna utilizzare il mouse e cliccare sui bottoni
+
     # ESEMPI
+
     - per accettare una missione bisogna cliccare su essa con il mouse
     - per equipaggiare un'arma bisogna cliccare su di essa con il mouse
-    - per riparare l'arma equipaggiata bisogna cliccare sull'icona del martello , le armi riparabili sono quelle che hanno la barra della durabilità non piena , quindi le spade
-    - per comprare le munizioni dell'arco bisogna cliccare sull'icona della freccia con l'arco equipaggiato
+    - per riparare l'arma equipaggiata bisogna cliccare sull'icona del martello , le armi riparabili sono quelle che hanno la barra della durabilità non piena , quindi le armi corpo a corpo, come la spada
+    - per comprare le munizioni bisogna cliccare sull'icona della freccia con un arma da distanza equipaggiata
+    - per migliorare l'armatura ed il moltiplicatore del danno bisogna premere sui rispettivi tasti del mercante (il primo upgrade dell'armatura è gratuito)
+    - ogni upgrade dell'armatura costerà 50 in più rispetto al precedente, invece quello del danno costerà 100 in più rispetto al precedente
+    - si possono vedere la riduzione del danno ed il moltiplicatore del danno nell'inventario sopra alla vita, invece il livello dell'armatura è sempre riportato in basso a sinistra affianco alla rispettiva icona
 
 # missioni nel Hub
 
@@ -998,9 +1019,18 @@ In futuro vorrei gestire meglio tutta la parte delle armi ranged separando i Bul
 - ogni punto segnato premierà il giocatore con 3 dobloni
 - ogni punto subito sottrarrà un doblone al giocatore (se il giocatore non ne possiede, non succederà nulla)
 
+# SlotMachine
+
+- dopo aver aperto la board interagendo con la SlotMachine nell'Hub si potrà tentare la fortuna premendo il tasto "play"
+- ogni giocata osterà al giocatore 5 dobloni
+- dopo aver giocato con successo la slot si fermerà per circa 5 secondi per permettere di visionare il risultato al giocatore, dopo questo lasso di tempo la slot ripartirà automaticamente e si potrà giocare nuovamente
+- ogni combinazione unica ha un reward diverso che varia da 10 a 1000 dobloni
+- il gioco è completamente random
+- consigliato solo alle persone con 18 anni o più, giocare con prudenza, potrebbe creare dipendenza
+
 # Dinamiche di gioco
 
 - lo scopo del gioco è uccidere più nemici possibili ed il boss
 - il boss è segnalato da un pallino viola sulla mappa, inseguilo per ucciderlo
 - una volta ucciso il boss, si rigenererà con il doppio della potenza
-- il giocoo andrà avanti all'infito con il boss che di volta in volta si rigenererà
+- il gioco andrà avanti all'infito con il boss che di volta in volta si rigenererà in un luogo casuale del mondo
