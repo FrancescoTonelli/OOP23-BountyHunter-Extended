@@ -29,6 +29,13 @@ public interface SlotMachine {
     WinCategories win();
 
     /**
+     * Returns the current combination of the slot's board as an enum 2DList
+     * 
+     * @return the current displayed elements on the slot's board
+     */
+    public SlotMachineTilesTypes[][] getDisplayedTypes();
+
+    /**
      * Returns the Panel of the object
      * 
      * @return the interface as an HidableObject

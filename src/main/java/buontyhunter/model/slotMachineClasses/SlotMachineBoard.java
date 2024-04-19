@@ -249,7 +249,7 @@ public class SlotMachineBoard extends HidableObject{
     
 
     /**
-     * Generates a random combination of tiles and then checks if 
+     * hecks if in the current random disposition of tiles
      * any row has a winning combination and rewards the player accordingly
      * 
      * @return the tipe of win as a WinCategories enum

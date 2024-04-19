@@ -111,6 +111,7 @@ public class RangedWeapon extends Weapon {
             
         }
 
+        //getters
         public Direction getDirection(){
             return attackDirection;
         }
@@ -123,8 +124,6 @@ public class RangedWeapon extends Weapon {
          * update the state of the bullet
          */
         public void update() {
-
-            // for (Bullet bullet : bullets) {
 
             if (travelDistance > range) {
                 bullet = null;
@@ -175,7 +174,7 @@ public class RangedWeapon extends Weapon {
                 owner.getDamagingArea().setBBox(hitbox);
             }
             travelDistance += weaponSpeed;
-            // }
+
         }
 
     }
