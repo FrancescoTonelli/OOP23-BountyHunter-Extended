@@ -1113,6 +1113,14 @@ public class ImagePathProvider {
                     setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
                 }
             });
+            put(ImageType.merchantBackground, new AssetImage() {
+                {
+                    setPath("Merchant/MerchantBackground.png");
+                    setType(ImageType.merchantBackground);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
             put(ImageType.armourUpgrade, new AssetImage() {
                 {
                     setPath("Merchant/ArmourUpgrade.png");

@@ -5,6 +5,7 @@ import buontyhunter.model.*;
 import buontyhunter.model.AI.enemySpawner.EnemyConfiguration;
 import buontyhunter.model.AI.enemySpawner.EnemyType;
 import buontyhunter.model.armourClasses.Armour;
+import buontyhunter.model.merchantClasses.MerchantEntity;
 import buontyhunter.model.merchantClasses.MerchantMenu;
 import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
@@ -314,12 +315,12 @@ public class GameFactory {
 
                 MerchantMenu menu = new MerchantMenu(GameObjectType.HidableObject, new Point2d(0, 0), new Vector2d(0, 0), 
                                 new RectBoundingBox(new Point2d(0, 0), GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT()),
-                                null , new SlotMachineBoardGraphicsComponent(), null, false, player);
+                                null , new MerchantMenuGraphicsComponent(), null, false, player);
 
-                return new SlotMachineEntity(GameObjectType.InterractableArea,
+                return new MerchantEntity(GameObjectType.InterractableArea,
                                 pos, new Vector2d(0, 0),
                                 new RectBoundingBox(pos, 1, 1),
-                                menu, player);
+                                menu);
 
         }
 

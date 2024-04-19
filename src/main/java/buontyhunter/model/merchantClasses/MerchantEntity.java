@@ -11,7 +11,7 @@ import buontyhunter.model.InterractableArea;
 public class MerchantEntity extends InterractableArea implements Merchant{
 
 
-    public MerchantEntity(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, HidableObject panel,
+    public MerchantEntity(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box,
                     HidableObject menu) {
         super(type, pos, vel, box, menu);
         

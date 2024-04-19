@@ -22,8 +22,6 @@ public class MerchantMenu extends HidableObject {
             GraphicsComponent graph, PhysicsComponent phys, boolean show, PlayerEntity player) {
         super(type, pos, vel, box, input, graph, phys, show);
 
-        updateUpgradeArmourCost();
-        updateUpgradeDamageCost();
         weaponSold=false;
         this.player=player;
     }
@@ -43,6 +41,8 @@ public class MerchantMenu extends HidableObject {
     }
 
     public boolean upgradeArmour(){
+        updateUpgradeArmourCost();
+
         if(player.getDoblons()>=getUpgradeArmourCost()){
             
             if(player.levelUpArmour()){
@@ -57,6 +57,8 @@ public class MerchantMenu extends HidableObject {
     }
 
     public boolean upgradeDamage(){
+        updateUpgradeDamageCost();
+        
         if(player.getDoblons()>=getUpgradeDamageCost()){
             
             player.withdrawDoblons(getUpgradeDamageCost());

@@ -15,6 +15,8 @@ import buontyhunter.core.GameEngine;
 import buontyhunter.input.*;
 import buontyhunter.model.*;
 import buontyhunter.model.MusicPlayer.Track;
+import buontyhunter.model.merchantClasses.MerchantEntity;
+import buontyhunter.model.merchantClasses.MerchantMenu;
 import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
 
@@ -186,6 +188,16 @@ public class SwingScene implements Scene, ComponentListener {
 		}
 	}
 
+	private MerchantMenu getMerchantMenu() {
+		try {
+			return (MerchantMenu) gameState.getWorld().getInterractableAreas().stream()
+					.filter(e -> e.getPanel() instanceof MerchantMenu).findFirst().get().getPanel();
+		} catch (Exception e) {
+			throw new RuntimeException("MerchantMenu not found" + gameState.getWorld().getInterractableAreas().stream()
+							.filter(pan -> pan.getPanel() instanceof MerchantMenu).toString());
+		}
+	}
+
 	public class ScenePanel extends JPanel implements KeyListener {
 
 		protected int centerY;
@@ -273,6 +285,10 @@ public class SwingScene implements Scene, ComponentListener {
 
 					if (e instanceof SlotMachineEntity) {
 						gr.drawSlotMachine((SlotMachineEntity) e, scene);
+					}
+
+					if (e instanceof MerchantEntity) {
+						gr.drawMerchant((MerchantEntity) e, scene);
 					}
 
 					if ((camera.inScene(e.getPos()) && (e instanceof Teleporter || e instanceof WizardBossEntity))) {

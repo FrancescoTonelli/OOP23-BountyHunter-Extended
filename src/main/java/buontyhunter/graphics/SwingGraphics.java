@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import buontyhunter.model.FighterEntity.MovementState;
 import buontyhunter.model.consumables.Consumable;
+import buontyhunter.model.merchantClasses.MerchantEntity;
 import buontyhunter.model.merchantClasses.MerchantMenu;
 import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
@@ -893,12 +894,33 @@ public class SwingGraphics implements Graphics {
 
 	}
 
+	public void drawMerchant(MerchantEntity merchant, World w) {
+		if (w.getInterractableAreas().stream().filter(i -> i.getPanel().isShow()).collect(Collectors.toList()).isEmpty() &&
+				!w.getInventory().isShow() && !w.getQuestJournal().isShow()) {
+
+			g2.drawImage(assetManager.getImage(ImageType.merchant), getXinPixel(merchant.getPos()) + 20,
+					getYinPixel(merchant.getPos()) + 20, null);
+		}
+	}
+
 	public void drawMerchantMenu(MerchantMenu menu, World w){
 		if (!menu.isShow()){
 			return;
 		}
 
-		
+		g2.setColor(new Color(0, 0, 0, 0.6f));
+		g2.fillRect(0, 0, GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+
+		int minDim = GameEngine.RESIZATOR.getWINDOW_WIDTH() < GameEngine.RESIZATOR.getWINDOW_HEIGHT()
+				? GameEngine.RESIZATOR.getWINDOW_WIDTH()
+				: GameEngine.RESIZATOR.getWINDOW_HEIGHT();
+
+		int boardDimension = minDim;
+		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2 - (boardDimension / 2);
+		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2 - (boardDimension / 2);
+
+		g2.drawImage(assetManager.getImage(ImageType.merchantBackground), x, y, boardDimension, boardDimension, null);
+
 	}
 
 }

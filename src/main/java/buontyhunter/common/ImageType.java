@@ -141,6 +141,7 @@ public enum ImageType {
     win,
     slotMachine,
     merchant,
+    merchantBackground,
     armour,
     armourUpgrade,
     shuriken,
