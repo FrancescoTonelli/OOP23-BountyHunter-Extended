@@ -53,7 +53,8 @@ public class PlayerEntity extends FighterEntity {
      * makes the player's Armour level up upgrading its damage reduction
      */
     public boolean levelUpArmour(){
-        return armatura.levelUp();
+        boolean success = armatura.levelUp();
+        return success;
     }
 
     /**

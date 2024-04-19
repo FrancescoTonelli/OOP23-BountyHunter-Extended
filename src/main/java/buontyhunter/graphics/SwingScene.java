@@ -19,6 +19,7 @@ import buontyhunter.model.merchantClasses.MerchantEntity;
 import buontyhunter.model.merchantClasses.MerchantMenu;
 import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
+import buontyhunter.model.weaponClasses.WeaponType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -328,6 +329,14 @@ public class SwingScene implements Scene, ComponentListener {
 								.get(inventoryButtons.indexOf(btn)), x + offsetX, y, btn);
 
 						btn.setVisible(true);
+
+						//if the Shurikens has not been sold by the merchant yet, the weapon won't show in the inventory
+						if(((PlayerEntity) gameState.getWorld().getPlayer()).getWeapons()
+									.get(inventoryButtons.indexOf(btn)).getWeaponType()==WeaponType.SHURIKENS && !getMerchantMenu().isWeaponSold()){
+
+							btn.setVisible(false);
+						}
+
 					});
 				} else {
 					inventoryButtons.forEach(btn -> {
@@ -471,48 +480,45 @@ public class SwingScene implements Scene, ComponentListener {
 					upgradeArmour.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(!getMerchantMenu().upgradeArmour()){
-								//TODO input controller mercante finestra (soldi non sufficienti)
-							}
+							getMerchantMenu().upgradeArmour();
+							
 						}
 					});
 					JButton upgradeDamage = new JButton();
 					upgradeDamage.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(!getMerchantMenu().upgradeDamage()){
-								//TODO input controller mercante finestra (soldi non sufficienti)
-							}
+							getMerchantMenu().upgradeDamage();
 						}
 					});
 					JButton buyShurikens = new JButton();
 					buyShurikens.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(!getMerchantMenu().buyNewWeapon()){
-
-								//TODO input controller mercante finestra (soldi non sufficienti)
-							}
+							getMerchantMenu().buyNewWeapon();
 						}
 					});
 
 					merchantButtons.add(upgradeArmour);
 					merchantButtons.add(upgradeDamage);
+					merchantButtons.add(buyShurikens);
 
 					int x = width / 2;
 					int y = height / 2 - unit / 2;
 
-					merchantButtons.get(0).setVisible(getBlacksmithPannel().isShow());
-					gr.drawMerchantButtons(0,x - unit * 2, y,unit, merchantButtons.get(0));
+					merchantButtons.get(0).setVisible(getMerchantMenu().isShow());
+					gr.drawMerchantButtons(0,x - unit * 2, y + (int)(unit * 1.6) ,unit, merchantButtons.get(0));
 					this.add(merchantButtons.get(0), BorderLayout.CENTER);
 					
-					merchantButtons.get(1).setVisible(getBlacksmithPannel().isShow());
-					gr.drawMerchantButtons(1,x + unit, y,unit, merchantButtons.get(1));
+					merchantButtons.get(1).setVisible(getMerchantMenu().isShow());
+					gr.drawMerchantButtons(1,x - unit /2, y + (int)(unit * 1.6),unit, merchantButtons.get(1));
 					this.add(merchantButtons.get(1), BorderLayout.CENTER);
 
-					merchantButtons.get(2).setVisible(getBlacksmithPannel().isShow());
-					gr.drawMerchantButtons(2,x + unit, y,unit, merchantButtons.get(2));
+					merchantButtons.get(2).setVisible(getMerchantMenu().isShow());
+					gr.drawMerchantButtons(2,x + unit, y + (int)(unit * 1.6),unit, merchantButtons.get(2));
 					this.add(merchantButtons.get(2), BorderLayout.CENTER);
+
+					//if(((PlayerEntity) gameState.getWorld().getPlayer()).getWeapons().contains())
 
 				} else if (IsHub && !getMerchantMenu().isShow()) {
 					merchantButtons.forEach(btn -> {

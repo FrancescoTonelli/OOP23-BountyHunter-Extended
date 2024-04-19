@@ -8,7 +8,24 @@ public class Armour {
         level=lvl;
         damageReduction=dmgRed;
     }
+    
+    //Getters
+    public int getLevel(){
+        return level;
+    }
 
+    public int getdmgReduction(){
+        return damageReduction;
+    }
+
+    //Setters
+    public void setLevel(int set){
+        level = set;
+    }
+
+    public void setdmgReduction(int set){
+        damageReduction = set;
+    }
 
     public boolean levelUp(){
         
@@ -28,20 +45,5 @@ public class Armour {
         return false;
     }
 
-    public int getLevel(){
-        return level;
-    }
-
-    public int getdmgReduction(){
-        return damageReduction;
-    }
-
-    public void setLevel(int set){
-        level = set;
-    }
-
-    public void setdmgReduction(int set){
-        damageReduction = set;
-    }
 
 }

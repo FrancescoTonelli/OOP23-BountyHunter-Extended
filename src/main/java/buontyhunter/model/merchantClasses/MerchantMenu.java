@@ -26,6 +26,10 @@ public class MerchantMenu extends HidableObject {
         this.player=player;
     }
 
+    public boolean isWeaponSold(){
+        return weaponSold;
+    }
+
     public int getUpgradeArmourCost(){
         return upgradeArmourCost;
     }
@@ -62,6 +66,7 @@ public class MerchantMenu extends HidableObject {
         if(player.getDoblons()>=getUpgradeDamageCost()){
             
             player.withdrawDoblons(getUpgradeDamageCost());
+            player.setDamageMultiplier(player.getDamageMultiplier()+(float)0.5);
             updateUpgradeDamageCost();
             return true;
         }
@@ -70,9 +75,8 @@ public class MerchantMenu extends HidableObject {
     }
 
     public boolean buyNewWeapon(){
-        if(weaponSold||player.getDoblons()>=1000){
+        if(!weaponSold&&player.getDoblons()>=1000){
 
-            player.addWeapon(WeaponFactory.getInstance().createShurikens(player) );
             player.withdrawDoblons(1000);
             return weaponSold = true;
         }
