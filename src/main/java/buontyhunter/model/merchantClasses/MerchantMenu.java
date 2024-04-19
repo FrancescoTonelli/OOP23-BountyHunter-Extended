@@ -25,20 +25,39 @@ public class MerchantMenu extends HidableObject {
         this.player=player;
     }
 
+    /**
+     * @return the armour's upgrade cost
+     */
     public int getUpgradeArmourCost(){
         return upgradeArmourCost;
     }
+
+    /**
+     * @return the damage's upgrade cost
+     */
     public int getUpgradeDamageCost(){
         return upgradeDamageCost;
     }
 
+    /**
+     * updates the armour's upgrade cost
+     */
     public void updateUpgradeArmourCost(){
         upgradeArmourCost = player.getArmourLevel()*50;
     }
+
+    /**
+     * updates the damage's upgrade cost
+     */
     public void updateUpgradeDamageCost(){
         upgradeDamageCost = (int)(player.getDamageMultiplier()*100);
     }
 
+    /**
+     * Controls the multiplicative price and if the player has enough doblons 
+     * calls the method to upgrade the armour
+     * @return true if the upgrade succeded, false if not
+     */
     public boolean upgradeArmour(){
         updateUpgradeArmourCost();
 
@@ -55,6 +74,11 @@ public class MerchantMenu extends HidableObject {
         return false;
     }
 
+    /**
+     * Controls the multiplicative price and if the player has enough doblons 
+     * calls the method to upgrade the damage
+     * @return true if the upgrade succeded, false if not
+     */
     public boolean upgradeDamage(){
         updateUpgradeDamageCost();
         
@@ -69,6 +93,10 @@ public class MerchantMenu extends HidableObject {
         return false;
     }
 
+    /**
+     * With this method the player can buy the Shuriken weapon
+     * @return true if succeded, false if not
+     */
     public boolean buyNewWeapon(){
         if(!weaponSold&&player.getDoblons()>=1000){
 

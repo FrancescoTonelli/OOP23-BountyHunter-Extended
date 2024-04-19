@@ -27,6 +27,11 @@ public class Armour {
         damageReduction = set;
     }
 
+    /**
+     * Levels up the armour by 2 the first three times and by 1 until lvl 20
+     * at lvl 20 the upgrading automatically fails
+     * @return if the upgrade succeded
+     */
     public boolean levelUp(){
         
         if(level<20)

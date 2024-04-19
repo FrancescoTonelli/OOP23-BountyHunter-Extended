@@ -908,17 +908,26 @@ Ho aggiunto numerosi metodi in SwingGraphics per disegnare alcune entità e inte
 
 #### 3.5 Alessandro Buono Codice Esterno
 
+slotMachineClasses: La gestione dei vari roll random e della vittoria tramite vari Enum mi ha permesso di scrivere del codice molto più agilmente e soprattutto molto più leggibile
+
 SwingScene: Inserimento di un più efficiente metodo di gestire gli input dei vari tasti e le funzioni ad essi collegati nell’interfaccia e nelle altre classi (PlayerInputController, PlayerInputComponent, InputController, KeyboardInputController) per attacchi e movimento sia nei casi di pressione che di rilascio per ogni caso utile.
 
-GameFactory: Inserito il metodo per creare l’oggetto di base per l’utilità usato nel combattimento (WeaponDamagingArea), poi modificato altri factory base in cui venivano creati i personaggi o i nemici per dare l’equipaggiamento di base.
-Toccato anche gli update vari per tutti gli oggetti creati.
+GameFactory: Inserito il metodo per creare l’oggetto di base per l’utilità usato nel combattimento (WeaponDamagingArea).
 
-- MeleeWeapon
-- RangedWeapon
-- Weapon
-- WeaponFactory
-- WeaponType
-- DamagingArea
+Weapon
+
+File Creati
+|Classe|
+|------|
+|MerchantMenuGraphicsComponent| |
+|SlotMachineBoardGraphicsComponent| |
+|WeaponGraphicsComponent| |
+|SlotInputController| |
+|Armour| |
+|Tutti i file in merchantClasses (3)| |
+|Tutti i file in slotMachineClasses (5)| |
+|Tutti i file in weaponClasses (5)| |
+
 
 # Commenti Finali 
 
@@ -946,8 +955,9 @@ Le difficoltà più grandi che ho dovuto affrontare sono state sicuramente la sc
 #### 2.4 Alessandro Buono Autovalutazione
 
 In questo progetto mi sono concentrato soprattutto sulla parte di “ottimizzazione” e di programmazione a livello più meccanico.
-Ho dovuto fare cose semplici sulla carta, ma comunque molto dispendiose a livello mentale poiché avendo molti modi per implementarlo bisogna trovare il modo migliore che si incastri meglio nella struttura generale del codice pensando anche a come si svilupperà tutto il progetto.
-È stato un po' complicato coordinarsi con i bisogni di tutti, ma alla fine ci siamo riusciti a trovare ed è stato molto istruttivo soprattutto sul come gestire certe situazioni più critiche
+Ho dovuto fare cose semplici sulla carta, ma comunque molto dispendiose a livello logico poiché avendo molti modi per implementarlo bisogna trovare il modo che si incastri meglio nella struttura generale del codice pensando anche a come si svilupperà tutto il progetto e facendo in modo che sia comunque leggibile, modificabile ed aggiornabile facilmente.
+È stato un po' complicato coordinarsi con i bisogni di tutti, ma alla fine ci siamo riusciti a trovare ed è stato molto istruttivo soprattutto sul come gestire certe situazioni critiche.
+In futuro vorrei gestire meglio tutta la parte delle armi ranged separando i Bullet, rendendoli indipendenti in modo da poterli gestire più facilmente.
 
 
 
