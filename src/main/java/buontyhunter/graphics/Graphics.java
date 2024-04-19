@@ -2,6 +2,7 @@ package buontyhunter.graphics;
 
 import buontyhunter.model.*;
 import buontyhunter.model.consumables.Consumable;
+import buontyhunter.model.merchantClasses.MerchantMenu;
 import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.weaponClasses.RangedWeapon;
 import buontyhunter.model.weaponClasses.Weapon;
@@ -178,4 +179,11 @@ public interface Graphics {
 	 * @param board the board to draw
 	 */
 	void drawSlotMachineBoard(SlotMachineBoard board, World w);
+
+	/**
+	 * This method draws the Merchant's menu
+	 * 
+	 * @param menu the menu to draw
+	 */
+	void drawMerchantMenu(MerchantMenu menu, World w);
 }

@@ -463,7 +463,7 @@ public class GameFactory {
                 toRet.addInterractableArea(this.createPongForHub(new Point2d(12, 2), (PlayerEntity) toRet.getPlayer()));
                //TODO inserisci qui la slot ed il mercante
                 toRet.addInterractableArea(this.createSlotForHub(new Point2d(15, 2), (PlayerEntity) toRet.getPlayer() ));
-
+                toRet.addInterractableArea(this.createMerchantForHub(new Point2d(3, 10), (PlayerEntity)toRet.getPlayer()));
 
                 toRet.setQuestJournal(this.createQuestJournal());
                 toRet.disableEnemies();

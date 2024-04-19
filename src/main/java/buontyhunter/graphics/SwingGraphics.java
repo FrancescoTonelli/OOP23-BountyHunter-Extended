@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import buontyhunter.model.FighterEntity.MovementState;
 import buontyhunter.model.consumables.Consumable;
+import buontyhunter.model.merchantClasses.MerchantMenu;
 import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
 import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
 import buontyhunter.model.slotMachineClasses.WinCategories;
@@ -891,4 +892,13 @@ public class SwingGraphics implements Graphics {
 
 
 	}
+
+	public void drawMerchantMenu(MerchantMenu menu, World w){
+		if (!menu.isShow()){
+			return;
+		}
+
+		
+	}
+
 }

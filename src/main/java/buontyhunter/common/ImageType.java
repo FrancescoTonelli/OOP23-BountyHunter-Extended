@@ -139,5 +139,11 @@ public enum ImageType {
     playButton,
     jackpot,
     win,
-    slotMachine
+    slotMachine,
+    merchant,
+    armour,
+    armourUpgrade,
+    shuriken,
+    shurikenRotated,
+    shurikenBundle
 }
