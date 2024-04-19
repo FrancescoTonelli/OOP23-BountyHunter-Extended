@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 import javax.swing.JButton;
 import buontyhunter.core.GameEngine;
+import buontyhunter.common.Direction;
 import buontyhunter.common.ImageType;
 import buontyhunter.common.Point2d;
 import buontyhunter.model.*;
@@ -450,11 +451,54 @@ public class SwingGraphics implements Graphics {
 	public void drawBullet(RangedWeapon w) {
 		if (w.getHitbox() != null) {
 			var point = camera.getObjectPointInScene(w.getHitbox().getPoint2d());
-			if (point.isPresent()) {
-				g2.setColor(Color.RED);
-				g2.fillRect(getXinPixel(point.get()), getYinPixel(point.get()),
-						getValueInPixel(w.getHitbox().getWidth()),
-						getValueInPixel(w.getHitbox().getHeight()));
+
+			if(w.getBullet()!=null){
+
+				if (point.isPresent()) {
+	
+					if(w.getWeaponType()==WeaponType.BOW){
+						
+						switch (w.getBullet().getDirection()) {
+							case STAND_UP: {
+								g2.drawImage(assetManager.getImage(ImageType.arrowUp), getXinPixel(point.get()), getYinPixel(point.get()), null);
+								
+								break;
+							}
+							case STAND_DOWN: {
+								g2.drawImage(assetManager.getImage(ImageType.arrowDown), getXinPixel(point.get()), getYinPixel(point.get()), null);
+		
+								break;
+							}
+							case STAND_LEFT: {
+								g2.drawImage(assetManager.getImage(ImageType.arrowLeft), getXinPixel(point.get()), getYinPixel(point.get()), null);
+		
+								break;
+							}
+							case STAND_RIGHT: {
+								g2.drawImage(assetManager.getImage(ImageType.arrowRight), getXinPixel(point.get()), getYinPixel(point.get()), null);
+		
+								break;
+							}
+							default:
+								break;
+						}
+					}else if(w.getWeaponType()==WeaponType.SHURIKENS){
+	
+						if(w.getBullet().getZigZag()==0){
+							g2.drawImage(assetManager.getImage(ImageType.shuriken), getXinPixel(point.get()), getYinPixel(point.get()), null);
+						}else{
+							g2.drawImage(assetManager.getImage(ImageType.shurikenRotated), getXinPixel(point.get()), getYinPixel(point.get()), null);
+	
+						}
+	
+					}else{
+						g2.setColor(Color.RED);
+						g2.fillRect(getXinPixel(point.get()), getYinPixel(point.get()),
+								getValueInPixel(w.getHitbox().getWidth()),
+								getValueInPixel(w.getHitbox().getHeight()));
+	
+					}
+				}
 			}
 		}
 	}
@@ -732,6 +776,9 @@ public class SwingGraphics implements Graphics {
 				scaled = assetManager.getImage(ImageType.bow).getScaledInstance((int) (btn.getWidth() / (1.5)),
 						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
 				break;
+			case SHURIKENS:
+				scaled = assetManager.getImage(ImageType.shurikenBundle).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
 			default:
 				scaled = assetManager.getImage(ImageType.sword).getScaledInstance((int) (btn.getWidth() / (1.5)),
 						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
@@ -748,6 +795,8 @@ public class SwingGraphics implements Graphics {
 			g2.drawImage(assetManager.getImage(ImageType.brassKnucles), x, y, dimension, dimension, null);
 		} else if (weapon.getWeaponType() == WeaponType.BOW) {
 			g2.drawImage(assetManager.getImage(ImageType.bow), x, y, dimension, dimension, null);
+		}else if (weapon.getWeaponType() == WeaponType.SHURIKENS) {
+			g2.drawImage(assetManager.getImage(ImageType.shurikenBundle), x, y, dimension, dimension, null);
 		}
 	}
 
@@ -915,7 +964,7 @@ public class SwingGraphics implements Graphics {
 				? GameEngine.RESIZATOR.getWINDOW_WIDTH()
 				: GameEngine.RESIZATOR.getWINDOW_HEIGHT();
 
-		int boardDimension = minDim;
+		int boardDimension = (int)(minDim*0.8);
 		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2 - (boardDimension / 2);
 		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2 - (boardDimension / 2);
 

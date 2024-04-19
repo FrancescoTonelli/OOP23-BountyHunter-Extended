@@ -54,7 +54,8 @@ public class GameFactory {
                 toRet.addWeapon(WeaponFactory.getInstance().createSword(toRet));
                 toRet.addWeapon(WeaponFactory.getInstance().createBow(toRet));
                 toRet.addWeapon(WeaponFactory.getInstance().createBrassKnuckles(toRet));
-                toRet.setWeapon(toRet.getWeapons().get(2));
+                toRet.addWeapon(WeaponFactory.getInstance().createShurikens(toRet));
+                toRet.setWeapon(toRet.getWeapons().get(0));
 
                 return toRet;
         }
@@ -462,9 +463,8 @@ public class GameFactory {
                 toRet.addInterractableArea(this.createQuestPannelForHub(new Point2d(7, 5)));
                 toRet.addInterractableArea(this.createBlacksmithForHub(new Point2d(1, 4)));
                 toRet.addInterractableArea(this.createPongForHub(new Point2d(12, 2), (PlayerEntity) toRet.getPlayer()));
-               //TODO inserisci qui la slot ed il mercante
                 toRet.addInterractableArea(this.createSlotForHub(new Point2d(15, 2), (PlayerEntity) toRet.getPlayer() ));
-                toRet.addInterractableArea(this.createMerchantForHub(new Point2d(3, 10), (PlayerEntity)toRet.getPlayer()));
+                toRet.addInterractableArea(this.createMerchantForHub(new Point2d(2, 10), (PlayerEntity)toRet.getPlayer()));
 
                 toRet.setQuestJournal(this.createQuestJournal());
                 toRet.disableEnemies();

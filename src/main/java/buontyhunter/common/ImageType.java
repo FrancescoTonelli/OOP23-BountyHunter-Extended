@@ -146,5 +146,9 @@ public enum ImageType {
     armourUpgrade,
     shuriken,
     shurikenRotated,
-    shurikenBundle
+    shurikenBundle,
+    arrowLeft,
+    arrowRight,
+    arrowUp,
+    arrowDown
 }

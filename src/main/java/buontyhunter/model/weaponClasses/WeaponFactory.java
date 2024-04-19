@@ -31,7 +31,7 @@ public class WeaponFactory {
      * @return the new bow
      */
     public Weapon createBow(FighterEntity owner) {
-        return new RangedWeapon(30, 3, 15, 1, null, owner, WeaponType.BOW);
+        return new RangedWeapon(30, 3, 10, 1, null, owner, WeaponType.BOW);
     }
 
     /**
@@ -44,7 +44,7 @@ public class WeaponFactory {
         if (level < 1) {
             throw new IllegalArgumentException("Level must be greater than 0");
         }
-        return new RangedWeapon(60 * level, 1, 6, 1, null, owner, WeaponType.BOSSBOW);
+        return new RangedWeapon(60 * level, 1, 10, 1, null, owner, WeaponType.BOSSBOW);
 
     }
 
@@ -63,7 +63,7 @@ public class WeaponFactory {
      * @return the new boss sword
      */
     public Weapon createShurikens(FighterEntity owner) {
-        return new RangedWeapon(15, 4, 10, 2, null, owner, WeaponType.SHURIKENS);
+        return new RangedWeapon(15, 4, 8, 1, null, owner, WeaponType.SHURIKENS);
     }
 }
 

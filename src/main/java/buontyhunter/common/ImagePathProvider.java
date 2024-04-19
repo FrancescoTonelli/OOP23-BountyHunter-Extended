@@ -953,6 +953,37 @@ public class ImagePathProvider {
                     setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
                 }
             });
+            put(ImageType.arrowLeft, new AssetImage() {
+                {
+                    setPath("utility/arrowLeft.png");
+                    setType(ImageType.arrowLeft);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.arrowRight, new AssetImage() {
+                {
+                    setPath("utility/arrowRight.png");
+                    setType(ImageType.arrowRight);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });put(ImageType.arrowUp, new AssetImage() {
+                {
+                    setPath("utility/arrowUp.png");
+                    setType(ImageType.arrowUp);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.arrowDown, new AssetImage() {
+                {
+                    setPath("utility/arrowDown.png");
+                    setType(ImageType.arrowDown);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
             put(ImageType.bow, new AssetImage() {
                 {
                     setPath("utility/bow.png");

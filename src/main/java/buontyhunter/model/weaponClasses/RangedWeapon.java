@@ -92,7 +92,7 @@ public class RangedWeapon extends Weapon {
 
     }
 
-    private class Bullet {
+    public class Bullet {
 
         private double travelDistance;
         private Point2d pos;
@@ -106,10 +106,18 @@ public class RangedWeapon extends Weapon {
             pos = owner.getPos();
             hitbox = new RectBoundingBox(pos, 1, 1);
 
-            if(((PlayerEntity)owner).getWeapon().getWeaponType()==WeaponType.SHURIKENS){
+            if(owner.getWeapon().getWeaponType()==WeaponType.SHURIKENS){
                 curving=1;
             }
             
+        }
+
+        public Direction getDirection(){
+            return attackDirection;
+        }
+
+        public int getZigZag(){
+            return zigzag;
         }
 
         /**
@@ -155,7 +163,7 @@ public class RangedWeapon extends Weapon {
                     }
                 }
                 
-                if(((PlayerEntity)owner).getWeapon().getWeaponType()==WeaponType.SHURIKENS){
+                if(owner.getWeapon().getWeaponType()==WeaponType.SHURIKENS){
                     zigzag++;
                     
                     if(zigzag == 2){
