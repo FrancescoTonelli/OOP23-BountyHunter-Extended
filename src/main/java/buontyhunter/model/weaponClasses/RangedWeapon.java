@@ -4,7 +4,6 @@ package buontyhunter.model.weaponClasses;
 import buontyhunter.common.Direction;
 import buontyhunter.common.ImageType;
 import buontyhunter.model.FighterEntity;
-import buontyhunter.model.PlayerEntity;
 import buontyhunter.model.RectBoundingBox;
 import buontyhunter.common.Point2d;
 

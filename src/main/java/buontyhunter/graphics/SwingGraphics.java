@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 import javax.swing.JButton;
 import buontyhunter.core.GameEngine;
-import buontyhunter.common.Direction;
 import buontyhunter.common.ImageType;
 import buontyhunter.common.Point2d;
 import buontyhunter.model.*;
@@ -358,6 +357,46 @@ public class SwingGraphics implements Graphics {
 		
 
 		btn.setIcon(new ImageIcon(scaled));
+	}
+
+	public void drawMerchantButtons(int index, int x, int y, int unit, JButton btn){
+		btn.setOpaque(true);
+		btn.setBackground(new Color(197, 145, 84));
+		btn.setBorderPainted(true);
+		btn.setBorder(new LineBorder(new Color(130, 91, 49), unit / 10));
+		btn.setBounds(x, y, unit, unit);
+		btn.setLayout(new BorderLayout());
+
+		Image icon;
+
+
+		switch (index) {
+			case 0:
+				icon = assetManager.getImage(ImageType.armourUpgrade).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
+			case 1:
+				icon = assetManager.getImage(ImageType.damageUp).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
+			case 2:
+				icon = assetManager.getImage(ImageType.shurikenBundle).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
+			default:
+				icon = assetManager.getImage(ImageType.hammer).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
+		}
+
+		btn.setIcon(new ImageIcon(icon));
+
+	}
+
+	public void drawNotEnoughMoney(){
+		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2;
+		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2;
+
 	}
 
 	public void drawStringUnderPlayer(String s) {

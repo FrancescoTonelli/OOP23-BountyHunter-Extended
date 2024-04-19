@@ -37,6 +37,7 @@ public class SwingScene implements Scene, ComponentListener {
 	private final List<JButton> blacksmithButtons = new ArrayList<>();
 	private final List<JButton> inventoryButtons = new ArrayList<>();
 	private final List<JButton>	slotMachineButtons = new ArrayList<>();
+	private final List<JButton>	merchantButtons = new ArrayList<>();
 	protected final SwingAssetProvider assetManager;
 	private final MusicPlayer musicPlayer;
 	private Track currentTrack;
@@ -458,6 +459,68 @@ public class SwingScene implements Scene, ComponentListener {
 						btn.setVisible(false);
 					});
 				}
+
+				// render merchant buttons
+				if (IsHub && getMerchantMenu().isShow()) {
+					merchantButtons.forEach(btn -> {
+						frame.remove(btn);
+						btn.setVisible(false);
+					});
+
+					JButton upgradeArmour = new JButton();
+					upgradeArmour.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(!getMerchantMenu().upgradeArmour()){
+								//TODO input controller mercante finestra (soldi non sufficienti)
+							}
+						}
+					});
+					JButton upgradeDamage = new JButton();
+					upgradeDamage.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(!getMerchantMenu().upgradeDamage()){
+								//TODO input controller mercante finestra (soldi non sufficienti)
+							}
+						}
+					});
+					JButton buyShurikens = new JButton();
+					buyShurikens.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(!getMerchantMenu().buyNewWeapon()){
+
+								//TODO input controller mercante finestra (soldi non sufficienti)
+							}
+						}
+					});
+
+					merchantButtons.add(upgradeArmour);
+					merchantButtons.add(upgradeDamage);
+
+					int x = width / 2;
+					int y = height / 2 - unit / 2;
+
+					merchantButtons.get(0).setVisible(getBlacksmithPannel().isShow());
+					gr.drawMerchantButtons(0,x - unit * 2, y,unit, merchantButtons.get(0));
+					this.add(merchantButtons.get(0), BorderLayout.CENTER);
+					
+					merchantButtons.get(1).setVisible(getBlacksmithPannel().isShow());
+					gr.drawMerchantButtons(1,x + unit, y,unit, merchantButtons.get(1));
+					this.add(merchantButtons.get(1), BorderLayout.CENTER);
+
+					merchantButtons.get(2).setVisible(getBlacksmithPannel().isShow());
+					gr.drawMerchantButtons(2,x + unit, y,unit, merchantButtons.get(2));
+					this.add(merchantButtons.get(2), BorderLayout.CENTER);
+
+				} else if (IsHub && !getMerchantMenu().isShow()) {
+					merchantButtons.forEach(btn -> {
+						frame.remove(btn);
+						btn.setVisible(false);
+					});
+				}
+
 
 
 				// HUD render
