@@ -532,9 +532,7 @@ EnemyRegistry --> EnemyEntity : enemies[]
 
 **Soluzione** : Modificando l'interfaccia precedentemente implementata "InputController" mi sono adattato al pattern già utilizzato inserendo però varie funzioni per migliorare la logica e la leggibilità del codice.
 L'utilizzo di variabili di stato ha permesso al codice di essere flessibile ed adattabile a varie modifiche sulle interazioni fondamentali che il personaggio ha con gli input, per esempio se il personaggio si può muovere in più direzioni contemporaneamente o se il suo movimento è interrotto se si sta eseguendo un attacco, tutte cose facilmente comprensibili e modificabili nel codice.
-Ho fatto in modo che ci sia un timer adattivo in modo da gestire l'attack speed come il numero di attacchi al secondo e così il programma nel lasso di tempo in cui il timer è > 0, ignora completamente i segnali in entrata dalle frecce 
-
-**Pattern usato** : ECS (Entity Component System)
+Ho fatto in modo che ci sia un timer adattivo in modo da gestire l'attack speed come il numero di attacchi al secondo e così il programma nel lasso di tempo in cui il timer è > 0, ignora completamente gli input in entrata.
 
 ```mermaid
 
@@ -578,12 +576,12 @@ classDiagram
 
 **Problema** : Gestione delle hitbox degli attacchi
 
-**Soluzione** : Risolto impostatando le hitbox come un "HideableObject" in modo da poterne controllare lo stato ed in caso di necessità disattivarlo e poterne cambiarne direzione e dimensione comodamente, questi Object possono interagire con le BBox dei nemici per generare degli eventi alla sovrapposizione, dando effettivamente vita a questo gioco.
+**Soluzione** : Risolto impostatando le hitbox come un "HideableObject" in modo da poterne controllare lo stato ed in caso di necessità disattivarlo e poterne cambiare la direzione e dimensione comodamente, questi Object possono interagire con le BBox dei nemici per generare degli eventi alla sovrapposizione, dando effettivamente vita a questo gioco.
 
 
 **Problema** : Implementazione delle Armi
 
-**Soluzione** : Risolto con dell'ereditarietà standard per minimizzare il riciclo di codice  e permettere a tutte le classi figlie durante tutto il processo della creazione delle armi è risultato molto utile avere certi campi salvati in molteplici oggetti, così da rendere tutto il development più fluido e soprattutto comprensibile.
+**Soluzione** : Risolto con dell'ereditarietà standard per minimizzare la ripetizione del codice e permettere a tutte le classi figlie durante tutto il processo della creazione delle armi è risultato molto utile avere certi campi salvati in molteplici oggetti, così da rendere tutto il development più fluido e soprattutto comprensibile.
 Spesso può sembrare inutile o subottimale, ma può rispariare tanto tempo quando si cercano dei campi specifici o quando si cerca di risalire ad un errore.
 È molto importante però anche considerare il modo in cui i compagni di progetto concepiscono e progettano il codice, perché fare del codice comprensibile per se stessi non vuol dire sempre fare del codice comprensibile per tutti.
 
@@ -674,9 +672,121 @@ classDiagram
 
 ```
 
-**Problema** : Necessità di dare un tipo diverso a stesse istanze di Weapon
+**Problema** : Rendere costante il ciclarsi della SlotMachine e metterlo in pausa durante la rivelazione del risultato
 
-**Soluzione** : Creato un ENUM per permettere a svariati altri metodi di capire direttamente la tipologia delle armi riassumendo così molteplici righe di codice e soprattutto rendere molto più facile la gestione degli sprite, soprattutto perché per armi di stessa istanza di weapon non erano riconoscibili avendo un oggetto weapon.
+**Soluzione** : Per ottenere l'effetto di costante variazione della slot machine ho dovuto trovare un elemento che venisse richiamato ripetutamente solo mentre la finestra era aperta.
+Piuttosto che fare delle lunghissime chiamate nel GameLoop ho risolto utilizzando l'imput component che non avrei utilizzato per la SlotMachine visto che l'unica interazione col player è un singolo bottone.
+Utilizzando l'inputComponent per quello ho potuto creare praticamente un "mini loop" personalizzato con a disposizione tutti campi della Board e della SlotMachine in maniera più chiara e leggibile, mantenendo però la frequenza delle chiamate del metodo "update".
+Il fattore random è stato implementato con un array (coll) con tutti i tipi possibili, per poi associarli ad ogni casella della board con un Rand.
+
+```mermaid
+
+classDiagram
+    class SlotMachineBoard {
+        -SlotMachineTilesTypes[] coll
+        -SlotMachineTilesTypes[][] arr
+        +SlotMachineBoard(type, pos, vel, box, input, graph, phys, show)
+        +void roll()
+        +ImageType[][] getTileImages()
+        +SlotMachineTilesTypes[][] getyDisplayedTipes()
+        +boolean play(player)
+
+    }
+
+    class SlotMachineInputComponent {
+        void update
+    }
+    
+    class SlotMachine {
+        +void roll()
+        +boolean play()
+        +WinCategories win()
+        +HidableObject getPanel()
+    }
+
+    class SlotMachineEntity{
+        - PlayerEntity player
+        - SlotMachineBoard board
+    }
+    
+    class WinCategories {
+        <<enumeration>>
+        -Lose
+        -DoubleRefund
+        -QuintupleRefund
+        -SmallWin
+        -BigWin
+        -Jackpot
+    }
+
+    class SlotMachineTilesTypes {
+        <<enumeration>>
+        -zombie
+        -skelly
+        -knight
+        -wizard
+        -doblon
+        -hammer
+    }
+    class HidableObject
+    class InterractableArea
+
+    SlotMachineEntity --|> InterractableArea :Extends
+    SlotMachineEntity *-- SlotMachineBoard :Contains
+    SlotMachineEntity *-- SlotMachineInputComponent :Contains
+    SlotMachineEntity ..> SlotMachine : Implements
+    SlotMachineBoard --> HidableObject :Extends
+    SlotMachineBoard *-- PlayerEntity :Contains
+
+```
+
+**Problema** : Aggiungere delle armi a runtime al Player
+
+**Soluzione** : Purtroppo un muro che ho riscontrato è stato il fatto che l'inventario e la lista dei pulsanti esistenti nell'inventario (sia quantità che tipo) è stabilita subito dopo che il player è creato appena si trova nell'Hub per la prima volta e mai più, per questo ho deciso di optare per una soluzione più terra terra.
+Al player ho dato a disposizione tutte le armi quando viene creato, ma i pulsanti con quelle acquistabili sono nascosti, ed essi vengono rivelati dopo che sono state acquistate effettivamente.
+
+
+```mermaid
+
+classDiagram
+    class Merchant {
+        +int getUpgradeArmourCost()
+        +int getUpgradeDamageCost()
+        +void updateUpgradeArmourCost()
+        +void updateUpgradeDamageCost()
+    }
+
+    class MerchantEntity {
+        +MerchantEntity(type, pos, vel, box, menu)
+        +int getUpgradeArmourCost()
+        +int getUpgradeDamageCost()
+        +void updateUpgradeArmourCost()
+        +void updateUpgradeDamageCost()
+    }
+
+    class MerchantMenu {
+        -int upgradeArmourCost
+        -int upgradeDamageCost
+        +MerchantMenu(type, pos, vel, box, input, graph, phys, show, player)
+        +int getUpgradeArmourCost()
+        +int getUpgradeDamageCost()
+        +void updateUpgradeArmourCost()
+        +void updateUpgradeDamageCost()
+        +boolean upgradeArmour()
+        +boolean upgradeDamage()
+        +boolean buyNewWeapon()
+    }
+
+    class HidableObject
+    class InterractableArea
+
+    MerchantEntity --|> InterractableArea :Extends
+    MerchantEntity --* Merchant :Implements
+    MerchantEntity *-- MerchantMenu :Contains
+    MerchantMenu --|> HidableObject :Extends
+     MerchantMenu *-- PlayerEntity :Contains
+
+```
 
 
 # Sviluppo
@@ -921,8 +1031,6 @@ Ho aggiunto numerosi metodi in SwingGraphics per disegnare alcune entità e inte
 |Direction | |
 
 #### 3.5 Alessandro Buono Codice Esterno
-
-slotMachineClasses: La gestione dei vari roll random e della vittoria tramite vari Enum mi ha permesso di scrivere del codice molto più agilmente e soprattutto molto più leggibile
 
 SwingScene: Inserimento di un più efficiente metodo di gestire gli input dei vari tasti e le funzioni ad essi collegati nell’interfaccia e nelle altre classi (PlayerInputController, PlayerInputComponent, InputController, KeyboardInputController) per attacchi e movimento sia nei casi di pressione che di rilascio per ogni caso utile.
 
