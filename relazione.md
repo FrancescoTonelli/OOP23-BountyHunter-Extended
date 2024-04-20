@@ -35,7 +35,6 @@
         - [Fabio Fattori](#21-fabio-fattori)
         - [Mattia Senni](#22-mattia-senni)
         - [Francesco Tonelli](#23-francesco-tonelli)
-            - [Francesco Tonelli - Extended](#231-francesco-tonelli---extended)
         - [Alessandro Buono](#24-alessandro-buono)
         - [Codice riadattato per la realizzazzione](#25-codice-riadattato-per-la-realizzazzione)
     - [3. Codice Esterno](#3-codice-esterno)
@@ -43,7 +42,6 @@
         - [Fabio Fattori](#32-fabio-fattori-codice-esterno)
         - [Mattia Senni](#33-mattia-senni-codice-esterno)
         - [Francesco Tonelli](#34-francesco-tonelli-codice-esterno)
-            - [Francesco Tonelli - Extended](#341-francesco-tonelli-codice-esterno---extended)
         - [Alessandro Buono](#35-alessandro-buono-codice-esterno)
 - [Sviluppo ](#sviluppo)
     - [1. Testing Automatizzato ](#1-testing-automatizzato)
@@ -51,7 +49,6 @@
         - [Fabio Fattori](#21-fabio-fattori-sviluppo)
         - [Mattia Senni](#22-mattia-senni-sviluppo)
         - [Francesco Tonelli](#23-francesco-tonelli-sviluppo)
-            - [Francesco Tonelli](#231-francesco-tonelli-sviluppo---extended)
         - [Alessandro Buono](#24-alessandro-buono-sviluppo)
 - [Commenti Finali ](#commenti-finali)
     - [1. Autovalutazione e Lavori Futuri ](#1-autovalutazione-e-lavori-futuri)
@@ -529,8 +526,6 @@ EnemyRegistry --> EnemyEntity : enemies[]
 
 ![no UML found](./relazioniImgs/hud_diagram.png "4.4 Diagramma UML che descrive come è stato implementato l'HUD")
 
-#### 2.3.1 Francesco Tonelli - Extended
-
 **Problema** : Al posto di dare dei dobloni al player, dopo la morte di ogni nemico questi rilascia per terra dei drop che il giocatore può raccogliere
 
 **Soluzione** : Il World adesso possiede un ConsumableManager, che gestisce tutti i drop nel mondo di gioco, creandoli, utilizzandoli ed eliminandoli. Il manager possiede quindi una lista di Consumable, classe astratta che viene estesa da DropDoblonsGiver (che, se raccolto, da un doblone al giocatore), DropAmmoGiver (che da 3 munizioni) e DropHealthGiver (che cura istantaneamente il giocatore). Per questi consumabili sono stati sviluppati un componente per la fisica (ConsumablePhysicsComponent, che attiva il consumabile quando viene raggiunto dal giocatore), uno per la grafica (ConsumablesGraphicsComponent, che rende possibile disegnarlo) e una classe per disegnarli (ConsumableGraphics, che viene richiamata da SwingGraphics quando vanno disegnati a schermo).
@@ -887,9 +882,7 @@ per l'implementazione del l'A* path finder è stato utilizzato un utilizzato un 
 **Utilizzo di javax.sound.sampled** (non spiegata a lezione):
     Usata per la riproduzione delle tracce musicali durante il gameplay in MusicPlayer. Permalink: https://github.com/progetto-oop/OOP23-BountyHunter/blob/75c21c3c431681794c9b95293f02a4e8c649c342/app/src/main/java/buontyhunter/model/MusicPlayerImpl.java#L16
 
-#### 2.3.1 Francesco Tonelli Sviluppo - Extended
-
-**Utilizzo di Stream**:
+**[Extended] Utilizzo di Stream**:
     Utilizzati diverse volte per gestire le liste di consumabili nel ConsumableManager e nel World (getSceneEntities) e la lista di InterractableArea per trovare la PongEntity in World (updateState), in PLayerInputController (instanceAttack) e in SwingGraphics (drawPongIcon). Il permalink presenta un esempio creato per i consumabili. Permalink: https://github.com/FrancescoTonelli/OOP23-BountyHunter-Extended/blob/609593f636d23de3f7c196b15154951457fffdc4/src/main/java/buontyhunter/model/consumables/ConsumableManagerImpl.java#L72
 
 #### 2.4 Alessandro Buono Sviluppo
@@ -1057,11 +1050,7 @@ Ho aggiunto numerosi metodi in SwingGraphics per disegnare alcune entità e inte
 |MusicPlayerImpl | |
 |Direction | |
 
-#### 3.4.1 Francesco Tonelli Codice Esterno - Extended
-
-Di seguito ho aggiunto i file che sono stati creati ex-novo durante la parte di sviluppo aggiuntiva
-
-|File|
+|File Extended|
 |----|
 |ConsumableGraphics|
 |ConsumableGraphicsImpl|
