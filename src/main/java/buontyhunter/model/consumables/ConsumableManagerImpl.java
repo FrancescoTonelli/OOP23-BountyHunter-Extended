@@ -77,7 +77,8 @@ public class ConsumableManagerImpl implements ConsumableManager {
             }
         });
 
-        this.consumablesList = new ArrayList<>(this.getAllConsumables().stream().filter(i -> !i.isUsed()).toList());
+        this.consumablesList = new ArrayList<>(
+                this.getAllConsumables().stream().filter(i -> !i.isUsed()).collect(Collectors.toList()));
     }
 
     @Override
