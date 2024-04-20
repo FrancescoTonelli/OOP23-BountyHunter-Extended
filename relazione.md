@@ -898,12 +898,11 @@ per l'implementazione del l'A* path finder è stato utilizzato un utilizzato un 
 
 **Utilizzo di Stream**: 
     Usate in SwingGraphics/Scene per filtrare le varie possibili istanze di HidableObject e InteractableArea. Quello riportato è un singolo esempio presente nella classe SwingGraphics.
-    Permalink: SwingGraphics r:981 (da inserire permalink)
+    Permalink: https://github.com/FrancescoTonelli/OOP23-BountyHunter-Extended/blob/ffb3303ff0c3482d85dc769082132c7df5c7123a/src/main/java/buontyhunter/graphics/SwingGraphics.java#L981
 
 **Utilizzo di Lambda Expressions**: 
     Usate combinazione con gli Stream per filtrare Gli oggetti sopra citati.Esempio nella classe SwingScene .
-    Permalink: SwingScene r:185 (da inserire permalink)
-
+    Permalink: https://github.com/FrancescoTonelli/OOP23-BountyHunter-Extended/blob/ffb3303ff0c3482d85dc769082132c7df5c7123a/src/main/java/buontyhunter/graphics/SwingScene.java#L185
 
 #### 2.5 Codice riadattato per la realizzazzione
 

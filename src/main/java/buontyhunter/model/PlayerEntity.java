@@ -27,40 +27,43 @@ public class PlayerEntity extends FighterEntity {
             GraphicsComponent graph, PhysicsComponent phys, int health, int maxHealth, Weapon w, Armour arm) {
         super(type, pos, vel, box, input, graph, phys, health, maxHealth, w);
         quests = new ArrayList<Quest>();
-        this.doblons = 10000;
+        this.doblons = 0;
         inventoryWeapons = new ArrayList<Weapon>();
         damageMultiplier = 1;
         movementPlayerSpeed = 0.3;
-        weaponBought=false;
-        this.armatura=arm;
+        weaponBought = false;
+        this.armatura = arm;
     }
 
     /**
      * get the player's Armour level
+     * 
      * @return the level
      */
-    public int getArmourLevel(){
+    public int getArmourLevel() {
         return armatura.getLevel();
     }
 
     /**
      * get the player's Armour damage reduction
+     * 
      * @return the dmg reduction
      */
-    public int getDmgRed(){
+    public int getDmgRed() {
         return armatura.getdmgReduction();
     }
 
     /**
      * makes the player's Armour level up upgrading its damage reduction
      */
-    public boolean levelUpArmour(){
+    public boolean levelUpArmour() {
         boolean success = armatura.levelUp();
         return success;
     }
 
     /**
      * equip a weapon from the player's inventory
+     * 
      * @param w the weapon to equip
      */
     public void equipWeapon(Weapon w) {
@@ -71,6 +74,7 @@ public class PlayerEntity extends FighterEntity {
 
     /**
      * add a weapon to the player's inventory
+     * 
      * @param w the weapon to add
      */
     public void addWeapon(Weapon w) {
@@ -79,6 +83,7 @@ public class PlayerEntity extends FighterEntity {
 
     /**
      * remove a weapon from the player's inventory
+     * 
      * @param w the weapon to remove
      */
     public void removeWeapon(Weapon w) {
@@ -87,6 +92,7 @@ public class PlayerEntity extends FighterEntity {
 
     /**
      * get the player's inventory of weapons
+     * 
      * @return the player's inventory of weapons
      */
     public List<Weapon> getWeapons() {
@@ -96,20 +102,22 @@ public class PlayerEntity extends FighterEntity {
     /**
      * Notifies that the player has bought the Weapon from the merchant
      */
-    public void weaponBought(){
-        weaponBought=true;
+    public void weaponBought() {
+        weaponBought = true;
     }
-    
+
     /**
      * gets if the player bought the Weapon from the merchant
+     * 
      * @return if the Weapon has been bought
      */
-    public boolean isWeaponBought(){
+    public boolean isWeaponBought() {
         return weaponBought;
     }
 
     /**
      * add a quest to the player's quest list
+     * 
      * @param q the quest to add
      */
     public void addQuest(Quest q) {
@@ -118,6 +126,7 @@ public class PlayerEntity extends FighterEntity {
 
     /**
      * remove a quest from the player's quest list
+     * 
      * @param q the quest to remove
      */
     public void removeQuest(Quest q) {
@@ -126,6 +135,7 @@ public class PlayerEntity extends FighterEntity {
 
     /**
      * get the player's quest list
+     * 
      * @return the player's quest list
      */
     public List<Quest> getQuests() {
@@ -166,20 +176,22 @@ public class PlayerEntity extends FighterEntity {
 
     /**
      * give ammo to the RangedWeapon the player is currently using
+     * 
      * @param ammo the ammo to give
      */
-    public void giveAmmo(int ammo){
-        if(this.weapon instanceof RangedWeapon){
+    public void giveAmmo(int ammo) {
+        if (this.weapon instanceof RangedWeapon) {
             ((RangedWeapon) this.weapon).addAmmo(ammo);
         }
     }
 
     /**
      * get the amount of ammo the RangedWeapon the player is currently using has
+     * 
      * @return the amount of ammo the RangedWeapon the player is currently using has
      */
-    public int getAmmo(){
-        if(this.weapon instanceof RangedWeapon){
+    public int getAmmo() {
+        if (this.weapon instanceof RangedWeapon) {
             return ((RangedWeapon) this.weapon).howManyAmmo();
         }
         return 0;
@@ -187,16 +199,18 @@ public class PlayerEntity extends FighterEntity {
 
     /**
      * use ammo from the RangedWeapon the player is currently using
+     * 
      * @param ammo the ammo to use
      */
-    public void useAmmo(int ammo){
-        if(this.weapon instanceof RangedWeapon){
+    public void useAmmo(int ammo) {
+        if (this.weapon instanceof RangedWeapon) {
             ((RangedWeapon) this.weapon).subtractAmmo(ammo);
         }
     }
 
     /**
      * check if the player is dead
+     * 
      * @param w the world the player is in
      * @return true if the player is dead and false otherwise
      */
@@ -213,48 +227,50 @@ public class PlayerEntity extends FighterEntity {
      */
     public void deadBehaviour() {
         for (Weapon w : inventoryWeapons) {
-            if(w.getWeaponType()==WeaponType.BOW){
-                useAmmo(getAmmo()/2);
+            if (w.getWeaponType() == WeaponType.BOW) {
+                useAmmo(getAmmo() / 2);
             }
         }
-        withdrawDoblons(doblons/2);
+        withdrawDoblons(doblons / 2);
         quests.clear();
     }
 
     /**
      * Cures the player health instantly
      */
-    public void curePlayer(){
+    public void curePlayer() {
         this.setHealth(this.getMaxHealth());
     }
 
     /**
      * return player's damage multiplier
      */
-    public float getDamageMultiplier(){
+    public float getDamageMultiplier() {
         return this.damageMultiplier;
     }
 
     /**
      * modify player's damage multiplier value
+     * 
      * @param value the new value
      */
-    public void setDamageMultiplier(float value){
+    public void setDamageMultiplier(float value) {
         this.damageMultiplier = value;
     }
 
     /**
      * return player's movement speed
      */
-    public double getMovementSpeed(){
+    public double getMovementSpeed() {
         return this.movementPlayerSpeed;
     }
 
     /**
      * modify player's movement speed value
+     * 
      * @param value the new value
      */
-    public void setMovementSpeed(double value){
+    public void setMovementSpeed(double value) {
         this.movementPlayerSpeed = value;
     }
 }
