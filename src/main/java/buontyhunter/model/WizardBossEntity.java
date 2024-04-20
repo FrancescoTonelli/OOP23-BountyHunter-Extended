@@ -6,8 +6,6 @@ import buontyhunter.common.Vector2d;
 import buontyhunter.graphics.GraphicsComponent;
 import buontyhunter.input.InputComponent;
 import buontyhunter.physics.PhysicsComponent;
-import buontyhunter.weaponClasses.Weapon;
-import buontyhunter.weaponClasses.WeaponFactory;
 import buontyhunter.model.AI.AIFactoryImpl;
 import buontyhunter.model.AI.AttackHelper;
 import buontyhunter.model.AI.enemySpawner.EnemySpawner;
@@ -15,6 +13,8 @@ import buontyhunter.model.AI.enemySpawner.EnemySpawnerFixed;
 import buontyhunter.model.AI.enemySpawner.EnemyType;
 import buontyhunter.model.AI.pathFinding.AIEnemyFollowPathHelper;
 import buontyhunter.model.event.KilledEnemyEvent;
+import buontyhunter.model.weaponClasses.Weapon;
+import buontyhunter.model.weaponClasses.WeaponFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;

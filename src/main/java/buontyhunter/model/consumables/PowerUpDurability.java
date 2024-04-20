@@ -7,8 +7,8 @@ import buontyhunter.input.InputComponent;
 import buontyhunter.model.BoundingBox;
 import buontyhunter.model.GameObjectType;
 import buontyhunter.model.PlayerEntity;
+import buontyhunter.model.weaponClasses.MeleeWeapon;
 import buontyhunter.physics.PhysicsComponent;
-import buontyhunter.weaponClasses.MeleeWeapon;
 
 public class PowerUpDurability extends Consumable{
 

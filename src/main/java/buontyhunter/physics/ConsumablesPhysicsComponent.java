@@ -8,8 +8,8 @@ import buontyhunter.model.World;
 import buontyhunter.model.consumables.Consumable;
 import buontyhunter.model.consumables.DropAmmoGiver;
 import buontyhunter.model.consumables.PowerUpDurability;
-import buontyhunter.weaponClasses.MeleeWeapon;
-import buontyhunter.weaponClasses.RangedWeapon;
+import buontyhunter.model.weaponClasses.MeleeWeapon;
+import buontyhunter.model.weaponClasses.RangedWeapon;
 
 public class ConsumablesPhysicsComponent extends PhysicsComponent{
     public void update(long dt, GameObject obj, World w) {

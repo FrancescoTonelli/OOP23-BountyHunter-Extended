@@ -15,6 +15,12 @@ import buontyhunter.core.GameEngine;
 import buontyhunter.input.*;
 import buontyhunter.model.*;
 import buontyhunter.model.MusicPlayer.Track;
+import buontyhunter.model.merchantClasses.MerchantEntity;
+import buontyhunter.model.merchantClasses.MerchantMenu;
+import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
+import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
+import buontyhunter.model.weaponClasses.WeaponType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.*;
@@ -31,6 +37,8 @@ public class SwingScene implements Scene, ComponentListener {
 	private final List<JButton> questButtons = new ArrayList<>();
 	private final List<JButton> blacksmithButtons = new ArrayList<>();
 	private final List<JButton> inventoryButtons = new ArrayList<>();
+	private final List<JButton>	slotMachineButtons = new ArrayList<>();
+	private final List<JButton>	merchantButtons = new ArrayList<>();
 	protected final SwingAssetProvider assetManager;
 	private final MusicPlayer musicPlayer;
 	private Track currentTrack;
@@ -172,6 +180,26 @@ public class SwingScene implements Scene, ComponentListener {
 		}
 	}
 
+	private SlotMachineBoard getSlotMachineBoard() {
+		try {
+			return (SlotMachineBoard) gameState.getWorld().getInterractableAreas().stream()
+					.filter(e -> e.getPanel() instanceof SlotMachineBoard).findFirst().get().getPanel();
+		} catch (Exception e) {
+			throw new RuntimeException("SlotMachineBoard not found" + gameState.getWorld().getInterractableAreas().stream()
+							.filter(pan -> pan.getPanel() instanceof SlotMachineBoard).toString());
+		}
+	}
+
+	private MerchantMenu getMerchantMenu() {
+		try {
+			return (MerchantMenu) gameState.getWorld().getInterractableAreas().stream()
+					.filter(e -> e.getPanel() instanceof MerchantMenu).findFirst().get().getPanel();
+		} catch (Exception e) {
+			throw new RuntimeException("MerchantMenu not found" + gameState.getWorld().getInterractableAreas().stream()
+							.filter(pan -> pan.getPanel() instanceof MerchantMenu).toString());
+		}
+	}
+
 	public class ScenePanel extends JPanel implements KeyListener {
 
 		protected int centerY;
@@ -257,6 +285,14 @@ public class SwingScene implements Scene, ComponentListener {
 						gr.drawPongIcon((PongEntity) e, scene);
 					}
 
+					if (e instanceof SlotMachineEntity) {
+						gr.drawSlotMachine((SlotMachineEntity) e, scene);
+					}
+
+					if (e instanceof MerchantEntity) {
+						gr.drawMerchant((MerchantEntity) e, scene);
+					}
+
 					if ((camera.inScene(e.getPos()) && (e instanceof Teleporter || e instanceof WizardBossEntity))) {
 						e.updateGraphics(gr, scene);
 						if (e instanceof WizardBossEntity && ((WizardBossEntity) e).isAttackingPlayer()) {
@@ -293,7 +329,31 @@ public class SwingScene implements Scene, ComponentListener {
 								.get(inventoryButtons.indexOf(btn)), x + offsetX, y, btn);
 
 						btn.setVisible(true);
+
+						//if the Shurikens has not been sold by the merchant yet, the weapon won't show in the inventory
+						if(((PlayerEntity) gameState.getWorld().getPlayer()).getWeapons()
+									.get(inventoryButtons.indexOf(btn)).getWeaponType()==WeaponType.SHURIKENS &&
+									 !((PlayerEntity) gameState.getWorld().getPlayer()).isWeaponBought()){
+
+							btn.setVisible(false);
+						}
+
 					});
+
+					//Draws how much damage reduction the player currently has
+					g2.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 25));
+					g2.setColor(Color.WHITE);
+					g2.drawString("Current damage reduction: " + ((PlayerEntity) gameState.getWorld().getPlayer()).getDmgRed(),
+								unit/5 , unit*5 - unit/2 );
+
+					//Draws how much damage multiplier the player currently has
+					g2.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 25));
+					g2.setColor(Color.WHITE);
+					g2.drawString("Current damage multiplier: " + ((PlayerEntity) gameState.getWorld().getPlayer()).getDamageMultiplier(),
+								unit/5 , unit*5 - unit/4 );
+
+
+
 				} else {
 					inventoryButtons.forEach(btn -> {
 						this.remove(btn);
@@ -388,6 +448,103 @@ public class SwingScene implements Scene, ComponentListener {
 					});
 				}
 
+				// render slotMachine button
+				if (IsHub && getSlotMachineBoard().isShow()) {
+					
+					int x = (int)((width * 0.5) - (unit*0.7));
+					int y = (int)(height * 0.77);
+
+					slotMachineButtons.forEach(btn -> {
+						frame.remove(btn);
+						btn.setVisible(false);
+					});
+
+					JButton play = new JButton();
+					play.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							getSlotMachineBoard().buttonBeeingPressed();
+							getSlotMachineBoard().play((PlayerEntity) gameState.getWorld().getPlayer());
+							getSlotMachineBoard().buttonReleased();
+						}
+					});
+					
+					slotMachineButtons.add(play);
+
+					slotMachineButtons.get(0).setVisible(getSlotMachineBoard().isShow());
+					
+					gr.drawSlotMachineButtons(x , y, unit, slotMachineButtons.get(0));
+					
+					this.add(slotMachineButtons.get(0));
+					
+
+				} else if (IsHub && !getSlotMachineBoard().isShow()) {
+					slotMachineButtons.forEach(btn -> {
+						frame.remove(btn);
+						btn.setVisible(false);
+					});
+				}
+
+				// render merchant buttons
+				if (IsHub && getMerchantMenu().isShow()) {
+					merchantButtons.forEach(btn -> {
+						frame.remove(btn);
+						btn.setVisible(false);
+					});
+
+					JButton upgradeArmour = new JButton();
+					upgradeArmour.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							getMerchantMenu().upgradeArmour();
+							
+						}
+					});
+					JButton upgradeDamage = new JButton();
+					upgradeDamage.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							getMerchantMenu().upgradeDamage();
+						}
+					});
+					JButton buyShurikens = new JButton();
+					buyShurikens.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							getMerchantMenu().buyNewWeapon();
+						}
+					});
+
+					merchantButtons.add(upgradeArmour);
+					merchantButtons.add(upgradeDamage);
+					merchantButtons.add(buyShurikens);
+
+					int x = width / 2;
+					int y = height / 2 - unit / 2;
+
+					merchantButtons.get(0).setVisible(getMerchantMenu().isShow());
+					gr.drawMerchantButtons(0,x - unit * 2, y + (int)(unit * 1.6) ,unit, merchantButtons.get(0));
+					this.add(merchantButtons.get(0), BorderLayout.CENTER);
+					
+					merchantButtons.get(1).setVisible(getMerchantMenu().isShow());
+					gr.drawMerchantButtons(1,x - unit /2, y + (int)(unit * 1.6),unit, merchantButtons.get(1));
+					this.add(merchantButtons.get(1), BorderLayout.CENTER);
+
+					merchantButtons.get(2).setVisible(getMerchantMenu().isShow());
+					gr.drawMerchantButtons(2,x + unit, y + (int)(unit * 1.6),unit, merchantButtons.get(2));
+					this.add(merchantButtons.get(2), BorderLayout.CENTER);
+
+					//if(((PlayerEntity) gameState.getWorld().getPlayer()).getWeapons().contains())
+
+				} else if (IsHub && !getMerchantMenu().isShow()) {
+					merchantButtons.forEach(btn -> {
+						frame.remove(btn);
+						btn.setVisible(false);
+					});
+				}
+
+
+
 				// HUD render
 				int weaponContainerDimension = frame.getHeight() / 8;
 				int weaponContainerX = 10;
@@ -400,11 +557,11 @@ public class SwingScene implements Scene, ComponentListener {
 
 				gr.drawDurabilityBar(((PlayerEntity) gameState.getWorld().getPlayer()).getWeapon(),
 						weaponContainerX + weaponContainerDimension + 10,
-						weaponContainerY + (weaponContainerDimension / 3));
+						weaponContainerY + (weaponContainerDimension / 4));
 
-				int iconDimension = weaponContainerDimension / 4;
+				int iconDimension = weaponContainerDimension / 3;
 				int doblonsIconX = weaponContainerX + weaponContainerDimension + 10;
-				int iconY = weaponContainerY + (3 * (weaponContainerDimension / 4));
+				int iconY = weaponContainerY + (int)(weaponContainerDimension /1.7);
 				g2.drawImage(assetManager.getImage(ImageType.doblon),
 						doblonsIconX, iconY, iconDimension, iconDimension, null);
 				String doblonsAmount = ((PlayerEntity) gameState.getWorld().getPlayer()).getDoblons() + "";
@@ -412,13 +569,21 @@ public class SwingScene implements Scene, ComponentListener {
 				g2.setColor(Color.BLACK);
 				g2.drawString(doblonsAmount, doblonsIconX + iconDimension, iconY + iconDimension);
 
-				int arrowIconX = doblonsIconX + iconDimension + 20;
+				int arrowIconX = doblonsIconX + iconDimension + 40;
 				g2.drawImage(assetManager.getImage(ImageType.arrow),
 						arrowIconX, iconY, iconDimension, iconDimension, null);
 				String ammoAmount = ((PlayerEntity) gameState.getWorld().getPlayer()).getAmmo() + "";
 				g2.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));
 				g2.setColor(Color.BLACK);
 				g2.drawString(ammoAmount, arrowIconX + iconDimension, iconY + iconDimension);
+
+				int armourIconX = arrowIconX + iconDimension + 40;
+				g2.drawImage(assetManager.getImage(ImageType.armour),
+						armourIconX, iconY, iconDimension, iconDimension, null);
+				String armourLvl = ((PlayerEntity) gameState.getWorld().getPlayer()).getArmourLevel() + "";
+				g2.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 12));
+				g2.setColor(Color.BLACK);
+				g2.drawString(armourLvl, armourIconX + iconDimension, iconY + iconDimension);
 
 			}
 		}

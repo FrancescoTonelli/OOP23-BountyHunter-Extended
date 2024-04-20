@@ -2,8 +2,8 @@ package buontyhunter.model;
 
 import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;
-import buontyhunter.weaponClasses.MeleeWeapon;
-import buontyhunter.weaponClasses.RangedWeapon;
+import buontyhunter.model.weaponClasses.MeleeWeapon;
+import buontyhunter.model.weaponClasses.RangedWeapon;
 
 public class BlacksmithEntity extends InterractableArea implements Blacksmith{
 

@@ -6,10 +6,11 @@ import buontyhunter.common.Point2d;
 import buontyhunter.common.Vector2d;
 import buontyhunter.graphics.GraphicsComponent;
 import buontyhunter.input.InputComponent;
+import buontyhunter.model.armourClasses.Armour;
+import buontyhunter.model.weaponClasses.RangedWeapon;
+import buontyhunter.model.weaponClasses.Weapon;
+import buontyhunter.model.weaponClasses.WeaponType;
 import buontyhunter.physics.PhysicsComponent;
-import buontyhunter.weaponClasses.RangedWeapon;
-import buontyhunter.weaponClasses.Weapon;
-import buontyhunter.weaponClasses.WeaponType;
 
 public class PlayerEntity extends FighterEntity {
 
@@ -19,15 +20,43 @@ public class PlayerEntity extends FighterEntity {
     private List<Weapon> inventoryWeapons;
     private float damageMultiplier;
     private double movementPlayerSpeed;
+    private Armour armatura;
+    private boolean weaponBought;
 
     public PlayerEntity(GameObjectType type, Point2d pos, Vector2d vel, BoundingBox box, InputComponent input,
-            GraphicsComponent graph, PhysicsComponent phys, int health, int maxHealth, Weapon w) {
+            GraphicsComponent graph, PhysicsComponent phys, int health, int maxHealth, Weapon w, Armour arm) {
         super(type, pos, vel, box, input, graph, phys, health, maxHealth, w);
         quests = new ArrayList<Quest>();
-        this.doblons = 0;
+        this.doblons = 10000;
         inventoryWeapons = new ArrayList<Weapon>();
         damageMultiplier = 1;
         movementPlayerSpeed = 0.3;
+        weaponBought=false;
+        this.armatura=arm;
+    }
+
+    /**
+     * get the player's Armour level
+     * @return the level
+     */
+    public int getArmourLevel(){
+        return armatura.getLevel();
+    }
+
+    /**
+     * get the player's Armour damage reduction
+     * @return the dmg reduction
+     */
+    public int getDmgRed(){
+        return armatura.getdmgReduction();
+    }
+
+    /**
+     * makes the player's Armour level up upgrading its damage reduction
+     */
+    public boolean levelUpArmour(){
+        boolean success = armatura.levelUp();
+        return success;
     }
 
     /**
@@ -62,6 +91,21 @@ public class PlayerEntity extends FighterEntity {
      */
     public List<Weapon> getWeapons() {
         return new ArrayList<Weapon>(inventoryWeapons);
+    }
+
+    /**
+     * Notifies that the player has bought the Weapon from the merchant
+     */
+    public void weaponBought(){
+        weaponBought=true;
+    }
+    
+    /**
+     * gets if the player bought the Weapon from the merchant
+     * @return if the Weapon has been bought
+     */
+    public boolean isWeaponBought(){
+        return weaponBought;
     }
 
     /**

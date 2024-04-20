@@ -953,6 +953,37 @@ public class ImagePathProvider {
                     setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
                 }
             });
+            put(ImageType.arrowLeft, new AssetImage() {
+                {
+                    setPath("utility/arrowLeft.png");
+                    setType(ImageType.arrowLeft);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.arrowRight, new AssetImage() {
+                {
+                    setPath("utility/arrowRight.png");
+                    setType(ImageType.arrowRight);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });put(ImageType.arrowUp, new AssetImage() {
+                {
+                    setPath("utility/arrowUp.png");
+                    setType(ImageType.arrowUp);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.arrowDown, new AssetImage() {
+                {
+                    setPath("utility/arrowDown.png");
+                    setType(ImageType.arrowDown);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
             put(ImageType.bow, new AssetImage() {
                 {
                     setPath("utility/bow.png");
@@ -1061,6 +1092,102 @@ public class ImagePathProvider {
                 {
                     setPath("utility/pong.png");
                     setType(ImageType.pongIcon);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.slotMachineBackground, new AssetImage() {
+                {
+                    setPath("slotMachine/slotMachineBackground.png");
+                    setType(ImageType.slotMachineBackground);
+                    setHeight(GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getWINDOW_WIDTH());
+                }
+            });
+            put(ImageType.playButton, new AssetImage() {
+                {
+                    setPath("slotMachine/playButton.png");
+                    setType(ImageType.playButton);
+                    setHeight(GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getWINDOW_WIDTH());
+                }
+            });
+            put(ImageType.jackpot, new AssetImage() {
+                {
+                    setPath("slotMachine/jackpot.png");
+                    setType(ImageType.jackpot);
+                    setHeight(GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getWINDOW_WIDTH());
+                }
+            });
+            put(ImageType.win, new AssetImage() {
+                {
+                    setPath("slotMachine/win.png");
+                    setType(ImageType.win);
+                    setHeight(GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getWINDOW_WIDTH());
+                }
+            });
+            put(ImageType.slotMachine, new AssetImage() {
+                {
+                    setPath("slotMachine/slotMachine.png");
+                    setType(ImageType.slotMachine);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.merchant, new AssetImage() {
+                {
+                    setPath("Merchant/Merchant.png");
+                    setType(ImageType.merchant);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.merchantBackground, new AssetImage() {
+                {
+                    setPath("Merchant/MerchantBackground.png");
+                    setType(ImageType.merchantBackground);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.armourUpgrade, new AssetImage() {
+                {
+                    setPath("Merchant/ArmourUpgrade.png");
+                    setType(ImageType.armourUpgrade);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.shurikenBundle, new AssetImage() {
+                {
+                    setPath("Merchant/ShurikenBundle.png");
+                    setType(ImageType.shurikenBundle);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.armour, new AssetImage() {
+                {
+                    setPath("utility/Armour.png");
+                    setType(ImageType.armour);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.shuriken, new AssetImage() {
+                {
+                    setPath("utility/Shuriken.png");
+                    setType(ImageType.shuriken);
+                    setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
+                    setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
+                }
+            });
+            put(ImageType.shurikenRotated, new AssetImage() {
+                {
+                    setPath("utility/ShurikenRotated.png");
+                    setType(ImageType.shurikenRotated);
                     setHeight(GameEngine.RESIZATOR.getRATIO_HEIGHT());
                     setWidth(GameEngine.RESIZATOR.getRATIO_WIDTH());
                 }

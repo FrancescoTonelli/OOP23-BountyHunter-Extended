@@ -134,5 +134,21 @@ public enum ImageType {
     potion,
     damageUp,
     speedUp,
-    pongIcon
+    pongIcon,
+    slotMachineBackground,
+    playButton,
+    jackpot,
+    win,
+    slotMachine,
+    merchant,
+    merchantBackground,
+    armour,
+    armourUpgrade,
+    shuriken,
+    shurikenRotated,
+    shurikenBundle,
+    arrowLeft,
+    arrowRight,
+    arrowUp,
+    arrowDown
 }

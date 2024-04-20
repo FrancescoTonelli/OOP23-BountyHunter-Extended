@@ -14,10 +14,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import buontyhunter.model.FighterEntity.MovementState;
 import buontyhunter.model.consumables.Consumable;
-import buontyhunter.weaponClasses.MeleeWeapon;
-import buontyhunter.weaponClasses.RangedWeapon;
-import buontyhunter.weaponClasses.Weapon;
-import buontyhunter.weaponClasses.WeaponType;
+import buontyhunter.model.merchantClasses.MerchantEntity;
+import buontyhunter.model.merchantClasses.MerchantMenu;
+import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
+import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
+import buontyhunter.model.slotMachineClasses.WinCategories;
+import buontyhunter.model.weaponClasses.MeleeWeapon;
+import buontyhunter.model.weaponClasses.RangedWeapon;
+import buontyhunter.model.weaponClasses.Weapon;
+import buontyhunter.model.weaponClasses.WeaponType;
+
 import java.util.stream.Collectors;
 
 public class SwingGraphics implements Graphics {
@@ -334,6 +340,58 @@ public class SwingGraphics implements Graphics {
 
 		btn.setIcon(new ImageIcon(scaled));
 	}
+	
+	public void drawSlotMachineButtons(int x, int y, int unit, JButton btn) {
+		btn.setOpaque(false);
+		btn.setBackground(new Color(197, 145, 84));
+		btn.setBorderPainted(false);
+		btn.setBorder(new LineBorder(new Color(130, 91, 49), unit / 10));
+		btn.setBounds(x, y, unit, unit);
+		btn.setLayout(new BorderLayout());
+
+		Image scaled;
+
+		
+		scaled = assetManager.getImage(ImageType.playButton).getScaledInstance((int) (btn.getWidth()),
+				(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+		
+
+		btn.setIcon(new ImageIcon(scaled));
+	}
+
+	public void drawMerchantButtons(int index, int x, int y, int unit, JButton btn){
+		btn.setOpaque(true);
+		btn.setBackground(new Color(197, 145, 84));
+		btn.setBorderPainted(true);
+		btn.setBorder(new LineBorder(new Color(130, 91, 49), unit / 10));
+		btn.setBounds(x, y, unit, unit);
+		btn.setLayout(new BorderLayout());
+
+		Image icon;
+
+
+		switch (index) {
+			case 0:
+				icon = assetManager.getImage(ImageType.armourUpgrade).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
+			case 1:
+				icon = assetManager.getImage(ImageType.damageUp).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
+			case 2:
+				icon = assetManager.getImage(ImageType.shurikenBundle).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
+			default:
+				icon = assetManager.getImage(ImageType.hammer).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
+		}
+
+		btn.setIcon(new ImageIcon(icon));
+
+	}
 
 	public void drawStringUnderPlayer(String s) {
 		var playerPosition = camera.getPlayerPoint();
@@ -426,11 +484,54 @@ public class SwingGraphics implements Graphics {
 	public void drawBullet(RangedWeapon w) {
 		if (w.getHitbox() != null) {
 			var point = camera.getObjectPointInScene(w.getHitbox().getPoint2d());
-			if (point.isPresent()) {
-				g2.setColor(Color.RED);
-				g2.fillRect(getXinPixel(point.get()), getYinPixel(point.get()),
-						getValueInPixel(w.getHitbox().getWidth()),
-						getValueInPixel(w.getHitbox().getHeight()));
+
+			if(w.getBullet()!=null){
+
+				if (point.isPresent()) {
+	
+					if(w.getWeaponType()==WeaponType.BOW){
+						
+						switch (w.getBullet().getDirection()) {
+							case STAND_UP: {
+								g2.drawImage(assetManager.getImage(ImageType.arrowUp), getXinPixel(point.get()), getYinPixel(point.get()), null);
+								
+								break;
+							}
+							case STAND_DOWN: {
+								g2.drawImage(assetManager.getImage(ImageType.arrowDown), getXinPixel(point.get()), getYinPixel(point.get()), null);
+		
+								break;
+							}
+							case STAND_LEFT: {
+								g2.drawImage(assetManager.getImage(ImageType.arrowLeft), getXinPixel(point.get()), getYinPixel(point.get()), null);
+		
+								break;
+							}
+							case STAND_RIGHT: {
+								g2.drawImage(assetManager.getImage(ImageType.arrowRight), getXinPixel(point.get()), getYinPixel(point.get()), null);
+		
+								break;
+							}
+							default:
+								break;
+						}
+					}else if(w.getWeaponType()==WeaponType.SHURIKENS){
+	
+						if(w.getBullet().getZigZag()==0){
+							g2.drawImage(assetManager.getImage(ImageType.shuriken), getXinPixel(point.get()), getYinPixel(point.get()), null);
+						}else{
+							g2.drawImage(assetManager.getImage(ImageType.shurikenRotated), getXinPixel(point.get()), getYinPixel(point.get()), null);
+	
+						}
+	
+					}else{
+						g2.setColor(Color.RED);
+						g2.fillRect(getXinPixel(point.get()), getYinPixel(point.get()),
+								getValueInPixel(w.getHitbox().getWidth()),
+								getValueInPixel(w.getHitbox().getHeight()));
+	
+					}
+				}
 			}
 		}
 	}
@@ -708,6 +809,10 @@ public class SwingGraphics implements Graphics {
 				scaled = assetManager.getImage(ImageType.bow).getScaledInstance((int) (btn.getWidth() / (1.5)),
 						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
 				break;
+			case SHURIKENS:
+				scaled = assetManager.getImage(ImageType.shurikenBundle).getScaledInstance((int) (btn.getWidth() / (1.5)),
+						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
+				break;
 			default:
 				scaled = assetManager.getImage(ImageType.sword).getScaledInstance((int) (btn.getWidth() / (1.5)),
 						(int) (btn.getHeight() / (1.5)), Image.SCALE_SMOOTH);
@@ -724,6 +829,8 @@ public class SwingGraphics implements Graphics {
 			g2.drawImage(assetManager.getImage(ImageType.brassKnucles), x, y, dimension, dimension, null);
 		} else if (weapon.getWeaponType() == WeaponType.BOW) {
 			g2.drawImage(assetManager.getImage(ImageType.bow), x, y, dimension, dimension, null);
+		}else if (weapon.getWeaponType() == WeaponType.SHURIKENS) {
+			g2.drawImage(assetManager.getImage(ImageType.shurikenBundle), x, y, dimension, dimension, null);
 		}
 	}
 
@@ -821,4 +928,82 @@ public class SwingGraphics implements Graphics {
 	private double pongConvertCoordinate(double x, double boardX, double unitX) {
 		return boardX + (x * unitX);
 	}
+
+	public void drawSlotMachine(SlotMachineEntity slot, World w) {
+		if (w.getInterractableAreas().stream().filter(i -> i.getPanel().isShow()).collect(Collectors.toList()).isEmpty() &&
+				!w.getInventory().isShow() && !w.getQuestJournal().isShow()) {
+
+			g2.drawImage(assetManager.getImage(ImageType.slotMachine), getXinPixel(slot.getPos()) + 20,
+					getYinPixel(slot.getPos()) + 20, null);
+		}
+	}
+
+	public void drawSlotMachineBoard(SlotMachineBoard board,  World w){
+		if (!board.isShow()){
+			return;
+		}
+
+		ImageType[][] imgList = board.getTileImages();
+		
+		int minDim = GameEngine.RESIZATOR.getWINDOW_WIDTH() < GameEngine.RESIZATOR.getWINDOW_HEIGHT()
+		? GameEngine.RESIZATOR.getWINDOW_WIDTH()
+		: GameEngine.RESIZATOR.getWINDOW_HEIGHT();
+		
+		int boardDimension = minDim / 5 * 3;
+		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2 - (boardDimension / 2);
+		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2 - (boardDimension / 2);
+		int offset = (int)(boardDimension/7.5);
+		
+		g2.setColor(new Color(0, 0, 0, 0.6f));
+		g2.fillRect(0, 0, GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+
+
+		g2.drawImage(assetManager.getImage(ImageType.slotMachineBackground), x, y, boardDimension, boardDimension, null);
+
+		for(int i=0; i < imgList.length;i++){
+            for(int j=0; j < imgList[i].length;j++){
+				g2.drawImage(assetManager.getImage(imgList[i][j]),(int)(x+offset+j*boardDimension*0.23),(int)(y+offset+i*boardDimension*0.28),90,90, null);
+		
+			}
+		}
+
+		if(board.isjackpotWon()){
+			g2.drawImage(assetManager.getImage(ImageType.jackpot), x, 0, boardDimension, boardDimension/3, null);
+		}
+		else if(board.isResultDisplaying()&&board.currentWinCategories()!=WinCategories.Lose){
+			g2.drawImage(assetManager.getImage(ImageType.win), x, 0, boardDimension, boardDimension/3, null);
+		}
+
+
+	}
+
+	public void drawMerchant(MerchantEntity merchant, World w) {
+		if (w.getInterractableAreas().stream().filter(i -> i.getPanel().isShow()).collect(Collectors.toList()).isEmpty() &&
+				!w.getInventory().isShow() && !w.getQuestJournal().isShow()) {
+
+			g2.drawImage(assetManager.getImage(ImageType.merchant), getXinPixel(merchant.getPos()) + 20,
+					getYinPixel(merchant.getPos()) + 20, null);
+		}
+	}
+
+	public void drawMerchantMenu(MerchantMenu menu, World w){
+		if (!menu.isShow()){
+			return;
+		}
+
+		g2.setColor(new Color(0, 0, 0, 0.6f));
+		g2.fillRect(0, 0, GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT());
+
+		int minDim = GameEngine.RESIZATOR.getWINDOW_WIDTH() < GameEngine.RESIZATOR.getWINDOW_HEIGHT()
+				? GameEngine.RESIZATOR.getWINDOW_WIDTH()
+				: GameEngine.RESIZATOR.getWINDOW_HEIGHT();
+
+		int boardDimension = (int)(minDim*0.8);
+		int x = GameEngine.RESIZATOR.getWINDOW_WIDTH() / 2 - (boardDimension / 2);
+		int y = GameEngine.RESIZATOR.getWINDOW_HEIGHT() / 2 - (boardDimension / 2);
+
+		g2.drawImage(assetManager.getImage(ImageType.merchantBackground), x, y, boardDimension, boardDimension, null);
+
+	}
+
 }

@@ -2,8 +2,12 @@ package buontyhunter.graphics;
 
 import buontyhunter.model.*;
 import buontyhunter.model.consumables.Consumable;
-import buontyhunter.weaponClasses.RangedWeapon;
-import buontyhunter.weaponClasses.Weapon;
+import buontyhunter.model.merchantClasses.MerchantEntity;
+import buontyhunter.model.merchantClasses.MerchantMenu;
+import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
+import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
+import buontyhunter.model.weaponClasses.RangedWeapon;
+import buontyhunter.model.weaponClasses.Weapon;
 
 public interface Graphics {
 	/**
@@ -170,4 +174,32 @@ public interface Graphics {
 	 * @param panel the panel to draw
 	 */
 	void drawPongPanel(PongPanel panel);
+
+	/**
+	 * this method draws the slotMachine icon in the hub
+	 * 
+	 * @param slot the SlotMachine entity to draw
+	 */
+	public void drawSlotMachine(SlotMachineEntity slot, World w);
+
+	/**
+	 * This method renders the slot machine's board
+	 * 
+	 * @param board the board to draw
+	 */
+	void drawSlotMachineBoard(SlotMachineBoard board, World w);
+
+	/**
+	 * this method draws the Merchant icon in the hub
+	 * 
+	 * @param merchant the MerchantEntity entity to draw
+	 */
+	void drawMerchant(MerchantEntity merchant, World w);
+
+	/**
+	 * This method draws the Merchant's menu
+	 * 
+	 * @param menu the menu to draw
+	 */
+	void drawMerchantMenu(MerchantMenu menu, World w);
 }

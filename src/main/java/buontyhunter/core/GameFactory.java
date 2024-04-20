@@ -4,8 +4,13 @@ import buontyhunter.input.*;
 import buontyhunter.model.*;
 import buontyhunter.model.AI.enemySpawner.EnemyConfiguration;
 import buontyhunter.model.AI.enemySpawner.EnemyType;
+import buontyhunter.model.armourClasses.Armour;
+import buontyhunter.model.merchantClasses.MerchantEntity;
+import buontyhunter.model.merchantClasses.MerchantMenu;
+import buontyhunter.model.slotMachineClasses.SlotMachineBoard;
+import buontyhunter.model.slotMachineClasses.SlotMachineEntity;
+import buontyhunter.model.weaponClasses.WeaponFactory;
 import buontyhunter.physics.*;
-import buontyhunter.weaponClasses.WeaponFactory;
 import buontyhunter.common.*;
 import buontyhunter.graphics.*;
 import java.util.*;
@@ -44,12 +49,13 @@ public class GameFactory {
                                 new RectBoundingBox(new Point2d(0, 0), 1, 1),
                                 new PlayerInputController(), new PlayerGraphicsComponent(),
                                 new PlayerPhysicsComponent(),
-                                health, maxHealth, null);
+                                health, maxHealth, null, new Armour(0, 0));
 
                 toRet.addWeapon(WeaponFactory.getInstance().createSword(toRet));
                 toRet.addWeapon(WeaponFactory.getInstance().createBow(toRet));
                 toRet.addWeapon(WeaponFactory.getInstance().createBrassKnuckles(toRet));
-                toRet.setWeapon(toRet.getWeapons().get(2));
+                toRet.addWeapon(WeaponFactory.getInstance().createShurikens(toRet));
+                toRet.setWeapon(toRet.getWeapons().get(0));
 
                 return toRet;
         }
@@ -276,6 +282,51 @@ public class GameFactory {
         }
 
         /**
+         * Create a new SlotMachine;
+         * this entity will be used to show the Slot in the game
+         * 
+         * @param pos    position for the Slot in the Hub
+         * @param player the player
+         * @return the interactable SlotMachine area created
+         */
+        public InterractableArea createSlotForHub(Point2d pos, PlayerEntity player){
+
+
+                SlotMachineBoard board = new SlotMachineBoard(GameObjectType.HidableObject, new Point2d(0, 0), new Vector2d(0, 0), 
+                                new RectBoundingBox(new Point2d(0, 0), GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT()),
+                                new SlotInputController(), new SlotMachineBoardGraphicsComponent(), null, false);
+
+                return new SlotMachineEntity(GameObjectType.InterractableArea,
+                                pos, new Vector2d(0, 0),
+                                new RectBoundingBox(pos, 2, 1),
+                                board, player);
+
+        }
+
+        /**
+         * Create a new Merchant;
+         * This entity will be used to show the Merchant in the game
+         * 
+         * @param pos    position for the Merchant in the Hub
+         * @param player the player
+         * @return the interactable Merchant area created
+         */
+        public InterractableArea createMerchantForHub(Point2d pos, PlayerEntity player){
+
+
+                MerchantMenu menu = new MerchantMenu(GameObjectType.HidableObject, new Point2d(0, 0), new Vector2d(0, 0), 
+                                new RectBoundingBox(new Point2d(0, 0), GameEngine.RESIZATOR.getWINDOW_WIDTH(), GameEngine.RESIZATOR.getWINDOW_HEIGHT()),
+                                null , new MerchantMenuGraphicsComponent(), null, false, player);
+
+                return new MerchantEntity(GameObjectType.InterractableArea,
+                                pos, new Vector2d(0, 0),
+                                new RectBoundingBox(pos, 1, 1),
+                                menu);
+
+        }
+
+
+        /**
          * create the default quests for the game
          * 
          * @return the list of quests created
@@ -411,7 +462,10 @@ public class GameFactory {
                 toRet.setTeleporter(this.createTeleporterToOpenWorld());
                 toRet.addInterractableArea(this.createQuestPannelForHub(new Point2d(7, 5)));
                 toRet.addInterractableArea(this.createBlacksmithForHub(new Point2d(1, 4)));
-                toRet.addInterractableArea(this.createPongForHub(new Point2d(13, 2), (PlayerEntity) toRet.getPlayer()));
+                toRet.addInterractableArea(this.createPongForHub(new Point2d(12, 2), (PlayerEntity) toRet.getPlayer()));
+                toRet.addInterractableArea(this.createSlotForHub(new Point2d(15, 2), (PlayerEntity) toRet.getPlayer() ));
+                toRet.addInterractableArea(this.createMerchantForHub(new Point2d(2, 10), (PlayerEntity)toRet.getPlayer()));
+
                 toRet.setQuestJournal(this.createQuestJournal());
                 toRet.disableEnemies();
                 toRet.setInventory(this.createInventoryPanel());
